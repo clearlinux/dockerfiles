@@ -13,8 +13,13 @@ COPY keystone.conf /etc/keystone
 RUN mkdir -p /etc/nginx/ssl
 COPY keystone.wsgi.conf /etc/nginx/
 
+VOLUME /var/lib/mysql
+
 COPY bootstrap.sh /usr/bin
+COPY pre-setup.sh /usr/bin
 COPY openrc /root/
+RUN /usr/bin/pre-setup.sh
+
 
 WORKDIR /root
 CMD '/usr/bin/bootstrap.sh'
