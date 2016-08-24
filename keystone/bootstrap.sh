@@ -1,10 +1,10 @@
 #!/bin/bash
 
-IDENTITY_HOST=$IDENTITY_HOST
-KEYSTONE_DB_USER=$KEYSTONE_DB_USER
-KEYSTONE_DB_PASSWORD=$KEYSTONE_DB_PASSWORD
-KEYSTONE_DB_NAME=$KEYSTONE_DB_NAME
-KEYSTONE_ADMIN_PASSWORD=$KEYSTONE_ADMIN_PASSWORD
+IDENTITY_HOST=localhost
+KEYSTONE_DB_USER=keystone
+KEYSTONE_DB_PASSWORD=914de29bc82616d7c159eaf9b1f39402
+KEYSTONE_DB_NAME=keystone
+KEYSTONE_ADMIN_PASSWORD="${KEYSTONE_ADMIN_PASSWORD:-bb915e9ce0ae4b46e82a069b2ef0f8d7}"
 
 sed -i.bak s/IDENTITY_HOST/$IDENTITY_HOST/g /root/openrc
 sed -i.bak s/KEYSTONE_ADMIN_PASSWORD/$KEYSTONE_ADMIN_PASSWORD/g /root/openrc
@@ -31,9 +31,9 @@ if [[ ! -d /var/lib/mysql/mysql ]]; then
     mysql -e "DROP DATABASE test;"
 
     # Keystone Database and user
-    mysql -e "create database keystone;"
-    mysql -e "grant all on keystone.* to 'keystone'@'%' identified by 'secret';"
-    mysql -e "grant all on keystone.* to 'keystone'@'localhost' identified by 'secret';"
+    mysql -e "create database $KEYSTONE_DB_NAME;"
+    mysql -e "grant all on $KEYSTONE_DB_NAME.* to '$KEYSTONE_DB_USER'@'%' identified by '$KEYSTONE_DB_PASSWORD';"
+    mysql -e "grant all on $KEYSTONE_DB_NAME.* to '$KEYSTONE_DB_USER'@'localhost' identified by '$KEYSTONE_DB_PASSWORD';"
 fi
 
 # Populate keystone database
@@ -56,7 +56,7 @@ echo "user  root;" >> /usr/share/nginx/conf/nginx.conf
 
 # Bootstrap keystone
 keystone-manage bootstrap --bootstrap-username admin \
-		--bootstrap-password secret \
+		--bootstrap-password $KEYSTONE_ADMIN_PASSWORD \
 		--bootstrap-project-name admin \
 		--bootstrap-role-name admin \
 		--bootstrap-service-name keystone \

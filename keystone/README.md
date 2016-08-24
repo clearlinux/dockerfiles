@@ -31,9 +31,6 @@ Start Keystone container
     YOUR_HOST=`hostname -f`
     docker run -d -it --name keystone -p 5000:5000 -p 35357:35357 \
 		   -e IDENTITY_HOST="$YOUR_HOST" \
-		   -e KEYSTONE_DB_USER="keystone" \
-		   -e KEYSTONE_DB_PASSWORD="secret" \
-		   -e KEYSTONE_DB_NAME="keystone" \
 		   -e KEYSTONE_ADMIN_PASSWORD="secret" \
 		   -v `pwd`/keystone_cert.pem:/etc/nginx/ssl/keystone_cert.pem \
 		   -v `pwd`/keystone_key.pem:/etc/nginx/ssl/keystone_key.pem \
@@ -58,14 +55,8 @@ Environment Variables
 ---------------------
 - ``IDENTITY_HOST``
   Identity (Keystone) host
-- ``KEYSTONE_DB_USER``
-  Keystone database username
-- ``KEYSTONE_DB_PASSWORD``
-  Keystone database password
-- ``KEYSTONE_DB_NAME``
-  Keystone database name
-- ``KEYSTONE_ADMIN_PASSWORD``
-  Keystone Admin user password
+- (Optional) ``KEYSTONE_ADMIN_PASSWORD``
+  Keystone Admin user password. Default: ``bb915e9ce0ae4b46e82a069b2ef0f8d7``
 
 Extra Build ARGs
 ----------------
