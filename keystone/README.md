@@ -31,7 +31,6 @@ Start Keystone container
     YOUR_HOST=`hostname -f`
     docker run -d -it --name keystone -p 5000:5000 -p 35357:35357 \
 		   -e IDENTITY_HOST="$YOUR_HOST" \
-		   -e COMPUTE_HOST="$YOUR_HOST" \
 		   -e KEYSTONE_DB_USER="keystone" \
 		   -e KEYSTONE_DB_PASSWORD="secret" \
 		   -e KEYSTONE_DB_NAME="keystone" \
@@ -59,8 +58,6 @@ Environment Variables
 ---------------------
 - ``IDENTITY_HOST``
   Identity (Keystone) host
-- ``COMPUTE_HOST``
-  Compute (ciao-launcher) host
 - ``KEYSTONE_DB_USER``
   Keystone database username
 - ``KEYSTONE_DB_PASSWORD``
