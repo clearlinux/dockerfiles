@@ -6,10 +6,13 @@ KEYSTONE_ADMIN_PASSWORD="${KEYSTONE_ADMIN_PASSWORD:-bb915e9ce0ae4b46e82a069b2ef0
 sed -i.bak s/IDENTITY_HOST/$IDENTITY_HOST/g /root/openrc
 sed -i.bak s/KEYSTONE_ADMIN_PASSWORD/$KEYSTONE_ADMIN_PASSWORD/g /root/openrc
 
+if [[ ! -d /var/lib/mysql/mysql ]]; then
+    cp -r /data/* /var/lib/mysql/
+fi
+
 # MariaDB
 mysqld_safe &
 mysqladmin --silent --wait=30 ping || exit 1
-
 
 # Populate keystone database
 keystone-manage db_sync
@@ -18,7 +21,6 @@ keystone-manage db_sync
 /usr/bin/uwsgi --ini /usr/share/uwsgi/keystone/admin.ini -s /run/uwsgi/keystone/admin.sock &
 /usr/bin/uwsgi --ini /usr/share/uwsgi/keystone/public.ini -s /run/uwsgi/keystone/public.sock &
 /usr/bin/nginx
-
 /usr/bin/memcached -u root &
 
 # Bootstrap keystone

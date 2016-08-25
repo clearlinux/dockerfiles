@@ -29,9 +29,11 @@ Start Keystone container
 ------------------------
 ```
     YOUR_HOST=`hostname -f`
+    MYSQL_DATA_DIR=/var/lib/mysql/
     docker run -d -it --name keystone -p 5000:5000 -p 35357:35357 \
 		   -e IDENTITY_HOST="$YOUR_HOST" \
 		   -e KEYSTONE_ADMIN_PASSWORD="secret" \
+		   -v $MYSQL_DATA_DIR:/var/lib/mysql \
 		   -v `pwd`/keystone_cert.pem:/etc/nginx/ssl/keystone_cert.pem \
 		   -v `pwd`/keystone_key.pem:/etc/nginx/ssl/keystone_key.pem \
 		   clearlinux/keystone
