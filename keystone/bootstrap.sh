@@ -38,6 +38,7 @@ source /root/openrc
 openstack project show service
 if [[ $? == 1 ]]; then
     openstack project create --domain default --description "Service Project" service
+    openstack role add --project service --user admin admin
 fi
 
 # Create 'user' role
