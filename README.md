@@ -6,6 +6,7 @@ https://hub.docker.com/u/clearlinux/
 
 Containers
 ----------
+- Ciao-deploy
 - CIAO-WebUI
 - Keystone
 - MariaDB
