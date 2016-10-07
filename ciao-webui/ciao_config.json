@@ -5,6 +5,11 @@
             "port": "8774",
             "protocol": "https"
         },
+        "storage":{
+            "host": "##STORAGE_HOST##",
+            "port": "8776",
+            "protocol": "https"
+        },
         "keystone": {
             "host": "##KEYSTONE_HOST##",
             "port": "35357",
