@@ -41,6 +41,8 @@ Environment Variables
   Identity (Keystone) host
 - ``CONTROLLER_HOST``
   Controller (ciao-controller) host
+- ``STORAGE_HOST``
+  Storage (ciao-controller) host
 - ``CERT_PASS``
   Passprhase for the ciao-webui certificate
 - ``MODE``

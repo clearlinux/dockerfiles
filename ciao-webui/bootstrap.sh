@@ -4,6 +4,7 @@ NODE_ENV=$MODE
 CONTROLLER_HOST=$CONTROLLER_HOST
 IDENTITY_HOST=$IDENTITY_HOST
 CERT_PASS=$CERT_PASS
+STORAGE_HOST=$STORAGE_HOST
 
 _usage(){
     >&2 echo "usage:"
@@ -11,6 +12,7 @@ _usage(){
     >&2 echo "                 -v /path/to/ciao-webui-cert.pem:/etc/pki/ciao-webui-cert.pem \\"
     >&2 echo "                 -e CONTROLLER_HOST=controller.example.com \\"
     >&2 echo "                 -e IDENTITY_HOST=keystone.example.com \\"
+    >&2 echo "(optional:       -e STORAGE_HOST=storage.example.com )\\"
     >&2 echo "(optional:       -e CERT_PASS=certificate_passphrase )"
 }
 
@@ -38,6 +40,7 @@ fi
 
 sed -i.bak s/##MODE##/$NODE_ENV/g                   /etc/ciao-webui/ciao_config.json
 sed -i.bak s/##CONTROLLER_HOST##/$CONTROLLER_HOST/g /etc/ciao-webui/ciao_config.json
+sed -i.bak s/##STORAGE_HOST##/$STORAGE_HOST/g       /etc/ciao-webui/ciao_config.json
 sed -i.bak s/##KEYSTONE_HOST##/$IDENTITY_HOST/g     /etc/ciao-webui/ciao_config.json
 sed -i.bak s/##CERT_PASS##/$CERT_PASS/g             /etc/ciao-webui/ciao_config.json
 
