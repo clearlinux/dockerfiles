@@ -7,7 +7,8 @@ ARG swupd_args
 RUN mkdir -p /root/share
 RUN mkdir -p /root/go/src
 RUN mkdir -p /etc/pki/ciao
-COPY bashrc /.bashrc
+COPY bashrc /root/bashrc
+RUN ln -s /root/bashrc /.bashrc
 COPY environment /etc/
 
 # update and utilities
