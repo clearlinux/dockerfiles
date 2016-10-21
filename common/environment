@@ -1,0 +1,5 @@
+#Proxy Settings
+
+# GO dependencies
+GOPATH="/root/go"
+GOBIN="$GOPATH/bin"

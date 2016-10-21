@@ -1,4 +1,4 @@
-FROM ciao/common
+FROM clearlinux/ciao-common
 MAINTAINER obed.n.munoz@intel.com
 
 ARG swupd_args
