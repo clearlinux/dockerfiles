@@ -8,27 +8,27 @@ This provides a ciao deployment container.
 Build
 -----
 ```
-    docker build -t clearlinux/ciao-deploy .
+docker build -t clearlinux/ciao-deploy .
 ```
 
 Or just pull it from Dockerhub
 ------------------------------
 ```
-    docker pull clearlinux/ciao-deploy
+docker pull clearlinux/ciao-deploy
 ```
 
 Run the Ciao-deploy Container
 ----------------------------
 ```
-    docker run -it clearlinux/ciao-deploy
+docker run -it clearlinux/ciao-deploy
 ```
 
 If you have setup your ssh key for the ansible setup, you may want to use it
 in your ciao-deploy container:
 
 ```
-    docker run -v /path/to/your/.ssh/key:/root/.ssh/key \
-               -it clearlinux/ciao-deploy
+docker run -v /path/to/your/.ssh/key:/root/.ssh/key \
+    -it clearlinux/ciao-deploy
 ```
 
 Setup your cluster configuration

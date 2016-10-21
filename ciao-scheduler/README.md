@@ -16,13 +16,13 @@ Features
 Build
 -----
 ```
-    docker build -t clearlinux/ciao-scheduler .
+docker build -t clearlinux/ciao-scheduler .
 ```
 
 Or just pull it from Dockerhub
 ------------------------------
 ```
-    docker pull clearlinux/ciao-scheduler
+docker pull clearlinux/ciao-scheduler
 ```
 
 Pre-requirements

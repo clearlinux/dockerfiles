@@ -8,31 +8,31 @@ This provides a ciao web dashboard container
 Build
 -----
 ```
-    docker build -t clearlinux/ciao-webui .
+docker build -t clearlinux/ciao-webui .
 ```
 
 Or just pull it from Dockerhub
 ------------------------------
 ```
-    docker pull clearlinux/ciao-webui
+docker pull clearlinux/ciao-webui
 ```
 Create Ciao-webui SSL certificates
 ----------------------------------
 ```
-    YOUR_HOST=`hostname -f`
+YOUR_HOST=`hostname -f`
 
-    openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout webui_key.pem \
-                -out webui_cert.pem -subj "/CN=$YOUR_HOST"
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout webui_key.pem \
+    -out webui_cert.pem -subj "/CN=$YOUR_HOST"
 ```
 
 Run the Ciao-webui Container
 ----------------------------
 ```
-    docker run -v `pwd`/webui_key.pem:/etc/pki/ciao-webui-key.pem \
-               -v `pwd`/webui_cert.pem:/etc/pki/ciao-webui-cert.pem \
-               -e CONTROLLER_HOST=controller.example.com \
-               -e IDENTITY_HOST=keystone.example.com \
-               -p 443:443 -d clearlinux/ciao-webui
+docker run -v `pwd`/webui_key.pem:/etc/pki/ciao-webui-key.pem \
+       -v `pwd`/webui_cert.pem:/etc/pki/ciao-webui-cert.pem \
+       -e CONTROLLER_HOST=controller.example.com \
+       -e IDENTITY_HOST=keystone.example.com \
+       -p 443:443 -d clearlinux/ciao-webui
 ```
 
 Environment Variables

@@ -8,13 +8,13 @@ This provides a CIAO Common base image that contains all initial requirements fo
 Build
 -----
 ```
-    docker build -t clearlinux/ciao-common .
+docker build -t clearlinux/ciao-common .
 ```
 
 Or just pull it from Dockerhub
 ------------------------------
 ```
-    docker pull clearlinux/ciao-common
+docker pull clearlinux/ciao-common
 ```
 
 Extra Build ARGs
