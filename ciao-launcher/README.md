@@ -24,6 +24,10 @@ Or just pull it from Dockerhub
 docker pull clearlinux/ciao-launcher
 ```
 
+Pre-requirements
+----------------
+Before starting ``ciao-launcher``, take a look on [CIAO on top of Docker containers for development]()
+
 Start CIAO Launcher container
 -----------------------------
 ### Run in daemon mode
