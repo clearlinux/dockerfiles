@@ -1,0 +1,21 @@
+configure:
+  scheduler:
+      storage_type: file
+      storage_uri: /etc/ciao/configuration.yaml
+  controller:
+      compute_port: 8774
+      compute_ca: /etc/pki/ciao/controller_cert.pem
+      compute_cert: /etc/pki/ciao/controller_key.pem
+      identity_user: admin
+      identity_password: secret
+  launcher:
+      compute_net: [192.168.0.1/24]
+      mgmt_net: [192.168.0.1/24]
+      disk_limit: false
+      mem_limit: false
+  image_service:
+      type: glance
+      url: http://HOST
+  identity_service:
+      type: keystone
+      url: https://IDENTITY_HOST:35357
