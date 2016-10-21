@@ -59,6 +59,11 @@ ciaorc  go  launcher.sh share
 root@example.com # ./launcher.sh
 ```
 
+### Getting CIAO Scheduler logs from docker
+```
+docker logs -f ciao-scheduler
+```
+
 Environment Variables
 ---------------------
 
