@@ -6,8 +6,12 @@ https://hub.docker.com/u/clearlinux/
 
 Containers
 ----------
-- Ciao-deploy
-- CIAO-WebUI
+- ciao-common
+- ciao-controller
+- ciao-launcher
+- ciao-scheduler
+- ciao-deploy
+- ciao-webui
 - Keystone
 - MariaDB
 
