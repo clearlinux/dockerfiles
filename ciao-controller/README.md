@@ -38,6 +38,7 @@ docker run -it -d --name ciao-controller --net=host
        -v `pwd`/certs/cert-Controller-$YOUR_HOST.pem:/etc/pki/ciao/cert-Controller-ciao-dev.pem \
        -v `pwd`/certs/controller_cert.pem:/etc/pki/ciao/controller_cert.pem \
        -v `pwd`/certs/controller_key.pem:/etc/pki/ciao/controller_key.pem \
+       -v `pwd`/certs/ciao-image_cert.pem:/etc/pki/ciao/ciao-image_cert.pem \
        -v `pwd`/ciao-keystone_cert.pem:/etc/ca-certs/cacert.pem \
        -e IDENTITY_HOST=$YOUR_HOST -e CONTROLLER_HOST=$YOUR_HOST \
        -v $GOPATH/src/github.com/01org/ciao:/root/go/src/github.com/01org/ciao \
@@ -51,6 +52,7 @@ docker run -it --name ciao-controller --net=host
        -v `pwd`/certs/cert-Controller-$YOUR_HOST.pem:/etc/pki/ciao/cert-Controller-ciao-dev.pem \
        -v `pwd`/certs/controller_cert.pem:/etc/pki/ciao/controller_cert.pem \
        -v `pwd`/certs/controller_key.pem:/etc/pki/ciao/controller_key.pem \
+       -v `pwd`/certs/ciao-image_cert.pem:/etc/pki/ciao/ciao-image_cert.pem \
        -v `pwd`/ciao-keystone_cert.pem:/etc/ca-certs/cacert.pem \
        -e IDENTITY_HOST=$YOUR_HOST -e CONTROLLER_HOST=$YOUR_HOST \
        -v $GOPATH/src/github.com/01org/ciao:/root/go/src/github.com/01org/ciao \
