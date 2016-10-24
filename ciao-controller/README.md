@@ -26,7 +26,7 @@ docker pull clearlinux/ciao-controller
 
 Pre-requirements
 ----------------
-Before starting ``ciao-launcher``, take a look on [CIAO on top of Docker containers for development]()
+Before starting ``ciao-controller``, take a look on [CIAO on top of Docker containers for development]()
 
 Start CIAO Controller container
 -----------------------------
@@ -62,7 +62,7 @@ docker run -it --name ciao-controller --net=host
 root@example.com # ls
 ciaorc  go  controller.sh share
 
-# Manual Start of Ciao Launcher
+# Manual Start of Ciao Controller
 root@example.com # ./controller.sh
 ```
 ### Getting CIAO Scheduler logs from docker
