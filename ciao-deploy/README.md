@@ -17,28 +17,39 @@ Or just pull it from Dockerhub
 docker pull clearlinux/ciao-deploy
 ```
 
+Clone the ciao example deployment
+---------------------------------
+```
+git clone https://github.com/clearlinux/clear-config-management.git
+```
+
+Setup your cluster configuration
+--------------------------------
+You may need to edit `clear-config-management/examples/ciao/group_vars/all`
+and `clear-config-management/examples/ciao/hosts` to suit your cluster
+setup needs.
+
+For more detailed instructions you may want to check
+[Deploying ciao via automation](https://clearlinux.org/documentation/ciao-deploy.html)
+documentation.
+
 Run the Ciao-deploy Container
 ----------------------------
 ```
-docker run -it clearlinux/ciao-deploy
+docker run -v $(pwd)/clear-config-management/examples/ciao:/root/ciao \
+    -it clearlinux/ciao-deploy
+
 ```
 
 If you have setup your ssh key for the ansible setup, you may want to use it
 in your ciao-deploy container:
 
 ```
-docker run -v /path/to/your/.ssh/key:/root/.ssh/key \
+docker run -v $(pwd)/clear-config-management/examples/ciao:/root/ciao \
+    -v /path/to/your/.ssh/key:/root/.ssh/key \
     -it clearlinux/ciao-deploy
 ```
 
-Setup your cluster configuration
---------------------------------
-You may need to edit `/root/ciao/group_vars/all` and `/root/ciao/hosts` to
-suit your cluster setup needs.
-
-For more detailed instructions you may want to check
-[Deploying ciao via automation](https://clearlinux.org/documentation/ciao-deploy.html)
-documentation.
 
 Extra Build ARGs
 ----------------
