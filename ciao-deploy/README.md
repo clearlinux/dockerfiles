@@ -20,13 +20,13 @@ docker pull clearlinux/ciao-deploy
 Clone the ciao example deployment
 ---------------------------------
 ```
-git clone https://github.com/clearlinux/clear-config-management.git
+git clone https://github.com/01org/ciao.git
 ```
 
 Setup your cluster configuration
 --------------------------------
-You may need to edit `clear-config-management/examples/ciao/group_vars/all`
-and `clear-config-management/examples/ciao/hosts` to suit your cluster
+You may need to edit `ciao/_DeploymentAndDistroPackaging/ansible/group_vars/all`
+and `ciao/_DeploymentAndDistroPackaging/ansible/hosts` to suit your cluster
 setup needs.
 
 For more detailed instructions you may want to check
@@ -36,7 +36,7 @@ documentation.
 Run the Ciao-deploy Container
 ----------------------------
 ```
-docker run -v $(pwd)/clear-config-management/examples/ciao:/root/ciao \
+docker run -v $(pwd)/ciao:/root/ciao \
     -it clearlinux/ciao-deploy
 
 ```
@@ -45,7 +45,7 @@ If you have setup your ssh key for the ansible setup, you may want to use it
 in your ciao-deploy container:
 
 ```
-docker run -v $(pwd)/clear-config-management/examples/ciao:/root/ciao \
+docker run -v $(pwd)/ciao:/root/ciao \
     -v /path/to/your/.ssh/key:/root/.ssh/key \
     -it clearlinux/ciao-deploy
 ```
