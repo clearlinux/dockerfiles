@@ -47,4 +47,9 @@ if [[ $? == 1 ]]; then
     openstack role create user
 fi
 
+# Run post-keystone.sh script, if it exists
+if [ -f "/usr/bin/post-keystone.sh" ]; then
+   /usr/bin/post-keystone.sh
+fi
+
 tail -f /var/log/*
