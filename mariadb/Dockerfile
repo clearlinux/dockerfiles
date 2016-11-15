@@ -3,6 +3,7 @@ MAINTAINER leoswaldo.macias@intel.com
 
 ARG swupd_args
 
+RUN swupd update $swupd_args
 RUN swupd bundle-add database-basic $swupd_args
 RUN rm -rf /var/lib/swupd/*
 

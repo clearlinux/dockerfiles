@@ -5,6 +5,7 @@ ARG WEBUI_VERSION=1.4.13.20
 
 ARG swupd_args
 
+RUN swupd update $swupd_args
 RUN swupd bundle-add network-basic nodejs-basic $swupd_args
 
 RUN mkdir -p /etc/ciao-webui
