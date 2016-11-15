@@ -36,7 +36,8 @@ documentation.
 Run the Ciao-deploy Container
 ----------------------------
 ```
-docker run -v $(pwd)/ciao:/root/ciao \
+docker run --privileged -v /dev/:/dev/ \
+    -v $(pwd)/ciao:/root/ciao \
     -it clearlinux/ciao-deploy
 
 ```
@@ -45,11 +46,19 @@ If you have setup your ssh key for the ansible setup, you may want to use it
 in your ciao-deploy container:
 
 ```
-docker run -v $(pwd)/ciao:/root/ciao \
+docker run --privileged -v /dev/:/dev/ \
+    -v $(pwd)/ciao:/root/ciao \
     -v /path/to/your/.ssh/key:/root/.ssh/key \
     -it clearlinux/ciao-deploy
 ```
 
+**Note**:
+
+The cotainer needs `–privileged -v /dev/:/dev/` in order to install
+your certificates in the
+[CNCI image](https://github.com/01org/ciao/tree/master/networking/ciao-cnci-agent#cnci-agent).
+To learn more about the Docker options used, please refer to the
+[Docker* documentation](https://docs.docker.com/engine/reference/commandline/run/).
 
 Extra Build ARGs
 ----------------
