@@ -18,4 +18,5 @@ script:
   - travis_retry docker exec -it  keystone /usr/bin/verify-keystone.sh
 
 deploy:
-  - "curl -H \"Content-Type: application/json\" --data '{\"build\": true}' -X POST https://registry.hub.docker.com/u/clearlinux/keystone/trigger/$DOCKER_TOKEN/"
+  # Deploy Keystone if was changed
+  -  "git diff --name-only HEAD^ --staged | grep keystone && curl -H \"Content-Type: application/json\" --data '{\"build\": true}' -X POST https://registry.hub.docker.com/u/clearlinux/keystone/trigger/$DOCKER_TOKEN/"
