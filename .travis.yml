@@ -1,0 +1,21 @@
+sudo: required
+
+services:
+  - docker
+
+env:
+  - HOST="localhost"
+  - DOCKER_TOKEN="8da7bc99-13da-46df-acc7-8929523d995f"
+
+before_script:
+  - export CONTAINER=clearlinux/keystone
+  - cd keystone
+  - docker build -f Dockerfile -t $CONTAINER .
+
+script:
+  - openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout keystone_key.pem -out keystone_cert.pem -subj "/CN=$HOST"
+  - docker run -d -it --name keystone -p 5000:5000 -p 35357:35357 -e IDENTITY_HOST="$HOST" -e KEYSTONE_ADMIN_PASSWORD="secret" -v `pwd`/keystone_cert.pem:/etc/nginx/ssl/keystone_cert.pem -v `pwd`/keystone_key.pem:/etc/nginx/ssl/keystone_key.pem -v `pwd`/verify-keystone.sh:/usr/bin/verify-keystone.sh clearlinux/keystone
+  - travis_retry docker exec -it  keystone /usr/bin/verify-keystone.sh
+
+after_success:
+  - "curl -H \"Content-Type: application/json\" --data '{\"build\": true}' -X POST https://registry.hub.docker.com/u/clearlinux/keystone/trigger/$DOCKER_TOKEN/"
