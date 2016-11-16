@@ -13,6 +13,7 @@ Containers
 - ciao-scheduler
 - ciao-deploy
 - ciao-webui
+- machine-learning
 - Keystone
 - MariaDB
 
