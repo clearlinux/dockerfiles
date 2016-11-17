@@ -1,6 +1,6 @@
 #!/bin/bash
+# This scripts informs CI about a working Keystone Service
 
-# Verification Keystone Service commands
 source /root/openrc
 
 for i in {1..5}; do openstack user list && break || sleep 1; done
