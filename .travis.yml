@@ -4,8 +4,7 @@ services:
   - docker
 
 env:
-  - HOST="localhost"
-  - DOCKER_TOKEN="8da7bc99-13da-46df-acc7-8929523d995f"
+  - HOST="localhost" DOCKER_TOKEN="8da7bc99-13da-46df-acc7-8929523d995f"
 
 before_script:
   - export CONTAINER=clearlinux/keystone
