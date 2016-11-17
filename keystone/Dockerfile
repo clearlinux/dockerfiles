@@ -16,6 +16,7 @@ COPY keystone.wsgi.conf /etc/nginx/
 
 COPY bootstrap.sh /usr/bin
 COPY pre-setup.sh /usr/bin
+COPY verify-keystone.sh /usr/bin
 COPY openrc /root/
 RUN /usr/bin/pre-setup.sh
 
