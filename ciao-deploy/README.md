@@ -35,15 +35,9 @@ documentation.
 
 Run the Ciao-deploy Container
 ----------------------------
-```
-docker run --privileged -v /dev/:/dev/ \
-    -v $(pwd)/ciao:/root/ciao \
-    -it clearlinux/ciao-deploy
-
-```
-
-If you have setup your ssh key for the ansible setup, you may want to use it
-in your ciao-deploy container:
+You will need to use an ssh key to manage the remote nodes. Replace
+`/path/to/your/.ssh/key` with your private ssh key filename (notice it
+must be an absolute path).
 
 ```
 docker run --privileged -v /dev/:/dev/ \
