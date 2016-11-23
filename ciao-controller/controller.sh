@@ -26,4 +26,4 @@ if [ ! -d "/etc/ssl" ] ; then
 fi
 
 # Starting the controller
-$GOBIN/ciao-controller -logtostderr -v=3
+$GOBIN/ciao-controller -logtostderr -ceph_id=admin -v=3
