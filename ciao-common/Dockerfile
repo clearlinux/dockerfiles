@@ -13,7 +13,7 @@ COPY environment /etc/
 
 # update and utilities
 RUN swupd update $swupd_args
-RUN swupd bundle-add os-core-dev $swupd_args
+RUN swupd bundle-add os-core-dev storage-cluster $swupd_args
 
 # CIAO Dependencies
 RUN swupd bundle-add go-basic $swupd_args
