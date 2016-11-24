@@ -28,7 +28,7 @@ fi
 # Wait until keystone is ready
 source /root/ciaorc
 echo "Waiting keystone to start "
-until ciao-cli tenant list ; do
+until ciao-cli tenant list | grep service ; do
     printf '.'
     sleep 1
 done
