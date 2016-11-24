@@ -66,7 +66,7 @@ docker logs -f ciao-scheduler
 
 Environment Variables
 ---------------------
-
+- ``CEPH_ID`` Specifies the CEPH storage ID (default=admin)
 
 Extra Build ARGs
 ----------------

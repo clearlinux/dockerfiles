@@ -1,6 +1,8 @@
 #!/bin/bash
 set -x
 
+CEPH_ID="${CEPH_ID:-admin}"
+
 # Copy images
 mkdir -p /var/lib/ciao/images
 if [ ! "$(ls -A /var/lib/ciao/images)" ]; then
@@ -18,4 +20,4 @@ mkdir -p /var/run
 killall -9 dnsmasq
 dnsmasq -C /etc/dnsmasq.conf
 
-$GOBIN/ciao-launcher -logtostderr -v=3
+$GOBIN/ciao-launcher -logtostderr -ceph_id=$CEPH_ID -v=3

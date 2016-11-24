@@ -2,6 +2,7 @@
 
 IDENTITY_HOST="${IDENTITY_HOST:-localhost}"
 CONTROLLER_HOST="${CONTROLLER_HOST:-localhost}"
+CEPH_ID="${CEPH_ID:-admin}"
 
 sed -i.bak s/CONTROLLER_HOST/$CONTROLLER_HOST/g /root/ciaorc
 sed -i.bak s/IDENTITY_HOST/$IDENTITY_HOST/g /root/ciaorc
@@ -22,8 +23,15 @@ if [ ! -d "/etc/ssl" ] ; then
     ln -s /etc/ca-certs/ /etc/ssl/certs
     ln -s /etc/ca-certs/cacert.pem /usr/share/ca-certs/$hash
     cat  /etc/pki/ciao/controller_cert.pem  >> /etc/ca-certs/cacert.pem
-    cat  /etc/pki/ciao/ciao-image_cert.pem  >> /etc/ca-certs/cacert.pem
 fi
 
-# Starting the controller
-$GOBIN/ciao-controller -logtostderr -ceph_id=admin -v=3
+# Wait until keystone is ready
+source /root/ciaorc
+echo "Waiting keystone to start "
+until ciao-cli tenant list ; do
+    printf '.'
+    sleep 1
+done
+# Starging ciao-controller
+$GOBIN/ciao-controller -logtostderr -ceph_id=$CEPH_ID -v=3
+

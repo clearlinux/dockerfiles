@@ -74,6 +74,7 @@ Environment Variables
 ---------------------
 - ``IDENTITY_HOST`` Specifies the Keystone URL. Example: example.com
 - ``CONTROLLER_HOST`` Specifies the CIAO Controller URL. Example: example.com
+- ``CEPH_ID`` Specifies the CEPH storage ID (default=admin)
 
 Extra Build ARGs
 ----------------
