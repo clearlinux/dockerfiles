@@ -11,10 +11,9 @@ sed -i.bak s/IDENTITY_HOST/$IDENTITY_HOST/g /root/ciaorc
 go install github.com/01org/ciao/...
 cp -f $GOBIN/* /usr/bin
 
-mkdir -p /root/ciao-data
-cd /root/ciao-data
-cp -r /root/go/src/github.com/01org/ciao/ciao-controller/tables .
-cp -r /root/go/src/github.com/01org/ciao/ciao-controller/workloads .
+mkdir -p /var/lib/ciao/data/controller/
+cp -r /root/go/src/github.com/01org/ciao/ciao-controller/tables /var/lib/ciao/data/controller/
+cp -r /root/go/src/github.com/01org/ciao/ciao-controller/workloads /var/lib/ciao/data/controller/
 
 if [ ! -d "/etc/ssl" ] ; then
     hash=`c_hash /etc/ca-certs/cacert.pem | cut -d ' ' -f1`
