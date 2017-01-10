@@ -2,10 +2,16 @@
 
 IDENTITY_HOST="${IDENTITY_HOST:-localhost}"
 CONTROLLER_HOST="${CONTROLLER_HOST:-localhost}"
+CIAO_TENANT_NAME="${CIAO_TENANT_NAME:-admin}"
+CIAO_USERNAME="${CIAO_USERNAME:-admin}"
+CIAO_SECRET="${CIAO_USERNAME:-secret}"
 CEPH_ID="${CEPH_ID:-admin}"
 
 sed -i.bak s/CONTROLLER_HOST/$CONTROLLER_HOST/g /root/ciaorc
 sed -i.bak s/IDENTITY_HOST/$IDENTITY_HOST/g /root/ciaorc
+sed -i.bak s/\<TENANT\>/$CIAO_TENANT_NAME/g /root/ciaorc
+sed -i.bak s/\<USERNAME\>/$CIAO_USERNAME/g /root/ciaorc
+sed -i.bak s/\<USERNAME\>/$CIAO_PASSWORD/g /root/ciaorc
 
 # compile the code before running it
 go install github.com/01org/ciao/...
