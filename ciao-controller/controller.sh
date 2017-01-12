@@ -27,7 +27,7 @@ if [ ! -d "/etc/ssl" ] ; then
     mkdir -p /etc/ssl
     ln -s /etc/ca-certs/ /etc/ssl/certs
     ln -s /etc/ca-certs/cacert.pem /usr/share/ca-certs/$hash
-    cat  /etc/pki/ciao/controller_cert.pem  >> /etc/ca-certs/cacert.pem
+    cat  /etc/pki/ciao/api/controller_cert.pem  >> /etc/ca-certs/cacert.pem
 fi
 
 # Wait until keystone is ready
