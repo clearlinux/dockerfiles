@@ -14,14 +14,14 @@ docker build -t clearlinux/mariadb .
 Or just pull it from Dockerhub
 ---------------------------
 ```
-docker pull clearlinux/mariadb
+docker pull clearlinux/mariadb:stable
 ```
 
 Start MariaDB Container
 -----------------------
 ```
 YOUR_HOST=`hostname -f`
-docker run --name mariadb -p 3306:3306 -e MYSQL_ROOT_PASSWORD=secret -d clearlinux/mariadb
+docker run --name mariadb -p 3306:3306 -e MYSQL_ROOT_PASSWORD=secret -d clearlinux/mariadb:stable
 # Test it
 mysql -uroot -h $YOUR_HOST -psecret -e "show databases;"
 ```
