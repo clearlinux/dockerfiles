@@ -7,10 +7,10 @@ RUN swupd update $swupd_args
 RUN swupd bundle-add database-basic $swupd_args
 RUN rm -rf /var/lib/swupd/*
 
-RUN mkdir /etc/mariadb
+RUN mkdir -p /etc/mariadb
 COPY my.cnf /etc/mariadb
 
-RUN mkdir /var/lib/mysql
+RUN mkdir -p /var/lib/mysql
 VOLUME /var/lib/mysql
 
 COPY bootstrap.sh /usr/bin
