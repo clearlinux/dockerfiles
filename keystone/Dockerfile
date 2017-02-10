@@ -4,11 +4,13 @@ MAINTAINER obed.n.munoz@intel.com
 ARG swupd_args=""
 
 RUN swupd update $swupd_args
+RUN swupd update $swupd_args
 RUN swupd bundle-add openstack-identity openstack-python-clients  $swupd_args
 RUN rm -rf /var/lib/swupd/*
 
 # Keystone
-RUN mkdir /etc/keystone
+RUN mkdir -p /etc/keystone
+RUN mkdir -p /var/tmp
 COPY keystone.conf /etc/keystone
 
 RUN mkdir -p /etc/nginx/ssl
