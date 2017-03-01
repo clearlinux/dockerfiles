@@ -1,6 +1,6 @@
 configure:
   scheduler:
-      storage_uri: /etc/ciao/configuration.yaml
+      storage_uri: file:///etc/ciao/configuration.yaml
   controller:
       compute_port: 8774
       compute_ca: /etc/pki/ciao/api/controller_cert.pem
