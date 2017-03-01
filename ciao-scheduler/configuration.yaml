@@ -1,6 +1,5 @@
 configure:
   scheduler:
-      storage_type: file
       storage_uri: /etc/ciao/configuration.yaml
   controller:
       compute_port: 8774
