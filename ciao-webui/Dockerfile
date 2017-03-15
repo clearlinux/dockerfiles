@@ -1,7 +1,7 @@
 FROM clearlinux
 MAINTAINER marcos.simental.magana@intel.com
 
-ARG WEBUI_VERSION=1.4.13.20
+ARG WEBUI_VERSION=1.4.14.15
 
 ARG swupd_args
 
