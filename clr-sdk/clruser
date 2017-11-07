@@ -1,0 +1,2 @@
+clr ALL=NOPASSWD:SETENV: /usr/bin/mixer, /usr/bin/swupd
+
