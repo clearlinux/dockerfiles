@@ -15,6 +15,7 @@ Containers
 - ciao-webui
 - clr-sdk
 - machine-learning
+- mixer-ci
 - Keystone
 - MariaDB
 
