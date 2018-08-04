@@ -75,6 +75,6 @@ except FileExistsError:
 
 # Move to mixdir and start bash as new user
 os.chdir(mixdir)
-cmd = "sudo -H -u {} bash -i".format(user).split()
+cmd = "su {}".format(user).split()
 os.execvp(cmd[0], cmd)
 
