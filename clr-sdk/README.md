@@ -4,6 +4,21 @@
 
 This repo provides a Clear Linux* SDK container for running the Clear Linux devloper tools. This container will allow you to use the [mixer tool](https://clearlinux.org/features/mixer) on your Linux host.
 
+> ### :warning: **IMPORTANT NOTE:**
+> As of `mixer` version `5.0.0`, you **must** run mixer with the `--native` flag
+> inside the `clr-sdk` container. This is because `mixer` now attempts to
+> automatically run build commands within a docker container containing the
+> correct toolchain version for the mix you are building. This is not possible
+> if you are already running within the `clr-sdk` container. The `--native` flag
+> foregoes this container launch, allowing the build to proceed as normal.
+>
+> If you _need_ this containerized `mixer` behavior to build across formats, it
+> is possible to mount the host system's Docker socket when you launch the
+> container (i.e., passing `-v /var/run/docker.sock:/var/run/docker.sock` to
+> your `docker run`). This has the effect of the in-container docker actually
+> spawning _sibling_ containers on the host system, rather than _child_
+> containers within the `clr-sdk` container.
+
 # Build
 ## Building Locally 
 
@@ -49,7 +64,7 @@ docker pull clearlinux/clr-sdk
     the container has exited. The container path will be automatically
     generated within the container if it doesn't already exist, and will
     replace whatever may already be there, so _use caution_.
-  * If you plan to run `sudo mixer build-image` inside the container, you
+  * If you plan to run `sudo mixer build image` inside the container, you
     must additionally pass `--privileged -v /dev:/dev` to docker run. This is
     because `mixer build-image` needs to mount a loopback device for generating
     the image filesystem. The `-v /dev:/dev` bind mount is due to an [outstanding
@@ -60,6 +75,8 @@ docker pull clearlinux/clr-sdk
   * If you are behind a firewall, you may need to pass the `--network host`
     flag to docker run, and then set your `http_proxy` and `https_proxy`
     environment variables within the container to configure your proxy.
+  * Please see note above about mounting the host system's docker socket if
+    you cannot use the `--native` flag when running `mixer`.
   #### Container arguments
   * `-d`|`--mixdir` tells the startup script what directory you mounted using
     the `-v` option above. The owner UID and GID of this directory will be
@@ -75,5 +92,4 @@ docker pull clearlinux/clr-sdk
   
   At this point, you should be able to run the commands described in the
   [mixer guide](https://clearlinux.org/documentation/clear-linux/guides/maintenance/mixer.html).
-  
-  
+  **Please see the note above about the `--native` flag.**
