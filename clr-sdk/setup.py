@@ -57,7 +57,7 @@ try:
 	cmd = "groupadd -o -g {} {}".format(gid,user)
 	subprocess.run(cmd.split(),stdout=subprocess.PIPE,stderr=subprocess.STDOUT,check=True)
 	# Note: adding user to mock group for access to running mock
-	cmd = "useradd -Nmo -g {} -G mock -u {} {}".format(gid,uid,user)
+	cmd = "useradd -Nmo -g {} -G mock,wheelnopw -u {} {}".format(gid,uid,user)
 	subprocess.run(cmd.split(),stdout=subprocess.PIPE,stderr=subprocess.STDOUT,check=True)
 	os.chown("/home/{}".format(user),uid,gid)
 except subprocess.SubprocessError:
