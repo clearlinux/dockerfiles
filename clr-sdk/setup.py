@@ -60,6 +60,15 @@ try:
 	cmd = "useradd -Nmo -g {} -G mock,wheelnopw -u {} {}".format(gid,uid,user)
 	subprocess.run(cmd.split(),stdout=subprocess.PIPE,stderr=subprocess.STDOUT,check=True)
 	os.chown("/home/{}".format(user),uid,gid)
+except subprocess.CalledProcessError as e:
+	if e.returncode and e.returncode == 9:
+		# Both 'groupadd' and 'useradd' return error code 9 if the group/user
+		# already exists. This will happen if the container is restarted or
+		# this script is manually re-run.
+		pass
+	else:
+		sys.stderr.write("Error creating user.\n")
+		sys.exit(1)
 except subprocess.SubprocessError:
 	sys.stderr.write("Error creating user.\n")
 	sys.exit(1)
