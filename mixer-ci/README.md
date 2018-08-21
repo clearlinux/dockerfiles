@@ -1,6 +1,6 @@
 # Mixer CI Container
-[![](https://images.microbadger.com/badges/image/clearlinux/mixer-ci.svg)](http://microbadger.com/images/clearlinux/clr-sdk "Get your own image badge on microbadger.com")
-[![](https://images.microbadger.com/badges/version/clearlinux/mixer-ci.svg)](http://microbadger.com/images/clearlinux/clr-sdk "Get your own version badge on microbadger.com")
+[![](https://images.microbadger.com/badges/image/clearlinux/mixer-ci.svg)](https://microbadger.com/images/clearlinux/mixer-ci "Get your own image badge on microbadger.com")
+[![](https://images.microbadger.com/badges/version/clearlinux/mixer-ci.svg)](https://microbadger.com/images/clearlinux/mixer-ci "Get your own version badge on microbadger.com")
 
 This repo provides a Clear Linux* container for running the Mixer CI on Travis.
 This container has all of the packages and tools installed to build Mixer from
@@ -12,9 +12,17 @@ source and run its test suite.
 docker build -t clearlinux/mixer-ci .
 ```
 > #### Note:
-> If you are behind a firewall, you may need to pass the `--network host` and/or
-> `--build-arg http://<proxy>:<port>` flags to docker build to configure your
-> proxy.
+> If you are behind a firewall, you may need to pass proxy settings to the
+> build environment:
+>
+> `--build-arg https_proxy="$https_proxy"`
+>
+> `--build-arg http_proxy="$http_proxy"`
+>
+> `--build-arg no_proxy="$no_proxy"`
+>
+> flags to docker build; note these only impact the Build Environment and
+> will not become part of the image being built.
 
 ## Pulling from Dockerhub
 ```
