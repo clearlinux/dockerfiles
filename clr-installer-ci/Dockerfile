@@ -8,7 +8,7 @@ ENV GOPATH="/go" PATH="/go/bin:${PATH}"
 RUN clrtrust generate && \
     # Update and add bundles
     swupd update && \
-    swupd bundle-add sysadmin-basic storage-utils network-basic go-basic-dev git telemetrics && \
+    swupd bundle-add sysadmin-basic storage-utils network-basic go-basic-dev git telemetrics os-installer && \
     # Install the Go Linters
     go get -u gopkg.in/alecthomas/gometalinter.v2 && \
     gometalinter.v2 --install
