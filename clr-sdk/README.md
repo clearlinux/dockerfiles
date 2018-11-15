@@ -105,5 +105,5 @@ o  run the Docker container would be:
     to access the mounted mix directory.
   
   At this point, you should be able to run the commands described in the
-  [mixer guide](https://clearlinux.org/documentation/clear-linux/guides/maintenance/mixer.html).
+  [mixer guide](https://clearlinux.org/documentation/clear-linux/guides/maintenance/mixer).
   **Please see the note above about the `--native` flag.**
