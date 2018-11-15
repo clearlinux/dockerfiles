@@ -4,24 +4,20 @@ services:
   - docker
 
 env:
-  - HOST="localhost" DOCKER_TOKEN="8da7bc99-13da-46df-acc7-8929523d995f"
-
-before_script:
-  - export CONTAINER=clearlinux/keystone
-  - cd keystone
-  - docker build -f Dockerfile -t $CONTAINER .
+  - DOCKERFILE_DIR=ciao-common
+  - DOCKERFILE_DIR=ciao-controller
+  - DOCKERFILE_DIR=ciao-launcher
+  - DOCKERFILE_DIR=ciao-scheduler
+  - DOCKERFILE_DIR=ciao-deploy
+  - DOCKERFILE_DIR=ciao-webui
+  - DOCKERFILE_DIR=clr-sdk
+  - DOCKERFILE_DIR=machine-learning
+  - DOCKERFILE_DIR=machine-learning-ui
+  - DOCKERFILE_DIR=mixer-ci
+  - DOCKERFILE_DIR=keystone
+  - DOCKERFILE_DIR=mariadb
 
 script:
-  - openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout keystone_key.pem -out keystone_cert.pem -subj "/CN=$HOST"
-  - docker run -d -it --name keystone -p 5000:5000 -p 35357:35357 -e IDENTITY_HOST="$HOST" -e KEYSTONE_ADMIN_PASSWORD="secret" -v `pwd`/keystone_cert.pem:/etc/nginx/ssl/keystone_cert.pem -v `pwd`/keystone_key.pem:/etc/nginx/ssl/keystone_key.pem clearlinux/keystone
-  - travis_retry docker exec -it  keystone /usr/bin/verify-keystone.sh
+  - cd $DOCKERFILE_DIR
+  - docker build -t clearlinux/$DOCKERFILE_DIR .
 
-deploy:
-  provider: releases
-  api_key: $GH_TOKEN
-  skip_cleanup: true
-  on:
-    tags: true
-
-after_deploy:
-  -  "git diff --name-only HEAD^ --staged | grep keystone && curl -H \"Content-Type: application/json\" --data '{\"build\": true}' -X POST https://registry.hub.docker.com/u/clearlinux/keystone/trigger/$DOCKER_TOKEN/"
