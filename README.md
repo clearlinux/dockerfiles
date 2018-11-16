@@ -7,12 +7,6 @@ https://hub.docker.com/u/clearlinux/
 
 Containers
 ----------
-- ciao-common
-- ciao-controller
-- ciao-launcher
-- ciao-scheduler
-- ciao-deploy
-- ciao-webui
 - clr-sdk
 - machine-learning
 - mixer-ci

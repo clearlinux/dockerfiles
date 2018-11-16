@@ -1,4 +1,0 @@
-export CIAO_CONTROLLER=192.168.0.1
-export CIAO_IDENTITY=https://192.168.0.1:35357
-export CIAO_USERNAME=admin
-export CIAO_PASSWORD=secret
