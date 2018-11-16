@@ -4,17 +4,10 @@ services:
   - docker
 
 env:
-  - DOCKERFILE_DIR=ciao-common
-  - DOCKERFILE_DIR=ciao-controller
-  - DOCKERFILE_DIR=ciao-launcher
-  - DOCKERFILE_DIR=ciao-scheduler
-  - DOCKERFILE_DIR=ciao-deploy
-  - DOCKERFILE_DIR=ciao-webui
   - DOCKERFILE_DIR=clr-sdk
   - DOCKERFILE_DIR=machine-learning
   - DOCKERFILE_DIR=machine-learning-ui
   - DOCKERFILE_DIR=mixer-ci
-  - DOCKERFILE_DIR=keystone
   - DOCKERFILE_DIR=mariadb
 
 script:
