@@ -1,0 +1,5 @@
+apiVersion: 0.0.1
+kind: ksonnet.io/parts
+name: dlaas-bench
+description: Prototypes for running DLaaS benchmarking on a multi node cluster
+author: Daniela Plascencia, Ganesh Mahalingam
