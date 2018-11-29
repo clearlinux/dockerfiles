@@ -12,4 +12,5 @@ Containers
 - mixer-ci
 - Keystone
 - MariaDB
-
+- stacks-dlaas-oss
+- stacks-dlaas-mkl

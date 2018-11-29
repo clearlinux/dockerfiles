@@ -9,6 +9,8 @@ env:
   - DOCKERFILE_DIR=machine-learning-ui
   - DOCKERFILE_DIR=mixer-ci
   - DOCKERFILE_DIR=mariadb
+  - DOCKERFILE_DIR=stacks/dlaas/oss
+  - DOCKERFILE_DIR=stacks/dlaas/mkl
 
 script:
   - cd $DOCKERFILE_DIR
