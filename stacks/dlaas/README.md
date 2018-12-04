@@ -3,16 +3,16 @@
 [![](https://images.microbadger.com/badges/version/clearlinux/dlaas.svg)](http://microbadger.com/images/clearlinux/mariadb "Get your own version badge on microbadger.com")
 
 This provides a Clear Linux Deep Learning Stack. To offer more flexibility,
-there are two versions of the Deep Learning Stack:  a "fully open source"
-version that includes only open source components, and a second, "mostly open
-source" version that includes the TensorFlow* framework optimized using Intel®
+there are two versions of the Deep Learning Stack:  a
+version that supports the TensorFlow* framework, and a second version that includes the TensorFlow* framework optimized using Intel®
 Math Kernel Library for Deep Neural Networks (Intel® MKL-DNN) primitives.
+
 
 # Building Locally
 
 ```
-docker build --no-cache -f oss/Dockerfile -t clearlinux/dlaas .     # fully open source
-docker build --no-cache -f mkl/Dockerfile -t clearlinux/dlaas-mkl . # mostly open source
+docker build --no-cache -f oss/Dockerfile -t clearlinux/dlaas .     # TensorFlow
+docker build --no-cache -f mkl/Dockerfile -t clearlinux/dlaas-mkl . # TensorFlow with MKL-DNN
 ```
 
 ## Optinal Build ARGs
