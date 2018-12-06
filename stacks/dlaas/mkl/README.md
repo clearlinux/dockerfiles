@@ -1,7 +1,7 @@
-# Clear Linux Deep Learning Stack
+# Intel® Deep Learning Stack
 [![](https://images.microbadger.com/badges/image/clearlinux/dlaas-mkl.svg)](http://microbadger.com/images/clearlinux/dlaas-mkl "Get your own image badge on microbadger.com")
 
-This variant is built with Intel MKL DNN library
+This variant is built with Intel® MKL-DNN library
 
 # Building Locally
 

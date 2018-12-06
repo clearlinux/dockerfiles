@@ -1,4 +1,4 @@
-# Clear Linux Deep Learning Stack
+# Intel® Deep Learning Stack
 [![](https://images.microbadger.com/badges/image/clearlinux/dlaas.svg)](http://microbadger.com/images/clearlinux/dlaas "Get your own image badge on microbadger.com")
 
 This variant is built with Eigen
