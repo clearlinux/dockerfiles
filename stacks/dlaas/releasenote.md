@@ -1,16 +1,16 @@
 
-# Intel® Deep Learning As A Service Stack
+# Deep Learning Reference Stack
 
 
-We are pleased to announce the initial release of the Intel Deep Learning As A Service Stack.
+We are pleased to announce the initial release of the Deep Learning Reference Stack.
 
-The Intel Deep Learning As A Service Stack is a reference stack that is optimized for Intel Architecture (IA) from the hardware to the end-use applications and solutions.  The stack has been tuned, tested and validated for Intel platforms to power a growing range of AI workloads. This reference stack makes it easier for developers and Cloud Service Providers to build deep learning models by reducing the complexity that comes with cutting-edge work.
-
-
-# The Intel Deep Learning As A Service Stack Release
+The Deep Learning Reference Stack is optimized for Intel® Architecture (IA) from the hardware to the end-use applications and solutions.  The stack has been tuned, tested and validated for Intel platforms to power a growing range of AI workloads. This reference stack makes it easier for developers and Cloud Service Providers to build deep learning models by reducing the complexity that comes with cutting-edge work.
 
 
-To offer more flexibility, we are releasing two versions of the Intel Deep Learning As A Service Stack:  a version that includes TensorFlow* optimized for Intel® Architecture, the "Eigen" version, and a second version that includes the TensorFlow* framework optimized using Intel® Math Kernel Library for Deep Neural Networks, the "Intel® MKL-DNN" version.
+# The Deep Learning Reference Stack Release
+
+
+To offer more flexibility, we are releasing two versions of the Deep Learning Reference Stack:  a version that includes TensorFlow* optimized for Intel® Architecture, the "Eigen" version, and a second version that includes the TensorFlow* framework optimized using Intel® Math Kernel Library for Deep Neural Networks, the "Intel® MKL-DNN" version.
 
 > **Note:**
      Clear Linux will be automatically updated to the latest release in the container.  The minimum validated version of Clear Linux for this stack is 26240
@@ -18,7 +18,7 @@ To offer more flexibility, we are releasing two versions of the Intel Deep Learn
 > **Note:**
 > For multi-node support, we include a registry with a set of jsonnet files to show integration with Kubeflow for deployment.
 
-## The Intel Deep Learning As A Service Stack with Eigen
+## The Deep Learning Reference Stack with Eigen
 
 
 The release includes:
@@ -26,7 +26,7 @@ The release includes:
   * TensorFlow 1.12 compiled with AVX2 and AVX512 optimizations
   * Runtimes (python)
 
-## The Intel Deep Learning As A Service Stack with Intel® MKL-DNN
+## The Deep Learning Reference Stack with Intel® MKL-DNN
 
 
 The release includes:
@@ -35,9 +35,9 @@ The release includes:
   * TensorFlow 1.12 optimized using Intel® Math Kernel Library for Deep Neural Networks (Intel® MKL-DNN) primitives.
 
 
-## How to get the Intel Deep Learning As A Service Stack
+## How to get the Deep Learning Reference Stack
 
-The official Intel Deep Learning As A Service Stack docker images are hosted at: https://hub.docker.com/u/clearlinux/.
+The official Deep Learning Reference Stack Docker images are hosted at: https://hub.docker.com/u/clearlinux/.
 
  * Pull from the [Eigen version](https://hub.docker.com/r/clearlinux/stacks-dlaas-oss/)
  * Pull from the [Intel MKL-DNN version](https://hub.docker.com/r/clearlinux/stacks-dlaas-mkl/)
@@ -48,14 +48,14 @@ The official Intel Deep Learning As A Service Stack docker images are hosted at:
 ## Licensing
 
 
-The Intel Deep Learning As A Service Stack is guided by the same [Terms of Use](https://download.clearlinux.org/TermsOfUse.html) declared by the Clear Linux project. The Docker images are hosted on https://hub.docker.com and as with all Docker images, these likely also contain other software which may be under other licenses (such as Bash, etc. from the base distribution, along with any direct or indirect dependencies of the primary software being contained).
+The Deep Learning Reference Stack is guided by the same [Terms of Use](https://download.clearlinux.org/TermsOfUse.html) declared by the Clear Linux project. The Docker images are hosted on https://hub.docker.com and as with all Docker images, these likely also contain other software which may be under other licenses (such as Bash, etc. from the base distribution, along with any direct or indirect dependencies of the primary software being contained).
 
 
 
-# Working with the Intel Deep Learning As A Service Stack
+# Working with the Deep Learning Reference Stack
 
 
-The Intel Deep Learning As A Service Stack includes TensorFlow and Kubeflow support.
+The Deep Learning Reference Stack includes TensorFlow and Kubeflow support.
 These software components were selected because they are most popular/widely used by developers and CSPs. Clear Linux provides optimizations across the entire OS stack for the ultimate end user performance and is customizable to meet your unique needs. TensorFlow was selected as it is the leading deep learning and machine learning framework. Intel® Math Kernel Library for Deep Neural Networks (Intel® MKL-DNN) is an open source performance library for Deep Learning (DL) applications intended for acceleration of DL frameworks on Intel® architecture. Intel® MKL-DNN includes highly vectorized and threaded building blocks to implement convolutional neural networks (CNN) with C and C++ interfaces.  Kubeflow  is a project that provides a straightforward way to deploy simple, scalable and portable Machine Learning workflows on Kubernetes. This combination of an operating system, the deep learning framework and libraries, results in a performant deep learning software stack.
 
 Please refer to the [Deep Learning tutorial](https://clearlinux.org/documentation/clear-linux/tutorials/dlaas.rst) for detailed instructions for running the TensorFlow and Kubeflow Benchmarks on the docker images.
@@ -133,7 +133,7 @@ Example: For Intel® Xeon® Gold 6140 CPU @ 2.30GHz based systems with 2 Sockets
 For further notes on performance tuning use Tensorflow’s [official performance guide](https://www.tensorflow.org/guide/performance/overview)
 
 
-# Contributing to the Intel Deep Learning As A Service Stack
+# Contributing to the Deep Learning Reference Stack
 
 We encourage your contributions to this project, through the established Clear Linux community tools.  Our team uses typical open source collaboration tools that are described on the Clear Linux [community page](https://clearlinux.org/community).
 
