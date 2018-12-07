@@ -1,4 +1,4 @@
-# Intel® Deep Learning As A Service Stack
+# Deep Learning Reference Stack
 [![](https://images.microbadger.com/badges/image/clearlinux/dlaas-mkl.svg)](http://microbadger.com/images/clearlinux/dlaas-mkl "Get your own image badge on microbadger.com")
 
 This variant is built with Intel® MKL-DNN library
@@ -9,7 +9,7 @@ This variant is built with Intel® MKL-DNN library
 docker build --no-cache -t clearlinux/dlaas-mkl .     # Optimized Intel Math Kernel Library (MKL) for Intel Architecture
 ```
 
-## Optinal Build ARGs
+## Optional Build ARGs
 
 * `swupd_args` specifies
   [swupd update](https://clearlinux.org/documentation/clear-linux/guides/maintenance/swupd-guide#perform-a-manual-update)
