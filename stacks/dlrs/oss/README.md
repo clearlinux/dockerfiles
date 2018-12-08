@@ -1,12 +1,12 @@
 # Deep Learning Reference Stack
-[![](https://images.microbadger.com/badges/image/clearlinux/dlaas.svg)](http://microbadger.com/images/clearlinux/dlaas "Get your own image badge on microbadger.com")
+[![](https://images.microbadger.com/badges/image/clearlinux/stacks-dlrs-oss.svg)](http://microbadger.com/images/clearlinux/stacks-dlrs-oss "Get your own image badge on microbadger.com")
 
 This variant is built with Eigen
 
 # Building Locally
 
 ```
-docker build --no-cache -t clearlinux/dlaas .     # Optimized for Intel Architecture
+docker build --no-cache -t clearlinux/stacks-dlrs-oss .     # Optimized for Intel Architecture
 ```
 
 ## Optional Build ARGs
@@ -19,7 +19,7 @@ docker build --no-cache -t clearlinux/dlaas .     # Optimized for Intel Architec
 ---------------------------
 
 ```
-docker pull clearlinux/dlaas
+docker pull clearlinux/stacks-dlrs-oss
 ```
 
 Default build args in Docker are on: https://docs.docker.com/engine/reference/builder/#/arg

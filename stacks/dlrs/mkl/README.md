@@ -1,12 +1,12 @@
 # Deep Learning Reference Stack
-[![](https://images.microbadger.com/badges/image/clearlinux/dlaas-mkl.svg)](http://microbadger.com/images/clearlinux/dlaas-mkl "Get your own image badge on microbadger.com")
+[![](https://images.microbadger.com/badges/image/clearlinux/stacks-dlrs-mkl.svg)](http://microbadger.com/images/clearlinux/stacks-dlrs-mkl "Get your own image badge on microbadger.com")
 
 This variant is built with Intel® MKL-DNN library
 
 # Building Locally
 
 ```
-docker build --no-cache -t clearlinux/dlaas-mkl .     # Optimized Intel Math Kernel Library (MKL) for Intel Architecture
+docker build --no-cache -t clearlinux/stacks-dlrs-mkl .     # Optimized Intel Math Kernel Library (MKL) for Intel Architecture
 ```
 
 ## Optional Build ARGs
@@ -19,7 +19,7 @@ docker build --no-cache -t clearlinux/dlaas-mkl .     # Optimized Intel Math Ker
 ---------------------------
 
 ```
-docker pull clearlinux/dlaas-mkl
+docker pull clearlinux/stacks-dlrs-mkl
 ```
 
 Default build args in Docker are on: https://docs.docker.com/engine/reference/builder/#/arg
