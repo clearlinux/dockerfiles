@@ -4,8 +4,7 @@
 
 We are pleased to announce the initial release of the Deep Learning Reference Stack.
 
-The Deep Learning Reference Stack is optimized for Intel® Architecture (IA) from the hardware to the end-use applications and solutions.  The stack has been tuned, tested and validated for Intel platforms to power a growing range of AI workloads. This reference stack makes it easier for developers and Cloud Service Providers to build deep learning models by reducing the complexity that comes with cutting-edge work.
-
+The Deep Learning Reference Stack, an integrated, highly-performant open source stack optimized for Intel® Xeon® Scalable platforms. This open source community release is part of our effort to ensure AI developers have easy access to all of the features and functionality of the Intel platforms.  The Deep Learning Reference Stack is highly-tuned and built for cloud native environments. With this release, we are enabling developers to quickly prototype by reducing the complexity associated with integrating multiple software components, while still giving users the flexibility to customize their solutions.
 
 # The Deep Learning Reference Stack Release
 
