@@ -1,6 +1,6 @@
 apiVersion: 0.1.0
 kind: ksonnet.io/registry
 libraries:
-  dlaas-bench:
-    path: dlaas-bench
+  dlrs-bench:
+    path: dlrs-bench
     version: master

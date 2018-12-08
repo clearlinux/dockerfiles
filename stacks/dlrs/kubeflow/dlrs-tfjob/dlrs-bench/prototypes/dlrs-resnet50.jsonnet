@@ -1,6 +1,6 @@
 // @apiVersion 0.1
-// @name io.intel.pkg.dlaas-alexnet
-// @description dlaas multi-node benchmark
+// @name io.intel.pkg.dlrs-resnet50
+// @description dlrs multi-node benchmark
 // @shortDescription A multi-node DLaaS benchmark
 // @param name string Name for the job.
 
@@ -8,7 +8,7 @@ local k = import "k.libsonnet";
 
 local name = params.name;
 local namespace = env.namespace;
-local image = "hub.docker.com/clearlinux/stacks-dlaas-kubeflow:latest";
+local image = "hub.docker.com/clearlinux/stacks-dlrs-kubeflow:latest";
 local replicas = 3;
 
 local tfjob = {
@@ -30,7 +30,7 @@ local tfjob = {
                   "python",
                   "tf_cnn_benchmarks.py",
                   "--batch_size=32",
-                  "--model=alexnet",
+                  "--model=resnet50",
                   "--variable_update=parameter_server",
                   "--local_parameter_device=cpu",
                   "--init_learning_rate=0.0001",
@@ -56,7 +56,7 @@ local tfjob = {
                   "python",
                   "tf_cnn_benchmarks.py",
                   "--batch_size=32",
-                  "--model=alexnet",
+                  "--model=resnet50",
                   "--variable_update=parameter_server",
                   "--local_parameter_device=cpu",
                   "--init_learning_rate=0.0001",
