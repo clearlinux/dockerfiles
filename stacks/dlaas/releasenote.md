@@ -4,10 +4,11 @@
 
 We are pleased to announce the initial release of the Deep Learning Reference Stack.
 
+
 The Deep Learning Reference Stack, an integrated, highly-performant open source stack optimized for Intel® Xeon® Scalable platforms. This open source community release is part of our effort to ensure AI developers have easy access to all of the features and functionality of the Intel platforms.  The Deep Learning Reference Stack is highly-tuned and built for cloud native environments. With this release, we are enabling developers to quickly prototype by reducing the complexity associated with integrating multiple software components, while still giving users the flexibility to customize their solutions.
 
-# The Deep Learning Reference Stack Release
 
+# The Deep Learning Reference Stack Release
 
 To offer more flexibility, we are releasing two versions of the Deep Learning Reference Stack:  a version that includes TensorFlow* optimized for Intel® Architecture, the "Eigen" version, and a second version that includes the TensorFlow* framework optimized using Intel® Math Kernel Library for Deep Neural Networks, the "Intel® MKL-DNN" version.
 

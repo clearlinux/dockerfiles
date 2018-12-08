@@ -1,4 +1,6 @@
 # Deep Learning Reference Stack
+
+>>>>>>> 85383eb2e662dc34c0476f7641a75ca75fd7e716
 [![](https://images.microbadger.com/badges/image/clearlinux/dlaas.svg)](http://microbadger.com/images/clearlinux/dlaas "Get your own image badge on microbadger.com")
 
 This variant is built with Eigen
