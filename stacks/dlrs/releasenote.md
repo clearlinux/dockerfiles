@@ -38,8 +38,8 @@ The release includes:
 
 The official Deep Learning Reference Stack Docker images are hosted at: https://hub.docker.com/u/clearlinux/.
 
- * Pull from the [Eigen version](https://hub.docker.com/r/clearlinux/stacks-dlaas-oss/)
- * Pull from the [Intel MKL-DNN version](https://hub.docker.com/r/clearlinux/stacks-dlaas-mkl/)
+ * Pull from the [Eigen version](https://hub.docker.com/r/clearlinux/stacks-dlrs-oss/)
+ * Pull from the [Intel MKL-DNN version](https://hub.docker.com/r/clearlinux/stacks-dlrs-mkl/)
 
 > **Note:**
    The OSS version of the image will use the latest version of Clear Linux.
@@ -57,7 +57,7 @@ The Deep Learning Reference Stack is guided by the same [Terms of Use](https://d
 The Deep Learning Reference Stack includes TensorFlow and Kubeflow support.
 These software components were selected because they are most popular/widely used by developers and CSPs. Clear Linux provides optimizations across the entire OS stack for the ultimate end user performance and is customizable to meet your unique needs. TensorFlow was selected as it is the leading deep learning and machine learning framework. Intel® Math Kernel Library for Deep Neural Networks (Intel® MKL-DNN) is an open source performance library for Deep Learning (DL) applications intended for acceleration of DL frameworks on Intel® architecture. Intel® MKL-DNN includes highly vectorized and threaded building blocks to implement convolutional neural networks (CNN) with C and C++ interfaces.  Kubeflow  is a project that provides a straightforward way to deploy simple, scalable and portable Machine Learning workflows on Kubernetes. This combination of an operating system, the deep learning framework and libraries, results in a performant deep learning software stack.
 
-Please refer to the [Deep Learning tutorial](https://clearlinux.org/documentation/clear-linux/tutorials/dlaas.rst) for detailed instructions for running the TensorFlow and Kubeflow Benchmarks on the docker images.
+Please refer to the [Deep Learning tutorial](https://clearlinux.org/documentation/clear-linux/tutorials/dlrs.rst) for detailed instructions for running the TensorFlow and Kubeflow Benchmarks on the docker images.
 
 ## Performance tuning configurations
 
@@ -85,7 +85,7 @@ With Kubernetes + Tensorflow, a simple configuration would be: 1 master + 3 slav
 | data_format | NHWC for Eigen; NCHW for MKL as MKL is optimized for this format |
 
 
-Example: For Intel® Xeon® Gold 6140 CPU @ 2.30GHz based systems with 2 Sockets and 18 Cores/Socket, 2-node distributed MKL dstraining with 1 worker per node and 1 Parameter Server (PS) can be specified and launched with this [TFJob](https://github.com/clearlinux/dockerfiles/blob/master/stacks/dlaas/kubeflow/dlaas-tfjob/dlaas-bench/prototypes/dlaas-resnet50.jsonnet)
+Example: For Intel® Xeon® Gold 6140 CPU @ 2.30GHz based systems with 2 Sockets and 18 Cores/Socket, 2-node distributed MKL dstraining with 1 worker per node and 1 Parameter Server (PS) can be specified and launched with this [TFJob](https://github.com/clearlinux/dockerfiles/blob/master/stacks/dlrs/kubeflow/dlrs-tfjob/dlrs-bench/prototypes/dlrs-resnet50.jsonnet)
 
 ```
  PS:
