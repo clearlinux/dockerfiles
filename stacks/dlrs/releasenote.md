@@ -33,6 +33,9 @@ The release includes:
   * Runtimes (python)
   * TensorFlow 1.12 optimized using Intel® Math Kernel Library for Deep Neural Networks (Intel® MKL-DNN) primitives.
 
+> **Note:**
+   When using the Deep Learning Reference Stack with Intel(r ) MKL-DNN version, you may see this warning message: "tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 AVX512F FMA". This is because this version of the Deep Learning Reference Stack is using Intel(r ) MKL-DNN for performance optimization rather than Intel(r ) Advanced Vector Extensions 512, and is expected for this version of the Deep Learning Reference Stack.
+
 
 ## How to get the Deep Learning Reference Stack
 
