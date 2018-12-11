@@ -1,25 +1,24 @@
-# Deep Learning Reference Stack
+## Deep Learning Reference Stack with Optimized Eigen
+
 [![](https://images.microbadger.com/badges/image/clearlinux/stacks-dlrs-oss.svg)](http://microbadger.com/images/clearlinux/stacks-dlrs-oss "Get your own image badge on microbadger.com")
 
-This variant is built with Eigen
+The Deep Learning Reference Stack, an integrated, highly-performant open source
+stack optimized for Intel® Xeon® Scalable platforms. This open source community
+release is part of our effort to ensure AI developers have easy access to all
+of the features and functionality of the Intel platforms.  The Deep Learning
+Reference Stack is highly-tuned and built for cloud native environments. With
+this release, we are enabling developers to quickly prototype by reducing the
+complexity associated with integrating multiple software components, while
+still giving users the flexibility to customize their solutions.
 
-# Building Locally
+### Building Locally
 
-```
-docker build --no-cache -t clearlinux/stacks-dlrs-oss .     # Optimized for Intel Architecture
-```
-
-## Optional Build ARGs
-
-* `swupd_args` specifies
-  [swupd update](https://clearlinux.org/documentation/clear-linux/guides/maintenance/swupd-guide#perform-a-manual-update)
-  flags passed to the update during build.
-
-# Pulling from Dockerhub
----------------------------
+Default build args in Docker are on: https://docs.docker.com/engine/reference/builder/#arg
 
 ```
-docker pull clearlinux/stacks-dlrs-oss
+docker build --no-cache -t clearlinux/stacks-dlrs-oss .
 ```
 
-Default build args in Docker are on: https://docs.docker.com/engine/reference/builder/#/arg
+### Optional Build ARGs
+
+* `swupd_args` specifies [swupd update](https://clearlinux.org/documentation/clear-linux/guides/maintenance/swupd-guide#perform-a-manual-update) flags passed to the update during build.
