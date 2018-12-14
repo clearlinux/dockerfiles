@@ -1,5 +1,5 @@
 FROM clearlinux
-MAINTAINER leonardo.sandoval.gonzalez@intel.com
+MAINTAINER otc-swstacks@intel.com
 
 ARG swupd_args
 
