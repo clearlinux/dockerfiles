@@ -1,5 +1,5 @@
 FROM clearlinux
-MAINTAINER otc-swstacks@intel.com
+LABEL maintainer="otc-swstacks@intel.com"
 
 ARG swupd_args
 
