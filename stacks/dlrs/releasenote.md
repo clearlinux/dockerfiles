@@ -60,7 +60,7 @@ The Deep Learning Reference Stack is guided by the same [Terms of Use](https://d
 The Deep Learning Reference Stack includes TensorFlow and Kubeflow support.
 These software components were selected because they are most popular/widely used by developers and CSPs. Clear Linux provides optimizations across the entire OS stack for the ultimate end user performance and is customizable to meet your unique needs. TensorFlow was selected as it is the leading deep learning and machine learning framework. Intel® Math Kernel Library for Deep Neural Networks (Intel® MKL-DNN) is an open source performance library for Deep Learning (DL) applications intended for acceleration of DL frameworks on Intel® architecture. Intel® MKL-DNN includes highly vectorized and threaded building blocks to implement convolutional neural networks (CNN) with C and C++ interfaces.  Kubeflow  is a project that provides a straightforward way to deploy simple, scalable and portable Machine Learning workflows on Kubernetes. This combination of an operating system, the deep learning framework and libraries, results in a performant deep learning software stack.
 
-Please refer to the [Deep Learning tutorial](https://clearlinux.org/documentation/clear-linux/tutorials/dlrs.rst) for detailed instructions for running the TensorFlow and Kubeflow Benchmarks on the docker images.
+Please refer to the [Deep Learning tutorial](https://clearlinux.org/documentation/clear-linux/tutorials/dlrs) for detailed instructions for running the TensorFlow and Kubeflow Benchmarks on the docker images.
 
 ## Performance tuning configurations
 
