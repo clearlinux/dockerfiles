@@ -3,16 +3,17 @@
 // @description dlrs multi-node benchmark
 // @shortDescription A multi-node DLaaS benchmark
 // @param name string Name for the job.
+// @param image string DLRS Image name.
 
 local k = import "k.libsonnet";
 
 local name = params.name;
 local namespace = env.namespace;
-local image = "hub.docker.com/clearlinux/stacks-dlrs-kubeflow:latest";
+local image = params.image;
 local replicas = 3;
 
 local tfjob = {
-  apiVersion: "kubeflow.org/v1alpha2",
+  apiVersion: "kubeflow.org/v1beta1",
   kind: "TFJob",
   metadata: {
     name: name,
