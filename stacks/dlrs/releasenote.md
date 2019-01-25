@@ -12,7 +12,7 @@ The Deep Learning Reference Stack, an integrated, highly-performant open source 
 To offer more flexibility, we are releasing two versions of the Deep Learning Reference Stack:  a version that includes TensorFlow* optimized for Intel® Architecture, the "Eigen" version, and a second version that includes the TensorFlow* framework optimized using Intel® Math Kernel Library for Deep Neural Networks, the "Intel® MKL-DNN" version.
 
 > **Note:**
-     Clear Linux will be automatically updated to release version 27180 in the container.  The minimum validated version of Clear Linux for this stack is 26240
+     Clear Linux will be automatically updated to release version 27340 in the container.  The minimum validated version of Clear Linux for this stack is 26240
 
 > **Note:**
 > For multi-node support, we include a registry with a set of jsonnet files to show integration with Kubeflow for deployment.
@@ -45,7 +45,7 @@ The official Deep Learning Reference Stack Docker images are hosted at: https://
  * Pull from the [Intel MKL-DNN version](https://hub.docker.com/r/clearlinux/stacks-dlrs-mkl/)
 
 > **Note:**
-   The OSS version of the image will use version 27180 of Clear Linux.
+   The OSS version of the image will use version 27340 of Clear Linux.
 
 ## Licensing
 
