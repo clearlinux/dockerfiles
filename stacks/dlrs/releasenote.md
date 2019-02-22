@@ -1,15 +1,12 @@
 
 # Deep Learning Reference Stack
 
-
-We are pleased to announce the initial release of the Deep Learning Reference Stack.
-
-The Deep Learning Reference Stack, an integrated, highly-performant open source stack optimized for Intel® Xeon® Scalable platforms. This open source community release is part of our effort to ensure AI developers have easy access to all of the features and functionality of the Intel platforms.  The Deep Learning Reference Stack is highly-tuned and built for cloud native environments. With this release, we are enabling developers to quickly prototype by reducing the complexity associated with integrating multiple software components, while still giving users the flexibility to customize their solutions.
+The Deep Learning Reference Stack, an integrated, highly-performant open source stack optimized for Intel® Xeon® Scalable platforms. This open source community release is part of our effort to ensure AI developers have easy access to all of the features and functionality of the Intel platforms.  The Deep Learning Reference Stack is highly-tuned and built for cloud native environments. With this stack, we are enabling developers to quickly prototype by reducing the complexity associated with integrating multiple software components, while still giving users the flexibility to customize their solutions. This version includes additional components to provide greater flexibility and a more comprehensive take on the deep learning environment.
 
 # The Deep Learning Reference Stack Release
 
+To offer more flexibility, we are releasing multiple versions of the Deep Learning Reference Stack. All versions are built on top of the Clear Linux OS, which is optimized for IA.
 
-To offer more flexibility, we are releasing two versions of the Deep Learning Reference Stack:  a version that includes TensorFlow* optimized for Intel® Architecture, the "Eigen" version, and a second version that includes the TensorFlow* framework optimized using Intel® Math Kernel Library for Deep Neural Networks, the "Intel® MKL-DNN" version.
 
 > **Note:**
      Clear Linux will be automatically updated to release version 27340 in the container.  The minimum validated version of Clear Linux for this stack is 26240
@@ -19,7 +16,6 @@ To offer more flexibility, we are releasing two versions of the Deep Learning Re
 
 ## The Deep Learning Reference Stack with Eigen
 
-
 The release includes:
   * Clear Linux* OS
   * TensorFlow 1.12 compiled with AVX2 and AVX512 optimizations
@@ -27,14 +23,38 @@ The release includes:
 
 ## The Deep Learning Reference Stack with Intel® MKL-DNN
 
-
 The release includes:
   * Clear Linux* OS
   * Runtimes (python)
   * TensorFlow 1.12 optimized using Intel® Math Kernel Library for Deep Neural Networks (Intel® MKL-DNN) primitives.
 
 > **Note:**
-   When using the Deep Learning Reference Stack with Intel(r ) MKL-DNN version, you may see this warning message: "tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 AVX512F FMA". This is because this version of the Deep Learning Reference Stack is using Intel(r ) MKL-DNN for performance optimization rather than Intel(r ) Advanced Vector Extensions 512, and is expected for this version of the Deep Learning Reference Stack.
+   When using the Deep Learning Reference Stack with Intel®  MKL-DNN version, you may see this warning message: "tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 AVX512F FMA". This is because this version of the Deep Learning Reference Stack is using Intel®  MKL-DNN for performance optimization rather than Intel®  Advanced Vector Extensions 512, and is expected for this version of the Deep Learning Reference Stack.
+
+## The Deep Learning Reference Stack with PyTorch
+
+The release includes:
+ * Clear Linux* OS
+ * Runtimes (python)
+ * PyTorch
+ * Jupyter Notebooks
+
+
+## The Deep Learning Reference Stack with PyTorch and Intel Intel® MKL
+
+The release includes:
+ * Clear Linux* OS
+ * Runtimes (python)
+ * PyTorch optimized using the Intel® Math Kernel Library
+ * Jupyter Notebooks
+
+## The Deep Learning Reference Stack with Pytorch and Intel® MKL-DNN
+
+The release includes:
+ * Clear Linux* OS
+ * PyTorch optimized using Intel® Math Kernel Library for Deep Neural Networks (Intel® MKL-DNN) primitives.
+ * Runtimes (python)
+ * Jupyter Notebooks
 
 
 ## How to get the Deep Learning Reference Stack
@@ -43,6 +63,10 @@ The official Deep Learning Reference Stack Docker images are hosted at: https://
 
  * Pull from the [Eigen version](https://hub.docker.com/r/clearlinux/stacks-dlrs-oss/)
  * Pull from the [Intel MKL-DNN version](https://hub.docker.com/r/clearlinux/stacks-dlrs-mkl/)
+ * Pull from the [PyTorch version](https://hub.docker.com/r/clearlinux/stacks...)
+ * Pull from the [PyTorch with Intel MKL version](https://hub.docker.com/r/clearlinux/stacks...)
+ * Pull from the [PyTorch with Intel MKL-DNN version](https://hub.docker.com/r/clearlinux/stacks...)
+
 
 > **Note:**
    The OSS version of the image will use version 27340 of Clear Linux.
