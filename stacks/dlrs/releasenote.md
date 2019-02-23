@@ -48,14 +48,6 @@ The release includes:
  * PyTorch optimized using the Intel® Math Kernel Library
  * Jupyter Notebooks
 
-## The Deep Learning Reference Stack with Pytorch and Intel® MKL-DNN
-
-The release includes:
- * Clear Linux* OS
- * PyTorch optimized using Intel® Math Kernel Library for Deep Neural Networks (Intel® MKL-DNN) primitives.
- * Runtimes (python)
- * Jupyter Notebooks
-
 
 ## How to get the Deep Learning Reference Stack
 
