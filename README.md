@@ -14,3 +14,5 @@ Containers
 - MariaDB
 - stacks-dlrs-oss
 - stacks-dlrs-mkl
+- stacks-pytorch-oss
+- stacks-pytorch-mkl
