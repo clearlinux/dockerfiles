@@ -36,7 +36,7 @@ The release includes:
 The release includes:
  * Clear Linux* OS
  * Runtimes (python)
- * PyTorch
+ * PyTorch with OpenBlAS
  * Jupyter Notebooks
 
 
@@ -55,9 +55,9 @@ The official Deep Learning Reference Stack Docker images are hosted at: https://
 
  * Pull from the [Eigen version](https://hub.docker.com/r/clearlinux/stacks-dlrs-oss/)
  * Pull from the [Intel MKL-DNN version](https://hub.docker.com/r/clearlinux/stacks-dlrs-mkl/)
- * Pull from the [PyTorch version](https://hub.docker.com/r/clearlinux/stacks...)
- * Pull from the [PyTorch with Intel MKL version](https://hub.docker.com/r/clearlinux/stacks...)
- * Pull from the [PyTorch with Intel MKL-DNN version](https://hub.docker.com/r/clearlinux/stacks...)
+ * Pull from the [PyTorch with OpenBLAS version](https://hub.docker.com/r/clearlinux/stacks-pytorch-oss)
+ * Pull from the [PyTorch with Intel MKL-DNN version](https://hub.docker.com/r/clearlinux/stacks-pytorch-mkl)
+
 
 
 > **Note:**
