@@ -13,7 +13,7 @@ mkdir -p /etc/profile.d && \
     source ~/.bashrc
 # create an env and install Tensorflow
 echo "Installing Tensorflow with MKL..."
-conda create -y -n tf_env tensorflow nltk && \
+conda create -y -n tf_env tensorflow nltk && conda clean --all -y && \
     echo "export PATH=/opt/conda/envs/tf_env/bin:$PATH" >> ~/.bashrc && \
     echo "conda activate tf_env" >> ~/.bashrc
 ln -s -f /opt/conda/envs/tf_env/bin/python /usr/bin/python
