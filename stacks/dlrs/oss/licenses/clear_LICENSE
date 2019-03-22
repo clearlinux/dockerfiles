@@ -42,7 +42,6 @@ CDDL-1.1
 CECILL-1.1
 CPL-1.0
 ClArtistic
-DOC
 Distributable
 ECL-2.0
 EPL-1.0
@@ -57,9 +56,11 @@ GPL-1.0
 GPL-1.0+
 GPL-2.0
 GPL-2.0+
+GPL-2.0-only
 GPL-2.0-or-later
 GPL-3.0
 GPL-3.0+
+GPL-3.0-only
 HPND
 ICU
 IJG
@@ -74,9 +75,10 @@ LGPL-2.0
 LGPL-2.0+
 LGPL-2.1
 LGPL-2.1+
+LGPL-2.1-only
 LGPL-3.0
 LGPL-3.0+
-LPPL-1.3a
+LPPL-1.0
 LPPL-1.3c
 Libpng
 MIT
@@ -110,8 +112,10 @@ Rdisc
 Ruby
 SAX-PD
 SGI-B-1.0
+SGI-B-1.1
 SGI-B-2.0
 SISSL
+Saxpath
 Sleepycat
 TCL
 Unicode-TOU
