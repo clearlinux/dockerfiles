@@ -42,7 +42,6 @@ CDDL-1.1
 CECILL-1.1
 CPL-1.0
 ClArtistic
-DOC
 Distributable
 ECL-2.0
 EPL-1.0
@@ -56,8 +55,8 @@ GL2PS
 GPL-1.0
 GPL-1.0+
 GPL-2.0
-GPL-2.0 CDDL-1.0
 GPL-2.0+
+GPL-2.0-only
 GPL-2.0-or-later
 GPL-3.0
 GPL-3.0+
@@ -77,7 +76,6 @@ LGPL-2.0+
 LGPL-2.1
 LGPL-2.1+
 LGPL-2.1-only
-LGPL-2.1-or-later
 LGPL-3.0
 LGPL-3.0+
 LPPL-1.0
@@ -117,12 +115,14 @@ SGI-B-1.0
 SGI-B-1.1
 SGI-B-2.0
 SISSL
+Saxpath
 Sleepycat
 TCL
 Unicode-TOU
 Unlicense
 Vim
 W3C
+W3C-19980720
 WTFPL
 X11
 ZPL-2.0
