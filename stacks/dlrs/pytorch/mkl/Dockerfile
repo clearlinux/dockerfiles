@@ -4,6 +4,8 @@ LABEL maintainer=otc-swstacks@intel.com
 
 ARG PYTHON_VERSION=3.7.1
 ARG MINICONDA_VERSION=4.5.12
+ARG HOROVOD_VERSION=0.16.0
+ARG MKL_VERSION=2019.1
 ARG swupd_args
 ENV PATH /opt/conda/bin:$PATH
 
@@ -16,7 +18,7 @@ ADD https://repo.continuum.io/miniconda/Miniconda3-$MINICONDA_VERSION-Linux-x86_
 RUN chmod +x /tmp/miniconda.sh && \
     /tmp/miniconda.sh -b -p /opt/conda && \
     conda install -y python=$PYTHON_VERSION \
-    numpy pyyaml scipy ipython mkl mkl-include cython typing && \
+    numpy pyyaml scipy ipython mkl=${MKL_VERSION} mkl-include=${MKL_VERSION} cython typing && \
 	conda install -y gcc libgcc -c conda-forge
 RUN pip --no-cache-dir install ninja
 
@@ -36,7 +38,7 @@ RUN CMAKE_PREFIX_PATH="$(dirname $(which conda))/../" \
 RUN pip --no-cache-dir install torchvision
 RUN pip --no-cache-dir install ipython ipykernel jupyter && \
     python -m ipykernel.kernelspec
-RUN HOROVOD_WITH_TORCH=1 pip install --no-cache-dir horovod
+RUN HOROVOD_WITH_TORCH=1 pip install --no-cache-dir horovod==${HOROVOD_VERSION}
 RUN mv /opt/conda/compiler_compat/ld.orig /opt/conda/compiler_compat/ld
 
 
