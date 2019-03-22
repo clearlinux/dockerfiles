@@ -9,7 +9,7 @@ To offer more flexibility, we are releasing multiple versions of the Deep Learni
 
 
 > **Note:**
-     Clear Linux will be automatically updated to release version 27340 in the container.  The minimum validated version of Clear Linux for this stack is 26240
+     Clear Linux will be automatically updated to the latest release version in the container. The minimum validated version of Clear Linux for this stack is 27910.
 
 > **Note:**
 > For multi-node support, we include a registry with a set of jsonnet files to show integration with Kubeflow for deployment.
@@ -59,9 +59,6 @@ The official Deep Learning Reference Stack Docker images are hosted at: https://
  * Pull from the [PyTorch with Intel MKL-DNN version](https://hub.docker.com/r/clearlinux/stacks-pytorch-mkl)
 
 
-
-> **Note:**
-   The OSS version of the image will use version 27340 of Clear Linux.
 
 ## Licensing
 
