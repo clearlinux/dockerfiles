@@ -5,19 +5,19 @@ This provides a Clear Linux* PostgreSQL instance.
 Build
 -----
 ```
-docker build -t clearlinux/postgresql .
+docker build -t clearlinux/postgres .
 ```
 
 Or just pull it from Dockerhub
 ---------------------------
 ```
-docker pull clearlinux/postgresql
+docker pull clearlinux/postgres
 ```
 
 Start PostgreSQL Container
 -----------------------
 ```
-docker run -p 5432:5432 -e POSTGRES_PASSWORD=secret -d clearlinux/postgresql
+docker run -p 5432:5432 -e POSTGRES_PASSWORD=secret -d clearlinux/postgres
 ```
 
 Environment Variables

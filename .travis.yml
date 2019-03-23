@@ -11,7 +11,7 @@ env:
   - DOCKERFILE_DIR=mariadb
   - DOCKERFILE_DIR=stacks/dlrs/oss
   - DOCKERFILE_DIR=stacks/dlrs/mkl
-  - DOCKERFILE_DIR=postgresql
+  - DOCKERFILE_DIR=postgres
 
 script:
   - cd $DOCKERFILE_DIR
