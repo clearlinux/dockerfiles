@@ -12,6 +12,7 @@ env:
   - DOCKERFILE_DIR=stacks/dlrs/oss
   - DOCKERFILE_DIR=stacks/dlrs/mkl
   - DOCKERFILE_DIR=postgres
+  - DOCKERFILE_DIR=nginx
 
 script:
   - cd $DOCKERFILE_DIR
