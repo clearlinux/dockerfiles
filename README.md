@@ -12,6 +12,7 @@ Containers
 - mixer-ci
 - Keystone
 - MariaDB
+- redis
 - stacks-dlrs-oss
 - stacks-dlrs-mkl
 - stacks-pytorch-oss
