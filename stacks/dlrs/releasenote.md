@@ -9,7 +9,7 @@ To offer more flexibility, we are releasing multiple versions of the Deep Learni
 
 
 > **Note:**
-     Clear Linux will be automatically updated to the latest release version in the container. The minimum validated version of Clear Linux for this stack is 28530.
+     Clear Linux will be automatically updated to the latest release version in the container. The minimum validated version of Clear Linux for this stack is 28560.
 
 > **Note:**
 > For multi-node support, we include a registry with a set of jsonnet files to show integration with Kubeflow for deployment.
