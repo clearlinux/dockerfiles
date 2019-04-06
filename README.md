@@ -8,6 +8,7 @@ https://hub.docker.com/u/clearlinux/
 Containers
 ----------
 - clr-sdk
+- httpd
 - machine-learning
 - mixer-ci
 - Keystone

@@ -14,6 +14,7 @@ env:
   - DOCKERFILE_DIR=postgres
   - DOCKERFILE_DIR=nginx
   - DOCKERFILE_DIR=redis
+  - DOCKERFILE_DIR=httpd
 
 script:
   - cd $DOCKERFILE_DIR
