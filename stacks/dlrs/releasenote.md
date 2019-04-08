@@ -156,16 +156,15 @@ We encourage your contributions to this project, through the established Clear L
 
 # Reporting Security Issues
 
-  If you have discovered a potential security vulnerability in an Intel open-source product, please contact the Intel OSSIRT (Open Source Security Incident Response Team) at secure-opensource@intel.com.
+  If you have discovered potential security vulnerability in an Intel product, please contact the iPSIRT at secure@intel.com.
 
   It is important to include the following details:
 
   * The projects and versions affected
-  * Repository and home page links for the affected projects
   * Detailed description of the vulnerability
   * Information on known exploits
 
-  Vulnerability information is extremely sensitive. The OSSIRT strongly recommends that all security vulnerability reports sent to Intel be encrypted using the OSSIRT PGP key. The PGP key is available here:  https://01.org/node/9721
+  Vulnerability information is extremely sensitive. The iPSIRT strongly recommends that all security vulnerability reports sent to Intel be encrypted using the iPSIRT PGP key. The PGP key is available here: https://www.intel.com/content/www/us/en/security-center/pgp-public-key.html
 
   Software to encrypt messages may be obtained from:
 
