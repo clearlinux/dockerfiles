@@ -7,16 +7,15 @@ RUN swupd update $swupd_args \
 	&& swupd bundle-add elasticsearch $swupd_args \
 	&& rm -rf /var/lib/swupd/*
 
-ENV PATH /usr/share/elasticsearch/bin:$PATH
+ENV PATH="/usr/share/elasticsearch/bin:${PATH}"
 
 WORKDIR /usr/share/elasticsearch
 
 RUN set -ex \
 	&& for path in \
-		./data \
-		./logs \
+		/var/data/elasticsearch \
+		/var/log/elasticsearch \
 		./config \
-		./config/scripts \
 	; do \
 		mkdir -p "$path"; \
 		chown -R elasticsearch:elasticsearch "$path"; \
@@ -24,7 +23,7 @@ RUN set -ex \
 
 COPY config ./config
 
-VOLUME /usr/share/elasticsearch/data
+VOLUME /var/data/elasticsearch
 
 COPY docker-entrypoint.sh /
 

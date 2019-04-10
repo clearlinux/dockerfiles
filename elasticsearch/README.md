@@ -17,7 +17,7 @@ docker pull clearlinux/elasticsearch
 Start a elasticsearch instance
 -----------------------
 ```
-docker run -d -p 9200:9200 -e "discovery.type=single-node" -v esdata:/usr/share/elasticsearch/data clearlinux/elasticsearch
+docker run -d -p 9200:9200 -e "discovery.type=single-node" -v esdata:/var/data/elasticsearch clearlinux/elasticsearch
 ```
 
 Check cluster health

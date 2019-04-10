@@ -2,8 +2,6 @@
 
 set -e
 
-export PATH=$PATH:/usr/share/elasticsearch/bin/
-
 # Add elasticsearch as command if needed
 if [ "${1:0:1}" = '-' ]; then
 	set -- elasticsearch "$@"
@@ -14,8 +12,8 @@ fi
 if [ "$1" = 'elasticsearch' -a "$(id -u)" = '0' ]; then
 	# Change the ownership of user-mutable directories to elasticsearch
 	for path in \
-		/usr/share/elasticsearch/data \
-		/usr/share/elasticsearch/logs \
+		/var/data/elasticsearch \
+		/var/log/elasticsearch \
 	; do
 		chown -R elasticsearch:elasticsearch "$path"
 	done
