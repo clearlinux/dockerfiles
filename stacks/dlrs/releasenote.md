@@ -160,7 +160,7 @@ We encourage your contributions to this project, through the established Clear L
 
   It is important to include the following details:
 
-  * The projects and versions affected
+  * The products and versions affected
   * Detailed description of the vulnerability
   * Information on known exploits
 
