@@ -16,6 +16,7 @@ env:
   - DOCKERFILE_DIR=redis
   - DOCKERFILE_DIR=httpd
   - DOCKERFILE_DIR=elasticsearch
+  - DOCKERFILE_DIR=cgit
 
 script:
   - cd $DOCKERFILE_DIR
