@@ -1,0 +1,6 @@
+scan-path=/var/www/cgit/
+cache-scanrc-ttl=1
+
+css=/cgit-data/cgit.css
+logo=/cgit-data/cgit.png
+favicon=/cgit-data/favicon.ico
