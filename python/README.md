@@ -1,4 +1,4 @@
-python
+Python
 ==========
 This provides a Clear Linux* python container
 
