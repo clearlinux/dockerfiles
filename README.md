@@ -18,3 +18,4 @@ Containers
 - stacks-dlrs-mkl
 - stacks-pytorch-oss
 - stacks-pytorch-mkl
+- php
