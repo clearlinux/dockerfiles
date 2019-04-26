@@ -14,6 +14,7 @@ Containers
 - mixer-ci
 - Keystone
 - MariaDB
+- memcached
 - redis
 - stacks-dlrs-oss
 - stacks-dlrs-mkl
