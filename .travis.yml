@@ -17,6 +17,7 @@ env:
   - DOCKERFILE_DIR=httpd
   - DOCKERFILE_DIR=elasticsearch
   - DOCKERFILE_DIR=cgit
+  - DOCKERFILE_DIR=python
 
 script:
   - cd $DOCKERFILE_DIR
