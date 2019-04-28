@@ -16,6 +16,7 @@ Containers
 - MariaDB
 - memcached
 - redis
+- python
 - stacks-dlrs-oss
 - stacks-dlrs-mkl
 - stacks-pytorch-oss
