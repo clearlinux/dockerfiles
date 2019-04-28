@@ -18,6 +18,7 @@ env:
   - DOCKERFILE_DIR=elasticsearch
   - DOCKERFILE_DIR=cgit
   - DOCKERFILE_DIR=python
+  - DOCKERFILE_DIR=memcached
 
 script:
   - cd $DOCKERFILE_DIR
