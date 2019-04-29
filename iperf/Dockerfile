@@ -1,7 +1,10 @@
 FROM clearlinux:latest
 MAINTAINER long1.wang@intel.com
-#RUN swupd mirror -s http://xxx.xxx/pub/mirrors/clearlinux/update
-RUN swupd bundle-add sysadmin-basic
+
+ARG swupd_args
+
+RUN swupd update $swupd_args && \
+    swupd bundle-add iperf $swupd_args
 
 # Define default command
 ENTRYPOINT ["iperf3"]
