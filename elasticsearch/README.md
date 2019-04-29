@@ -53,6 +53,6 @@ Please refer to [page](https://www.elastic.co/guide/en/elasticsearch/reference/5
 
 Extra Build ARGs
 ----------------
-- ``swupd_args`` Specifies [SWUPD](https://clearlinux.org/documentation/swupdate_how_to_run_the_updater.html) flags
+- ``swupd_args`` Specifies [SWUPD](https://github.com/clearlinux/swupd-client/blob/master/docs/swupd.1.rst#options) flags
 
 Default build args in Docker are on: https://docs.docker.com/engine/reference/builder/#arg

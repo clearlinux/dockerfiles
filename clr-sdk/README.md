@@ -35,7 +35,7 @@ docker build -t clearlinux/clr-sdk .
 > configure your proxy.
 
 #### Optional Build ARGs
-* `--build-arg swupd_args` specifies [SWUPD](https://clearlinux.org/documentation/swupdate_how_to_run_the_updater.html) flags passed to the update during build.
+* `--build-arg swupd_args` specifies [SWUPD](https://github.com/clearlinux/swupd-client/blob/master/docs/swupd.1.rst#options) flags passed to the update during build.
 ## Pulling from Dockerhub
 ```
 docker pull clearlinux/clr-sdk
