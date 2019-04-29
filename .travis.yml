@@ -9,8 +9,6 @@ env:
   - DOCKERFILE_DIR=machine-learning-ui
   - DOCKERFILE_DIR=mixer-ci
   - DOCKERFILE_DIR=mariadb
-  - DOCKERFILE_DIR=stacks/dlrs/oss
-  - DOCKERFILE_DIR=stacks/dlrs/mkl
   - DOCKERFILE_DIR=postgres
   - DOCKERFILE_DIR=nginx
   - DOCKERFILE_DIR=redis
