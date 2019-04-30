@@ -15,10 +15,10 @@ env:
   - DOCKERFILE_DIR=memcached
   - DOCKERFILE_DIR=mixer-ci
   - DOCKERFILE_DIR=nginx
+  - DOCKERFILE_DIR=php
   - DOCKERFILE_DIR=postgres
   - DOCKERFILE_DIR=python
   - DOCKERFILE_DIR=redis
-  - DOCKERFILE_DIR=php
 
 script:
   - cd $DOCKERFILE_DIR
