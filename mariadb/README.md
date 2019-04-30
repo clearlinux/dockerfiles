@@ -1,7 +1,5 @@
 MariaDB
 =======
-[![](https://images.microbadger.com/badges/image/clearlinux/mariadb.svg)](http://microbadger.com/images/clearlinux/mariadb "Get your own image badge on microbadger.com")
-[![](https://images.microbadger.com/badges/version/clearlinux/mariadb.svg)](http://microbadger.com/images/clearlinux/mariadb "Get your own version badge on microbadger.com")
 
 This provides a Clear Linux* MariaDB
 
@@ -14,16 +12,17 @@ docker build -t clearlinux/mariadb .
 Or just pull it from Dockerhub
 ---------------------------
 ```
-docker pull clearlinux/mariadb:stable
+docker pull clearlinux/mariadb:latest
 ```
 
 Start MariaDB Container
 -----------------------
 ```
-YOUR_HOST=`hostname -f`
-docker run --name mariadb -p 3306:3306 -e MYSQL_ROOT_PASSWORD=secret -d clearlinux/mariadb:stable
+docker run --name clr-mariadbtest -e MYSQL_ROOT_PASSWORD=mypass -d clearlinux/mariadb
+# Get the mariadb server IP
+docker inspect clr-mariadbtest | grep IPAddress
 # Test it
-mysql -uroot -h $YOUR_HOST -psecret -e "show databases;"
+mysql -h $IP -u root -p
 ```
 
 Environment Variables
