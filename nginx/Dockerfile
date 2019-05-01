@@ -1,9 +1,11 @@
 FROM clearlinux:latest
 MAINTAINER bin.yang@intel.com
 
+ARG swupd_args
+
 COPY default.conf /etc/nginx/conf.d/default.conf
 
-RUN swupd update $swupd_args && \
+RUN swupd update --no-boot-update $swupd_args && \
     swupd bundle-add nginx $swupd_args && \
     rm -rf /var/lib/swupd && \
     mkdir -p /var/log/nginx && \
