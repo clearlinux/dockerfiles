@@ -47,7 +47,7 @@ The release includes:
  * Jupyter Notebooks
 
 
-## The Deep Learning Reference Stack with PyTorch and Intel Intel® MKL
+## The Deep Learning Reference Stack with PyTorch and Intel® MKL
 
 The release includes:
  * Clear Linux* OS
