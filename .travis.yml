@@ -15,7 +15,6 @@ env:
   - DOCKERFILE_DIR=memcached
   - DOCKERFILE_DIR=mixer-ci
   - DOCKERFILE_DIR=nginx
-  - DOCKERFILE_DIR=node
   - DOCKERFILE_DIR=php
   - DOCKERFILE_DIR=postgres
   - DOCKERFILE_DIR=python
