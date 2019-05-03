@@ -14,11 +14,18 @@ To offer more flexibility, we are releasing multiple versions of the Deep Learni
 > **Note:**
 > For multi-node support, we include a registry with a set of jsonnet files to show integration with Kubeflow for deployment.
 
+## The Deep Learning Reference Stack with Intel® MKL-DNN and VNNI
+
+The release includes:
+  * Clear Linux* OS
+  * TensorFlow 1.13.1 optimized using Intel® Math Kernel Library for Deep Neural Networks (Intel® MKL-DNN) primitives and AVX-512 Vector Neural Network Instructions (VNNI)
+  * Jupyter Lab*
+
 ## The Deep Learning Reference Stack with Eigen
 
 The release includes:
   * Clear Linux* OS
-  * TensorFlow 1.12 compiled with AVX2 and AVX512 optimizations
+  * TensorFlow 1.13.1 compiled with AVX2 and AVX512 optimizations
   * Runtimes (python)
 
 ## The Deep Learning Reference Stack with Intel® MKL-DNN
@@ -26,7 +33,7 @@ The release includes:
 The release includes:
   * Clear Linux* OS
   * Runtimes (python)
-  * TensorFlow 1.12 optimized using Intel® Math Kernel Library for Deep Neural Networks (Intel® MKL-DNN) primitives.
+  * TensorFlow 1.13.1 optimized using Intel® Math Kernel Library for Deep Neural Networks (Intel® MKL-DNN) primitives.
 
 > **Note:**
    When using the Deep Learning Reference Stack with Intel®  MKL-DNN version, you may see this warning message: "tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 AVX512F FMA". This is because this version of the Deep Learning Reference Stack is using Intel®  MKL-DNN for performance optimization rather than Intel®  Advanced Vector Extensions 512, and is expected for this version of the Deep Learning Reference Stack.
@@ -53,11 +60,17 @@ The release includes:
 
 The official Deep Learning Reference Stack Docker images are hosted at: https://hub.docker.com/u/clearlinux/.
 
+ * Pull from the [Intel MKL-DNN-VNNI version](https://hub.docker.com/r/clearlinux/stacks-dlrs-mkl-vnni)
  * Pull from the [Eigen version](https://hub.docker.com/r/clearlinux/stacks-dlrs-oss/)
  * Pull from the [Intel MKL-DNN version](https://hub.docker.com/r/clearlinux/stacks-dlrs-mkl/)
  * Pull from the [PyTorch with OpenBLAS version](https://hub.docker.com/r/clearlinux/stacks-pytorch-oss)
  * Pull from the [PyTorch with Intel MKL-DNN version](https://hub.docker.com/r/clearlinux/stacks-pytorch-mkl)
 
+
+**Note:**
+   To take advantage of the AVX-512 and VNNI functionality with the Deep Learning Reference Stack, please use the following hardware:
+     * AVX 512 images requires an Intel® Xeon® Scalable Platform
+     * VNNI requires a Second-Generation Intel® Xeon® Scalable Platform
 
 
 ## Licensing
