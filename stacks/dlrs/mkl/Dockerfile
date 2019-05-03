@@ -1,36 +1,95 @@
-FROM clearlinux
-MAINTAINER otc-swstacks@intel.com
+#---------------------------------------------------------------------
+# Base instance to build MKL based Tensorflow on Clear Linux
+#---------------------------------------------------------------------
 
+FROM clearlinux as base
+LABEL maintainer=otc-swstacks@intel.com
+
+# tf with vnni support and bug fixes
+ARG TF_COMMIT_SHA=47ab68d265a96b6e7be06afd1b4b47e0114c0ee9
 ARG swupd_args
 
+# update os and add required bundles
 RUN swupd update $swupd_args && \
-	swupd bundle-add devpkg-openmpi git sysadmin-basic
+    swupd bundle-add machine-learning-basic git \
+    java-basic sysadmin-basic package-utils devpkg-zlib
 
-# install miniconda
-ADD https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh /miniconda.sh
-RUN sh /miniconda.sh -b -p /opt/conda && \
-    /opt/conda/bin/conda update -n base conda && \
-    rm /miniconda.sh
-ENV PATH=${PATH}:/opt/conda/bin
+RUN ln -s -f /usr/bin/pip3.7 /usr/bin/pip
+RUN ln -s -f /usr/bin/python3.7 /usr/bin/python
 
-# create tf_env and install tensorflow with mkl-dnn
-SHELL ["/bin/bash", "-c"]
-RUN conda create -n tf_env
-RUN conda install -n tf_env -y -c anaconda \
-    pip tensorflow nltk ipython
+RUN pip install \
+    keras_applications==1.0.6 \
+    keras_preprocessing==1.0.9
 
-# add conda env script to bashrc
-RUN echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
-    echo "conda activate tf_env" >> ~/.bashrc
+# clone build and install tensorflow 1.13.1
+WORKDIR /tensorflow_src
+RUN git clone https://github.com/tensorflow/tensorflow.git /tensorflow_src && \
+    git checkout -b quantized ${TF_COMMIT_SHA}
+RUN \
+  export PYTHON_BIN_PATH=/usr/bin/python3.7 &&\
+  export USE_DEFAULT_PYTHON_LIB_PATH=1 &&\
+  export CC_OPT_FLAGS="-march=native -mtune=native"  &&\
+  export TF_NEED_JEMALLOC=1  &&\
+  export TF_NEED_KAFKA=0 &&\
+  export TF_NEED_OPENCL_SYCL=0 &&\
+  export TF_NEED_GCP=0 &&\
+  export TF_NEED_HDFS=0 &&\
+  export TF_NEED_S3=0 &&\
+  export TF_ENABLE_XLA=1 &&\
+  export TF_NEED_GDR=0 &&\
+  export TF_NEED_VERBS=0 &&\
+  export TF_NEED_OPENCL=0 &&\
+  export TF_NEED_MPI=0 &&\
+  export TF_NEED_TENSORRT=0 &&\
+  export TF_SET_ANDROID_WORKSPACE=0 &&\
+  export TF_DOWNLOAD_CLANG=0 &&\
+  export TF_NEED_CUDA=0 &&\
+  export TF_BUILD_MAVX=MAVX512 &&\
+  export HTTP_PROXY=`echo $http_proxy | sed -e 's/\/$//'` &&\
+  export HTTPS_PROXY=`echo $https_proxy | sed -e 's/\/$//'`
+RUN ./configure
+RUN bazel --output_base=/tmp/bazel build --repository_cache=/tmp/cache \
+   --config=opt --config=mkl --copt=-O3 --copt=-mavx \
+   --copt=-mavx2 --copt=-march=skylake-avx512 --copt=-mfma  \
+   //tensorflow/tools/pip_package:build_pip_package
+RUN bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tf/
+
+#---------------------------------------------------------------------
+# Tensorflow with MKL-DNN on Clear Linux
+#---------------------------------------------------------------------
+
+FROM clearlinux
+LABEL maintainer=otc-swstacks@intel.com
+
+ARG HOROVOD_VERSION=0.16.1
+ARG swupd_args
+
+# update os and add required bundles
+RUN swupd update $swupd_args && \
+    swupd bundle-add git \
+    openssh-server sysadmin-basic \
+    devpkg-openmpi python3-basic jupyter devpkg-opencv
+
+RUN ln -s -f /usr/bin/pip3.7 /usr/bin/pip &&\
+    ln -s -f /usr/bin/python3.7 /usr/bin/python
+
+# install keras, nltk and jupyterhub
+RUN pip --no-cache-dir install \
+    keras_applications==1.0.6 \
+    keras_preprocessing==1.0.9 \
+    nltk==3.4 jupyterhub==0.9.4
+
+# install tensorflow
+COPY --from=base /tmp/tf/*.whl /tmp/.
+RUN pip --no-cache-dir  install /tmp/tensorflow*.whl
 
 # install horovod
-RUN source ~/.bashrc
-RUN mv /opt/conda/envs/tf_env/compiler_compat/ld /opt/conda/envs/tf_env/compiler_compat/ld.orig
-RUN HOROVOD_WITH_TENSORFLOW=1 /opt/conda/envs/tf_env/bin/pip install --no-cache-dir horovod
-RUN mv /opt/conda/envs/tf_env/compiler_compat/ld.orig /opt/conda/envs/tf_env/compiler_compat/ld
+RUN HOROVOD_WITH_TENSORFLOW=1 \
+    pip --no-cache-dir install --no-cache-dir horovod==${HOROVOD_VERSION}
 
-# install additional python packages for ipython and jupyter
-RUN /opt/conda/envs/tf_env/bin/pip install --no-cache-dir ipython ipykernel matplotlib jupyter && \
-   /opt/conda/envs/tf_env/bin/python -m ipykernel.kernelspec
-
-CMD ["/bin/bash"]
+# clean up and init
+RUN rm -rf /tmp/*
+WORKDIR /workspace
+COPY ./set_env.sh /workspace/
+RUN chmod -R a+w /workspace
+ENTRYPOINT source /workspace/set_env.sh && /bin/bash
