@@ -7,7 +7,7 @@ LABEL maintainer=otc-swstacks@intel.com
 
 # tf with vnni support and bug fixes
 ARG TF_COMMIT_SHA=47ab68d265a96b6e7be06afd1b4b47e0114c0ee9
-ARG swupd_args
+ARG swupd_args="--no-boot-update $swupd_args"
 
 # update os and add required bundles
 RUN swupd update $swupd_args && \
@@ -62,7 +62,7 @@ FROM clearlinux
 LABEL maintainer=otc-swstacks@intel.com
 
 ARG HOROVOD_VERSION=0.16.1
-ARG swupd_args
+ARG swupd_args="--no-boot-update $swupd_args"
 
 # update os and add required bundles
 RUN swupd update $swupd_args && \

@@ -2,7 +2,7 @@
 FROM clearlinux
 LABEL maintainer=otc-swstacks@intel.com
 
-ARG swupd_args
+ARG swupd_args="--no-boot-update $swupd_args"
 
 # update os and install pytorch
 RUN swupd update $swupd_args && \

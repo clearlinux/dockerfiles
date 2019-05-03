@@ -1,7 +1,7 @@
 FROM clearlinux:latest
 MAINTAINER bin.yang@intel.com
 
-ARG swupd_args
+ARG swupd_args="--no-boot-update $swupd_args"
 
 COPY default.conf /etc/nginx/conf.d/default.conf
 

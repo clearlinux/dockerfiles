@@ -4,7 +4,7 @@ LABEL maintainer=otc-swstacks@intel.com
 
 ARG PYTHON_VERSION=3.7.1
 ARG MINICONDA_VERSION=4.5.12
-ARG swupd_args
+ARG swupd_args="--no-boot-update $swupd_args"
 ENV PATH /opt/conda/bin:$PATH
 
 # update os and add pkgs

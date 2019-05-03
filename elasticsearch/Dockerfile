@@ -1,7 +1,7 @@
 FROM clearlinux:latest
 MAINTAINER qi.zheng@intel.com
 
-ARG swupd_args
+ARG swupd_args="--no-boot-update $swupd_args"
 
 RUN swupd update $swupd_args \
 	&& swupd bundle-add elasticsearch $swupd_args \

@@ -1,7 +1,7 @@
 FROM clearlinux:latest
 MAINTAINER kevin.c.wells@intel.com
 
-ARG swupd_args
+ARG swupd_args="--no-boot-update $swupd_args"
 
 COPY setup.py /usr/bin/setup.py
 

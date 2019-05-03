@@ -1,7 +1,7 @@
 FROM clearlinux
 MAINTAINER marcos.simental.magana@intel.com
 
-ARG swupd_args
+ARG swupd_args="--no-boot-update $swupd_args"
 
 RUN swupd update $swupd_args
 RUN swupd bundle-add machine-learning-basic R-basic R-extras
