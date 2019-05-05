@@ -3,17 +3,17 @@ Iperf is a widely used tool for network performance measurement and tuning.
 
 ## Build
 ```
-sudo docker build -t clr-iperf:latest .
+sudo docker build -t clearlinux/iperf .
 ```
 
 ## Run as Server:
 ```
-sudo docker run -it --rm --name=iperf-srv -p 5201:5201 clr-iperf -s
+sudo docker run -it --rm --name=iperf-srv -p 5201:5201 clearlinux/iperf -s
 ```
 
 ## Run as Client (first get server IP address):
 ```
-sudo docker run -it --rm --network=host clr-iperf -c <SERVER_IP>
+sudo docker run -it --rm --network=host clearlinux/iperf -c <SERVER_IP>
 ```
 
 ## Extra Build ARGs
