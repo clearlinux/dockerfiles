@@ -11,6 +11,7 @@ env:
   - DOCKERFILE_DIR=golang
   - DOCKERFILE_DIR=haproxy
   - DOCKERFILE_DIR=httpd
+  - DOCKERFILE_DIR=iperf
   - DOCKERFILE_DIR=machine-learning-ui
   - DOCKERFILE_DIR=machine-learning
   - DOCKERFILE_DIR=mariadb
