@@ -8,6 +8,7 @@ env:
   - DOCKERFILE_DIR=clr-installer-ci
   - DOCKERFILE_DIR=clr-sdk
   - DOCKERFILE_DIR=elasticsearch
+  - DOCKERFILE_DIR=golang
   - DOCKERFILE_DIR=haproxy
   - DOCKERFILE_DIR=httpd
   - DOCKERFILE_DIR=machine-learning-ui
