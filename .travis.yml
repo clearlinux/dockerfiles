@@ -23,6 +23,7 @@ env:
   - DOCKERFILE_DIR=postgres
   - DOCKERFILE_DIR=python
   - DOCKERFILE_DIR=redis
+  - DOCKERFILE_DIR=ruby
 
 script:
   - cd $DOCKERFILE_DIR
