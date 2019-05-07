@@ -20,7 +20,7 @@ Since no two users of haproxy are likely to configure it exactly alike, we provi
 
 Details of how-to
 ---------------------
-Please refer to the docker official golang image [page](https://hub.docker.com/_/haproxy).
+Please refer to the docker official haproxy image [page](https://hub.docker.com/_/haproxy).
 
 Extra Build ARGs
 ----------------
