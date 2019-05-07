@@ -18,6 +18,10 @@ use customized configuration file
 ---------------------
 Since no two users of haproxy are likely to configure it exactly alike, we provide /usr/local/etc/haproxy/haproxy.cfg as an example, user may need to customize their own and override this default. Please refer to [page](https://cbonte.github.io/haproxy-dconv/) for configure details.
 
+Details of how-to
+---------------------
+Please refer to the docker official haproxy image [page](https://hub.docker.com/_/haproxy).
+
 Extra Build ARGs
 ----------------
 - ``swupd_args`` Specifies [SWUPD](https://github.com/clearlinux/swupd-client/blob/master/docs/swupd.1.rst#options) flags
