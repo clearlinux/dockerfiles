@@ -17,7 +17,7 @@ docker pull clearlinux/nginx
 Start nginx Container
 -----------------------
 ```
-docker run -p 80:80 -v /var/www:/var/www -d clearlinux/nginx
+docker run -p 80:80 -v /some/content:/usr/share/nginx/html -d clearlinux/nginx
 ```
 
 How to use this image
