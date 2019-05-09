@@ -2,7 +2,6 @@ FROM clearlinux:latest
 MAINTAINER long1.wang@intel.com
 
 ARG swupd_args
-RUN echo ${swupd_args}
 
 RUN swupd update --no-boot-update $swupd_args && \
     swupd bundle-add java-runtime $swupd_args && \
