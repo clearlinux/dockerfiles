@@ -25,6 +25,7 @@ env:
   - DOCKERFILE_DIR=python
   - DOCKERFILE_DIR=redis
   - DOCKERFILE_DIR=ruby
+  - DOCKERFILE_DIR=tensorflow
 
 script:
   - cd $DOCKERFILE_DIR
