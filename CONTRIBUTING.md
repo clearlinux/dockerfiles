@@ -22,6 +22,10 @@ This often means:
 * Having a section in the README of the derivative image that includes an Extra
   Build args section mentioning how to use swupd
 
+Common existing Dockerfiles may be found at the
+[repository](https://github.com/docker-library/official-images/) for Docker
+library's official images.
+
 Criteria for Pull Request Acceptance
 ------------------------------------
 
