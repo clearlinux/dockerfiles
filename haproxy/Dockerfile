@@ -6,7 +6,7 @@ ARG swupd_args
 RUN swupd update --no-boot-update $swupd_args
 
 RUN swupd bundle-add haproxy $swupd_args \
-    && rm -rf /var/lib/swupd \
+    && rm -rf /var/lib/swupd/* \
     && mkdir -p /usr/local/etc/haproxy
 
 STOPSIGNAL SIGUSR1

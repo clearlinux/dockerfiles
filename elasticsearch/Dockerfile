@@ -3,8 +3,8 @@ MAINTAINER qi.zheng@intel.com
 
 ARG swupd_args
 
-RUN swupd update $swupd_args \
-	&& swupd bundle-add elasticsearch $swupd_args \
+RUN swupd update --no-boot-update $swupd_args
+RUN swupd bundle-add elasticsearch $swupd_args \
 	&& rm -rf /var/lib/swupd/*
 
 RUN set -ex \

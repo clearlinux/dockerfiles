@@ -3,11 +3,12 @@ MAINTAINER bin.yang@intel.com
 
 ARG swupd_args
 
+RUN swupd update --no-boot-update $swupd_args
+
 COPY default.conf /etc/nginx/conf.d/default.conf
 
-RUN swupd update --no-boot-update $swupd_args && \
-    swupd bundle-add nginx $swupd_args && \
-    rm -rf /var/lib/swupd && \
+RUN swupd bundle-add nginx $swupd_args && \
+    rm -rf /var/lib/swupd/* && \
     mkdir -p /var/log/nginx && \
     # forward request and error logs to docker log collector
     ln -sf /dev/stdout /var/log/nginx/access.log && \
