@@ -3,8 +3,8 @@ MAINTAINER qi.zheng@intel.com
 
 ARG swupd_args
 
-RUN swupd update $swupd_args \
-	&& swupd bundle-add httpd $swupd_args \
+RUN swupd update --no-boot-update $swupd_args
+RUN swupd bundle-add httpd $swupd_args \
 	&& rm -rf /var/lib/swupd/*
 
 #default configuration on /usr/share/defaults/httpd/httpd.conf

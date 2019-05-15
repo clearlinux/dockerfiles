@@ -3,8 +3,8 @@ MAINTAINER qi.zheng@intel.com
 
 ARG swupd_args
 
-RUN swupd update $swupd_args \
-	&& swupd bundle-add redis-native $swupd_args \
+RUN swupd update --no-boot-update $swupd_args
+RUN swupd bundle-add redis-native $swupd_args \
 	&& rm -rf /var/lib/swupd/* \
 	&& mkdir /data && chown redis:redis /data
 

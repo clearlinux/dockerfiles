@@ -1,8 +1,10 @@
 FROM clearlinux:latest
 MAINTAINER hongzhan.chen@intel.com
 
-RUN swupd update $swupd_args && \
-    swupd bundle-add python3-basic $swupd_args
-RUN rm -rf /var/lib/swupd
+ARG swupd_args
+
+RUN swupd update --no-boot-update $swupd_args
+RUN swupd bundle-add python3-basic $swupd_args \
+	&& rm -rf /var/lib/swupd/*
 
 CMD ["python3"]

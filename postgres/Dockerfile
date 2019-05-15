@@ -1,8 +1,11 @@
 FROM clearlinux:latest
 MAINTAINER william.douglas@intel.com
 
-RUN swupd update $swupd_args && \
-    swupd bundle-add postgresql $swupd_args
+ARG swupd_args
+
+RUN swupd update --no-boot-update $swupd_args
+RUN swupd bundle-add postgresql $swupd_args \
+	&& rm -rf /var/lib/swupd/*
 
 ENV PGDATA /var/lib/pgsql/data
 RUN mkdir -p /run/postgresql && chown -R postgres:postgres /run/postgresql

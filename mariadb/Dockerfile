@@ -3,8 +3,8 @@ MAINTAINER qi.zheng@intel.com
 
 ARG swupd_args
 
-RUN swupd update $swupd_args \
-	&& swupd bundle-add mariadb $swupd_args \
+RUN swupd update --no-boot-update $swupd_args
+RUN swupd bundle-add mariadb $swupd_args \
 	&& rm -rf /var/lib/swupd/*
 
 RUN mkdir /docker-entrypoint-initdb.d
