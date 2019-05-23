@@ -14,11 +14,11 @@ To offer more flexibility, we are releasing multiple versions of the Deep Learni
 > **Note:**
 > For multi-node support, we include a registry with a set of jsonnet files to show integration with Kubeflow for deployment.
 
-## The Deep Learning Reference Stack with Intel® MKL-DNN and VNNI
+## The Deep Learning Reference Stack with Intel® MKL-DNN and Intel® AVX512-Deep Learning Boost
 
 The release includes:
   * Clear Linux* OS
-  * TensorFlow 1.13.1 optimized using Intel® Math Kernel Library for Deep Neural Networks (Intel® MKL-DNN) primitives and AVX-512 Vector Neural Network Instructions (VNNI)
+  * TensorFlow 1.13.1 optimized using Intel® Math Kernel Library for Deep Neural Networks (Intel® MKL-DNN) primitives and Intel® AVX-512 Deep Learning Boost (Formerly Intel® VNNI)
   * Jupyter Lab*
 
 ## The Deep Learning Reference Stack with Eigen
@@ -58,7 +58,7 @@ The release includes:
 
 ## How to get the Deep Learning Reference Stack
 
-The official Deep Learning Reference Stack Docker images are hosted at: https://hub.docker.com/u/clearlinux/.
+The official Deep Learning Reference Stack Docker images are hosted at: https://hub.docker.com/u/clearlinux/.  Note that the Intel MKL-DNN-VNNI version is also referred to as the Intel® MKL with AVX-512 Deep Learning Boost in the documentation. 
 
  * Pull from the [Intel MKL-DNN-VNNI version](https://hub.docker.com/r/clearlinux/stacks-dlrs-mkl-vnni)
  * Pull from the [Eigen version](https://hub.docker.com/r/clearlinux/stacks-dlrs-oss/)
@@ -68,9 +68,9 @@ The official Deep Learning Reference Stack Docker images are hosted at: https://
 
 
 **Note:**
-   To take advantage of the AVX-512 and VNNI functionality with the Deep Learning Reference Stack, please use the following hardware:
+   To take advantage of the AVX-512, and AVX-512 Deep Learning Boost functionality with the Deep Learning Reference Stack, please use the following hardware:
      * AVX 512 images requires an Intel® Xeon® Scalable Platform
-     * VNNI requires a Second-Generation Intel® Xeon® Scalable Platform
+     * AVX-512 Deep Learning Boost requires a Second-Generation Intel® Xeon® Scalable Platform
 
 
 ## Licensing
