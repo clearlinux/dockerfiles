@@ -6,7 +6,8 @@ ENV GOPATH="/go" PATH="/go/bin:${PATH}"
 
 # Update and add bundles
 RUN swupd update && \
-    swupd bundle-add sysadmin-basic storage-utils network-basic go-basic-dev git telemetrics os-installer && \
+    swupd bundle-add sysadmin-basic storage-utils network-basic go-basic-dev clr-installer-gui && \
+    swupd clean && \
     # Install the Go Linters
     go get -u gopkg.in/alecthomas/gometalinter.v2 && \
     gometalinter.v2 --install
