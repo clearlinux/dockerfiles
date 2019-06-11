@@ -29,6 +29,7 @@ env:
   - DOCKERFILE_DIR=redis
   - DOCKERFILE_DIR=ruby
   - DOCKERFILE_DIR=tensorflow
+  - DOCKERFILE_DIR=flink
 
 script:
   - cd $DOCKERFILE_DIR
