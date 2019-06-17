@@ -18,6 +18,15 @@ RUN source /os-release && \
     --bundles=sudo,curl,scm-server --no-scripts \
     && rm -rf /install_root/var/lib/swupd/*
 
+# For some Host OS configuration with redirect_dir on,
+# extra data are saved on the upper layer when the same
+# file exists on different layers. To minimize docker
+# image size, remove the overlapped files before copy.
+RUN mkdir /os_core_install
+COPY --from=clearlinux/os-core:latest / /os_core_install/
+RUN cd / && \
+    find os_core_install | sed -e 's/os_core_install/install_root/' | xargs rm -d || true
+
 FROM clearlinux/httpd:latest
 
 COPY --from=builder /install_root /
