@@ -17,6 +17,7 @@ docker pull clearlinux/elasticsearch
 Start a elasticsearch instance
 -----------------------
 ```
+docker volume create esdata
 docker run -d -p 9200:9200 -e "discovery.type=single-node" -v esdata:/var/data/elasticsearch clearlinux/elasticsearch
 ```
 
