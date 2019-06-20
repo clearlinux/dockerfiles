@@ -32,5 +32,12 @@ FROM clearlinux/os-core:latest
 
 COPY --from=builder /install_root /
 
+RUN mkdir -p /etc/rabbitmq && \
+    chown rabbitmq:rabbitmq /etc/rabbitmq && \
+    ln -s /usr/lib/rabbitmq-server/sbin/cuttlefish /usr/bin/
+
+COPY docker-entrypoint.sh /usr/local/bin/
+ENTRYPOINT ["docker-entrypoint.sh"]
+
 EXPOSE 4369 5671 5672 25672
 CMD ["rabbitmq-server"]
