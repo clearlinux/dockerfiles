@@ -27,9 +27,13 @@ run "docker container ls"
 ```
 
 it will list wordpress containers info:
-CONTAINER ID     IMAGE                       PORTS                  NAMES
+
+CONTAINER ID      IMAGE                       PORTS                 NAMES
+
 eff987d8f6e9     clearlinux/nginx:latest     0.0.0.0:8080->80/tcp   wordpress_nginx_1
+
 738f71a6e7fa     clearlinux/wordpress:latest 9000/tcp               wordpress_wordpress_1
+
 deaa8614ce8d     clearlinux/mariadb:latest   3306/tcp               wordpress_db_1
 
 
