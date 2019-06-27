@@ -4,6 +4,7 @@ services:
   - docker
 
 env:
+  - DOCKERFILE_DIR=cassandra
   - DOCKERFILE_DIR=cgit
   - DOCKERFILE_DIR=clr-installer-ci
   - DOCKERFILE_DIR=clr-sdk
