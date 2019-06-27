@@ -32,8 +32,8 @@ FROM clearlinux/os-core:latest
 
 COPY --from=builder /install_root /
 
-RUN mkdir -p /etc/rabbitmq && \
-    chown rabbitmq:rabbitmq /etc/rabbitmq && \
+RUN mkdir -p /etc/rabbitmq /var/lib/rabbitmq /var/log/rabbitmq && \
+    chown rabbitmq:rabbitmq /etc/rabbitmq /var/lib/rabbitmq /var/log/rabbitmq && \
     ln -s /usr/lib/rabbitmq-server/sbin/cuttlefish /usr/bin/
 
 COPY docker-entrypoint.sh /usr/local/bin/
