@@ -32,6 +32,7 @@ env:
   - DOCKERFILE_DIR=redis
   - DOCKERFILE_DIR=ruby
   - DOCKERFILE_DIR=tensorflow
+  - DOCKERFILE_DIR=wordpress
 
 script:
   - cd $DOCKERFILE_DIR
