@@ -33,11 +33,11 @@ MAINTAINER wang.jue@intel.com
 COPY --from=builder /install_root /
 
 ENV CASSANDRA_CONFIG /usr/share/cassandra/conf
-ENV PATH /usr/share/cassandra/bin:$PATH
+ENV PATH /usr/share/cassandra/bin:/usr/share/cassandra/tools/bin:$PATH
 
 RUN mkdir -p /var/lib/cassandra/{cdc_raw,commitlog,data,hints,saved_caches}  \
         && chown -R cassandra:cassandra /var/lib/cassandra "$CASSANDRA_CONFIG" \
-        && chmod -R 777 /var/lib/cassandra "$CASSANDRA_CONFIG"
+        && chmod -R 777 /var/lib/cassandra /usr/share/cassandra/tools/bin "$CASSANDRA_CONFIG"
 VOLUME /var/lib/cassandra
 
 COPY docker-entrypoint.sh /usr/local/bin/
