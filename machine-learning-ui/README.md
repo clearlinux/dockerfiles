@@ -21,7 +21,7 @@ docker pull clearlinux/machine-learning-ui
 Run the machine-learning-ui Container
 ----------------------------------
 ```
-docker run -it clearlinux/machine-learning-ui
+docker run -p 8888:8888 -it clearlinux/machine-learning-ui
 ```
 
 Environment Variables
