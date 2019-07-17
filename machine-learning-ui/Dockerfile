@@ -3,10 +3,9 @@ MAINTAINER william.douglas@intel.com
 
 ARG swupd_args
 
-RUN swupd update $swupd_args
-RUN swupd bundle-add machine-learning-web-ui
-
-RUN rm -rf /var/lib/swupd
+RUN swupd update --no-boot-update $swupd_args \
+    && swupd bundle-add machine-learning-web-ui \
+    && rm -rf /var/lib/swupd/*
 
 EXPOSE 8888
 
