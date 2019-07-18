@@ -11,7 +11,7 @@ RUN source /usr/lib/os-release \
     && mkdir /install_root \
     && swupd os-install -V ${VERSION_ID} \
     --path /install_root --statedir /swupd-state \
-    --bundles=os-core --no-scripts \
+    --bundles=os-core --no-boot-update \
     && rm -rf /install_root/var/lib/swupd/*
 
 FROM scratch
