@@ -9,7 +9,7 @@ fi
 
 # allow the container to be started with `--user`
 if [ "$1" = 'cassandra' -a "$(id -u)" = '0' ]; then
-	exec su cassandra -s /bin/bash -c "$BASH_SOURCE" "$@"
+    exec su-exec cassandra "$BASH_SOURCE" "$@"
 fi
 
 _ip_address() {

@@ -7,7 +7,7 @@ if [ "${1#-}" != "$1" ]; then
 fi
 
 if [ "$1" = 'memcached' -a "$(id -u)" = '0' ]; then
-        echo "memcached -s /bin/bash -c \"$0 $@\"" | xargs su
+    exec su-exec memcached "$BASH_SOURCE" "$@"
 fi
 
 exec "$@"

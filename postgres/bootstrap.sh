@@ -51,7 +51,7 @@ if [ "$1" = 'postgres' ] && [ "$(id -u)" = '0' ]; then
 	fi
         sed -i "s|#listen_addresses.*|listen_addresses = '*'|" /usr/share/postgresql/postgresql.conf.sample
 
-	exec su postgres -s /bin/bash -c "$BASH_SOURCE $@"
+    exec su-exec postgres "$BASH_SOURCE" "$@"
 fi
 
 if [ "$1" = 'postgres' ]; then

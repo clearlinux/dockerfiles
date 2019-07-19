@@ -20,8 +20,7 @@ if [ "$1" = 'elasticsearch' -a "$(id -u)" = '0' ]; then
 		chown -R elasticsearch:elasticsearch "$path"
 	done
 	
-	# use tmp file to avoid multiple parameters issue on su -c
-	echo "elasticsearch  -s /bin/bash -c \"$0 $@\"" | xargs su
+    set -- su-exec elasticsearch "$@"
 fi
 
 # As argument is not related to elasticsearch,
