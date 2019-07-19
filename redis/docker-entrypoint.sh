@@ -9,7 +9,7 @@ fi
 
 # change to redis user to run
 if [ "$1" = 'redis-server' -a "$(id -u)" = '0' ]; then
-    echo "redis -s /bin/bash -c \"$0 $@\"" | xargs su
+    exec su-exec redis "$BASH_SOURCE" "$@"
 fi
 
 exec "$@"

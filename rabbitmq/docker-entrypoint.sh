@@ -90,7 +90,7 @@ if [[ "$1" == rabbitmq* ]] && [ "$(id -u)" = '0' ]; then
 		[ -n "$val" ] || continue
 		case "$conf" in
 			*_ssl_*file | ssl_*file )
-				if [ -f "$val" ] && ! echo "rabbitmq -s /bin/bash test -r \"$val\"" | xargs su; then
+				if [ -f "$val" ] && ! su-exec rabbitmq test -r "$val"; then
 					newFile="/tmp/rabbitmq-ssl/$conf.pem"
 					echo >&2
 					echo >&2 "WARNING: '$val' ($var) is not readable by rabbitmq ($(id rabbitmq)); copying to '$newFile'"
@@ -108,7 +108,7 @@ if [[ "$1" == rabbitmq* ]] && [ "$(id -u)" = '0' ]; then
 		find /var/lib/rabbitmq \! -user rabbitmq -exec chown rabbitmq '{}' +
 	fi
 
-	exec echo "rabbitmq -s /bin/bash \"$BASH_SOURCE\" \"$@\"" | xargs su
+    exec su-exec rabbitmq "$BASH_SOURCE" "$@"
 fi
 
 haveConfig=

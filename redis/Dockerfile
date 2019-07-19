@@ -15,7 +15,7 @@ RUN source /os-release && \
     mkdir /install_root \
     && swupd os-install -V ${VERSION_ID} \
     --path /install_root --statedir /swupd-state \
-    --bundles=redis-native,findutils --no-boot-update \
+    --bundles=redis-native,findutils,su-exec --no-boot-update \
     && rm -rf /install_root/var/lib/swupd/*
 
 # For some Host OS configuration with redirect_dir on,
