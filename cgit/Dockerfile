@@ -7,7 +7,7 @@ RUN swupd update --no-boot-update $swupd_args
 
 # Grab os-release info from the minimal base image so
 # that the new content matches the exact OS version
-COPY --from=clearlinux/os-core:latest /usr/lib/os-release /
+COPY --from=clearlinux/httpd:latest /usr/lib/os-release /
 
 # Install additional content in a target directory
 # using the os version from the minimal base
@@ -15,7 +15,7 @@ RUN source /os-release && \
     mkdir /install_root \
     && swupd os-install -V ${VERSION_ID} \
     --path /install_root --statedir /swupd-state \
-    --bundles=sudo,curl,scm-server --no-boot-update \
+    --bundles=sudo,curl,scm-server,httpd --no-boot-update \
     && rm -rf /install_root/var/lib/swupd/*
 
 # For some Host OS configuration with redirect_dir on,
@@ -23,7 +23,7 @@ RUN source /os-release && \
 # file exists on different layers. To minimize docker
 # image size, remove the overlapped files before copy.
 RUN mkdir /os_core_install
-COPY --from=clearlinux/os-core:latest / /os_core_install/
+COPY --from=clearlinux/httpd:latest / /os_core_install/
 RUN cd / && \
     find os_core_install | sed -e 's/os_core_install/install_root/' | xargs rm -d &> /dev/null || true
 
