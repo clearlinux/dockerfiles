@@ -7,7 +7,6 @@ env:
   - DOCKERFILE_DIR=cassandra
   - DOCKERFILE_DIR=cgit
   - DOCKERFILE_DIR=clr-installer-ci
-  - DOCKERFILE_DIR=clr-sdk
   - DOCKERFILE_DIR=elasticsearch
   - DOCKERFILE_DIR=flink
   - DOCKERFILE_DIR=golang
