@@ -6,7 +6,7 @@ load ../utils
 
 
 @test "Start nginx server" {
-    sudo docker run --name nginx-server --rm -d -p 8080:80 clearlinux/nginx
+    docker run --name nginx-server --rm -d -p 8080:80 clearlinux/nginx
     sleep 5
     run check_container_status nginx-server
     [ "$status" -eq 0 ]
@@ -17,7 +17,7 @@ load ../utils
 }
 
 @test "Stop nginx server" {
-    sudo docker stop nginx-server
+    docker stop nginx-server
     sleep 3
     run check_container_status nginx-server
     [ "$status" -eq 1 ]
