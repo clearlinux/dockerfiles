@@ -36,3 +36,5 @@ env:
 script:
   - cd $DOCKERFILE_DIR
   - docker build -t clearlinux/$DOCKERFILE_DIR .
+  - cd ..
+  - if [ -d "./tests/$DOCKERFILE_DIR" ]; then cd tests; make $DOCKERFILE_DIR; fi

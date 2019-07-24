@@ -5,7 +5,7 @@
 load ../utils
 
 @test "Start redis server" {
-    sudo docker run --name redis-server --rm -d clearlinux/redis redis-server --protected-mode no
+    docker run --name redis-server --rm -d clearlinux/redis redis-server --protected-mode no
     sleep 5 
     run check_container_status redis-server
     [ "$status" -eq 0 ]
@@ -18,8 +18,8 @@ load ../utils
     ipaddr="$output"
 
     # push two integers
-    sudo docker run --rm clearlinux/redis redis-cli -h $ipaddr lpush mylist x
-    sudo docker run --rm clearlinux/redis redis-cli -h $ipaddr lpush mylist y
+    docker run --rm clearlinux/redis redis-cli -h $ipaddr lpush mylist x
+    docker run --rm clearlinux/redis redis-cli -h $ipaddr lpush mylist y
 }
 
 @test "Redis LRANGE test" {
@@ -29,12 +29,12 @@ load ../utils
     ipaddr="$output"
 
     # push two integers
-    sudo docker run --rm clearlinux/redis redis-cli -h $ipaddr lrange mylist 0 -1
+    docker run --rm clearlinux/redis redis-cli -h $ipaddr lrange mylist 0 -1
 }
 
 
 @test "Stop redis server" {
-    sudo docker stop redis-server
+    docker stop redis-server
     sleep 3
     run check_container_status redis-server
     [ "$status" -eq 1 ]

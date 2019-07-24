@@ -23,9 +23,9 @@ check_os() {
 # otherwise, check the container name as the parameter
 check_container_status() {
     if [ -n $1 ]; then
-        sudo docker ps | grep $1 | grep Up
+        docker ps | grep $1 | grep Up
     else
-        sudo docker ps -l | grep Up
+        docker ps -l | grep Up
     fi
 }
 

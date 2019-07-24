@@ -6,7 +6,7 @@ load ../utils
 
 
 @test "Start memcached server" {
-    sudo docker run --name memcached-server --rm -d clearlinux/memcached
+    docker run --name memcached-server --rm -d clearlinux/memcached
     sleep 5
     run check_container_status memcached-server
     [ "$status" -eq 0 ]
@@ -23,7 +23,7 @@ load ../utils
 
 
 @test "Stop memcached server" {
-    sudo docker stop memcached-server
+    docker stop memcached-server
     sleep 3
     run check_container_status memcached-server
     [ "$status" -eq 1 ]
