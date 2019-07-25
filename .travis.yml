@@ -1,38 +1,9 @@
+language: ruby
+
 sudo: required
 
 services:
   - docker
 
-env:
-  - DOCKERFILE_DIR=cassandra
-  - DOCKERFILE_DIR=cgit
-  - DOCKERFILE_DIR=clr-installer-ci
-  - DOCKERFILE_DIR=elasticsearch
-  - DOCKERFILE_DIR=flink
-  - DOCKERFILE_DIR=golang
-  - DOCKERFILE_DIR=haproxy
-  - DOCKERFILE_DIR=httpd
-  - DOCKERFILE_DIR=iperf
-  - DOCKERFILE_DIR=machine-learning-ui
-  - DOCKERFILE_DIR=machine-learning
-  - DOCKERFILE_DIR=mariadb
-  - DOCKERFILE_DIR=memcached
-  - DOCKERFILE_DIR=mixer-ci
-  - DOCKERFILE_DIR=nginx
-  - DOCKERFILE_DIR=node
-  - DOCKERFILE_DIR=openjdk
-  - DOCKERFILE_DIR=os-core
-  - DOCKERFILE_DIR=rabbitmq
-  - DOCKERFILE_DIR=perl
-  - DOCKERFILE_DIR=php
-  - DOCKERFILE_DIR=php-fpm
-  - DOCKERFILE_DIR=postgres
-  - DOCKERFILE_DIR=python
-  - DOCKERFILE_DIR=redis
-  - DOCKERFILE_DIR=ruby
-  - DOCKERFILE_DIR=tensorflow
-  - DOCKERFILE_DIR=wordpress
-
 script:
-  - cd $DOCKERFILE_DIR
-  - docker build -t clearlinux/$DOCKERFILE_DIR .
+  - ./build-changed-containers.sh
