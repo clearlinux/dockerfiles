@@ -5,18 +5,16 @@
 load ../utils
 
 
-@test "Start nginx server" {
+@test "Connecting to nginx server" {
+    # start the container first
     docker run --name nginx-server --rm -d -p 8080:80 clearlinux/nginx
     sleep 5
     run check_container_status nginx-server
     [ "$status" -eq 0 ]
-}
 
-@test "Connecting to nginx server" {
     curl -svL http://localhost:8080/
-}
 
-@test "Stop nginx server" {
+    # stop the container
     docker stop nginx-server
     sleep 3
     run check_container_status nginx-server
