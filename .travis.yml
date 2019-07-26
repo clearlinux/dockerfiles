@@ -23,6 +23,7 @@ env:
   - DOCKERFILE_DIR=openjdk
   - DOCKERFILE_DIR=os-core
   - DOCKERFILE_DIR=rabbitmq
+  - DOCKERFILE_DIR=tomcat
   - DOCKERFILE_DIR=perl
   - DOCKERFILE_DIR=php
   - DOCKERFILE_DIR=php-fpm
