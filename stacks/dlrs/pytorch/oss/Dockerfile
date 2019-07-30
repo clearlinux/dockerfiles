@@ -1,11 +1,15 @@
 # OSS version of Pytorch on Clear OS
-FROM clearlinux
+ARG clear_ver
+FROM clearlinux/stacks-clearlinux:$clear_ver
 LABEL maintainer=otc-swstacks@intel.com
 
-ARG swupd_args
+# FIXME: Until Moby finds a way for saving ARGs in multi-stage builds (see https://github.com/moby/moby/issues/34129)
+# we have to re-declare clear_ver
+ARG clear_ver
+ARG swupd_args=$clear_ver
 
 # update os and install pytorch
-RUN swupd update $swupd_args && \
+RUN swupd update -m $swupd_args && \
     swupd bundle-add devpkg-openmpi \
     devpkg-libpng desktop-gnomelibs \
     openssh-server \

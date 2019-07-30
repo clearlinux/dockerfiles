@@ -1,26 +1,39 @@
 #---------------------------------------------------------------------
 # Base instance to build MKL based Tensorflow on Clear Linux
 #---------------------------------------------------------------------
-
-FROM clearlinux as base
+ARG clear_ver
+FROM clearlinux/stacks-clearlinux:$clear_ver as base
 LABEL maintainer=otc-swstacks@intel.com
+
+# FIXME: Until Moby finds a way for saving ARGs in multi-stage builds (see https://github.com/moby/moby/issues/34129)
+# we have to re-declare clear_ver
+ARG clear_ver
+ARG swupd_args=$clear_ver
 
 # tf with vnni support and bug fixes
 ARG TF_COMMIT_SHA=47ab68d265a96b6e7be06afd1b4b47e0114c0ee9
-ARG swupd_args
+ARG BAZEL_VERSION=0.24.0
 
 # update os and add required bundles
-RUN swupd update $swupd_args && \
-    swupd bundle-add machine-learning-basic git \
-    java-basic sysadmin-basic package-utils devpkg-zlib
+RUN swupd update -m $swupd_args && \
+    swupd bundle-add which git devpkg-opencv \
+    java-basic zip unzip devpkg-zlib sysadmin-basic \
+    python-data-science curl devpkg-openmpi wget package-utils
 
 RUN ln -s -f /usr/bin/pip3.7 /usr/bin/pip
 RUN ln -s -f /usr/bin/python3.7 /usr/bin/python
 
+# download and install bazel
+RUN mkdir /bazel && \
+    cd /bazel && \
+    curl -fSsL -O https://github.com/bazelbuild/bazel/releases/download/$BAZEL_VERSION/bazel-$BAZEL_VERSION-dist.zip && \
+    unzip bazel-$BAZEL_VERSION-dist.zip && \
+    env EXTRA_BAZEL_ARGS="--host_javabase=@local_jdk//:jdk" bash ./compile.sh && \
+    cp output/bazel /usr/bin/
+
 RUN pip install \
     keras_applications==1.0.6 \
     keras_preprocessing==1.0.9
-
 # clone build and install tensorflow 1.13.1
 WORKDIR /tensorflow_src
 RUN git clone https://github.com/tensorflow/tensorflow.git /tensorflow_src && \
@@ -57,18 +70,22 @@ RUN bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tf/
 #---------------------------------------------------------------------
 # Tensorflow with MKL-DNN on Clear Linux
 #---------------------------------------------------------------------
-
-FROM clearlinux
+ARG clear_ver
+FROM clearlinux/stacks-clearlinux:$clear_ver
 LABEL maintainer=otc-swstacks@intel.com
 
+# FIXME: Until Moby finds a way for saving ARGs in multi-stage builds (see https://github.com/moby/moby/issues/34129)
+# we have to re-declare clear_ver
+ARG clear_ver
+ARG swupd_args=$clear_ver
+
 ARG HOROVOD_VERSION=0.16.1
-ARG swupd_args
 
 # update os and add required bundles
-RUN swupd update $swupd_args && \
-    swupd bundle-add git \
+RUN swupd update -m $swupd_args && \
+    swupd bundle-add which git \
     openssh-server sysadmin-basic \
-    devpkg-openmpi python3-basic jupyter devpkg-opencv
+    devpkg-openmpi python3-basic jupyter
 
 RUN ln -s -f /usr/bin/pip3.7 /usr/bin/pip &&\
     ln -s -f /usr/bin/python3.7 /usr/bin/python
