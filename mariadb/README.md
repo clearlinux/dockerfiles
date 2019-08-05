@@ -70,7 +70,7 @@ AVX/AVX2:
 ...
 ```
 
-The side effect is the size of the container image almost got doubled because of two sets.
+The side effect is the size of the container image is bigger because of two sets binary included. For some size sensitive scenario, user can select the right binary only. 
 
 Extra Build ARGs
 ----------------
