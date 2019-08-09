@@ -1,0 +1,65 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-conf
+data:
+  nginx.conf: |
+    user nobody;
+    events {
+      worker_connections 768;
+    }
+
+    http {
+      access_log /var/log/nginx/access.log combined;
+      server {
+          root /usr/share/nginx/html;
+          location / {
+              autoindex on;
+          }
+      }
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clear-nginx-deployment
+spec:
+  selector:
+    matchLabels:
+      app: clear-nginx
+  template:
+    metadata:
+      labels:
+        app: clear-nginx
+    spec:
+      containers:
+      - name: clear-nginx
+        image: clearlinux/nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /etc/nginx
+          readOnly: true
+          name: nginx-conf
+      volumes:
+      - name: nginx-conf
+        configMap:
+          name: nginx-conf
+          items:
+            - key: nginx.conf
+              path: nginx.conf
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: clear-nginx-service
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: clear-nginx
+  type: NodePort
