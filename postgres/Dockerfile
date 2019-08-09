@@ -17,7 +17,7 @@ RUN source /os-release && \
     mkdir /install_root \
     && swupd os-install -V ${VERSION_ID} \
     --path /install_root --statedir /swupd-state \
-    --bundles=postgresql,su-exec --no-boot-update
+    --bundles=postgresql11,su-exec --no-boot-update
 
 # For some Host OS configuration with redirect_dir on,
 # extra data are saved on the upper layer when the same
@@ -32,14 +32,21 @@ FROM clearlinux/os-core:latest
 
 COPY --from=builder /install_root /
 
+ENV PATH $PATH:/usr/libexec/postgresql11
 ENV PGDATA /var/lib/pgsql/data
-RUN mkdir -p /run/postgresql && chown -R postgres:postgres /run/postgresql
-RUN mkdir -p "$PGDATA" && chown -R postgres:postgres "$PGDATA"
-VOLUME /var/lib/pgsql/data
+RUN sed -i "s|#listen_addresses.*|listen_addresses = '*'|" /usr/share/postgresql11/postgresql.conf.sample && \
+    mkdir -p /run/postgresql11 && chown -R postgres:postgres /run/postgresql11 && \
+    mkdir -p "$PGDATA" && chown -R postgres:postgres "$PGDATA" && \
+    mkdir /docker-entrypoint-initdb.d && \
+    mkdir -p /usr/local/bin
 
-RUN mkdir -p /usr/local/bin
-COPY bootstrap.sh /usr/local/bin
-ENTRYPOINT ["bootstrap.sh"]
+VOLUME /var/lib/pgsql/data
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh && \
+    ln -s /usr/local/bin/docker-entrypoint.sh / && \
+    ln -s /usr/share/postgresql11 /usr/share/postgresql
+
+ENTRYPOINT ["docker-entrypoint.sh"]
 
 EXPOSE 5432
 CMD ["postgres"]
