@@ -29,9 +29,9 @@ This container could be deployed on any kubernetes compatible cloud native clust
 
 Following template files as kubernete YAML registries for operator's reference:
 
-* nginx-service-deployment-simple.yaml: use default configurations to create nginx service on kubernetes cluster
-* nginx-service-deployment-customize-conf.yaml: demostrate how to use customized config file to replace default one.
-* nginx-service-deployment-persistent-volume.yaml: demostrate how to manage web server materials on persistent storage.
+* [nginx-service-deployment-simple.yaml](nginx-service-deployment-simple.yaml): use default configurations to create nginx service on kubernetes cluster
+* [nginx-service-deployment-customize-conf.yaml](nginx-service-deployment-customize-conf.yaml): demostrate how to use customized config file to replace default one.
+* [nginx-service-deployment-persistent-volume.yaml](nginx-service-deployment-persistent-volume.yaml): demostrate how to manage web server materials on persistent storage.
 
 Quick deployment for test:
 ```
