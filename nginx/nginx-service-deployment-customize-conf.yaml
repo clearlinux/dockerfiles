@@ -12,10 +12,10 @@ data:
     http {
       access_log /var/log/nginx/access.log combined;
       server {
-          root /usr/share/nginx/html;
-          location / {
-              autoindex on;
-          }
+        root /var/www/html;
+        location / {
+            autoindex on;
+        }
       }
     }
 ---
@@ -48,7 +48,6 @@ spec:
           items:
             - key: nginx.conf
               path: nginx.conf
-
 ---
 apiVersion: v1
 kind: Service
