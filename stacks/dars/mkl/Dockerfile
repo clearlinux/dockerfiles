@@ -1,38 +1,78 @@
-FROM clearlinux
-LABEL maintainer="otc-swstacks@intel.com"
-
+FROM clearlinux:latest AS builder
 ARG swupd_args
 
-WORKDIR /root
+# Move to latest Clear Linux release to ensure
+# that the swupd command line arguments are
+# correct
+RUN swupd update --no-boot-update $swupd_args
 
-# ldconfig configuration
-COPY dars.ld.so.conf .
-RUN cat dars.ld.so.conf >> /etc/ld.so.conf
+# Grab os-release info from the minimal base image so
+# that the new content matches the exact OS version
+COPY --from=clearlinux/os-core:latest /usr/lib/os-release /
 
-# OS update and bundle installation
-RUN swupd update $swupd_args && \
-    swupd bundle-add --skip-diskspace-check \
-    big-data-basic \
-    which
+# Install additional content in a target directory
+# using the os version from the minimal base
+RUN source /os-release && \
+    mkdir /install_root \
+    && swupd os-install -V ${VERSION_ID} \
+    --path /install_root --statedir /swupd-state \
+    --bundles=big-data-basic,cpio,os-core-update,which --no-boot-update \
+    && rm -rf /install_root/var/lib/swupd/*
 
-COPY profile /etc/profile
+# For some Host OS configuration with redirect_dir on,
+# extra data are saved on the upper layer when the same
+# file exists on different layers. To minimize docker
+# image size, remove the overlapped files before copy.
+RUN mkdir /os_core_install
+COPY --from=clearlinux/os-core:latest / /os_core_install/
+RUN find / os_core_install | sed -e 's/os_core_install/install_root/' | xargs rm -d &> /dev/null || true
 
+FROM clearlinux/os-core:latest
+LABEL maintainer=otc-swstacks@intel.com
 
-# start: MKL specific
-ENV MKL_INSTALLER=http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/15095/l_mkl_2019.2.187_online.tgz
-ENV MKL_WRAPPER=https://github.com/Intel-bigdata/mkl_wrapper_for_non_CDH/raw/master
-ENV MKL_TARGET_DIR=/opt/intel/mkl/wrapper
+ENV HOME=/root
 
-COPY silent.cfg .
-RUN swupd bundle-add curl cpio && \
-    curl ${MKL_INSTALLER} -o l_mkl.tgz && \
-    mkdir l_mkl && \
-    tar -xvf l_mkl.tgz -C l_mkl --strip-components=1 && \
-    l_mkl/install.sh -s silent.cfg && \
-    rm -rf l_mkl && \
-    mkdir -p ${MKL_TARGET_DIR} && \
-    curl -L ${MKL_WRAPPER}/mkl_wrapper.jar -o ${MKL_TARGET_DIR}/mkl_wrapper.jar && \
-    curl -L ${MKL_WRAPPER}/mkl_wrapper.so  -o ${MKL_TARGET_DIR}/mkl_wrapper.so && \
+# Configure openjdk11
+ENV JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk
+ENV PATH="${JAVA_HOME}/bin:${PATH}"
+
+# Environment variables to point to Hadoop,
+# Spark and YARN installation and configuration
+ENV HADOOP_HOME=/usr
+ENV HADOOP_CONF_DIR=/etc/hadoop
+ENV HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
+ENV HADOOP_DEFAULT_LIBEXEC_DIR=$HADOOP_HOME/libexec
+ENV HADOOP_IDENT_STRING=root
+ENV HADOOP_LOG_DIR=/var/log/hadoop
+ENV HADOOP_PID_DIR=/var/log/hadoop/pid
+ENV HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib/native"
+
+ENV HDFS_DATANODE_USER=root
+ENV HDFS_NAMENODE_USER=root
+ENV HDFS_SECONDARYNAMENODE_USER=root
+
+ENV SPARK_HOME=/usr/share/apache-spark
+ENV SPARK_CONF_DIR=/etc/spark
+
+ENV YARN_RESOURCEMANAGER_USER=root
+ENV YARN_NODEMANAGER_USER=root
+
+COPY --from=builder /install_root /
+
+COPY dars.ld.so.conf /etc/ld.so.conf
+
+COPY silent.cfg binaries/l_mkl_2019.4.243_online.tgz /
+
+RUN mkdir mkl && tar -xvf l_mkl_2019.4.243_online.tgz -C mkl --strip-components=1 && \
+    mkl/install.sh -s silent.cfg && \
+    rm -rf silent.cfg l_mkl_2019.4.243_online.tgz mkl && \
     ldconfig
 
-CMD ["/bin/sh"]
+COPY binaries/mkl_wrapper.so binaries/mkl_wrapper.jar /opt/intel/mkl/wrapper/
+
+RUN mkdir -p /etc/spark /etc/hadoop
+
+COPY spark_conf/* /etc/spark/
+COPY hadoop_conf/* /etc/hadoop/
+
+CMD ["/bin/bash"]
