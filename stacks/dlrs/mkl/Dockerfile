@@ -2,7 +2,7 @@
 # Base instance to build MKL based Tensorflow on Clear Linux
 #---------------------------------------------------------------------
 ARG clear_ver
-FROM clearlinux/stacks-clearlinux:$clear_ver as base
+FROM stacks-clearlinux:$clear_ver as base
 LABEL maintainer=otc-swstacks@intel.com
 
 # FIXME: Until Moby finds a way for saving ARGs in multi-stage builds (see https://github.com/moby/moby/issues/34129)
@@ -10,103 +10,87 @@ LABEL maintainer=otc-swstacks@intel.com
 ARG clear_ver
 ARG swupd_args=$clear_ver
 
-# tf with vnni support and bug fixes
-ARG TF_COMMIT_SHA=47ab68d265a96b6e7be06afd1b4b47e0114c0ee9
-ARG BAZEL_VERSION=0.24.0
-
 # update os and add required bundles
-RUN swupd update -m $swupd_args && \
-    swupd bundle-add which git devpkg-opencv \
-    java-basic zip unzip devpkg-zlib sysadmin-basic \
-    python-data-science curl devpkg-openmpi wget package-utils
+RUN swupd update -m $swupd_args \
+    && swupd bundle-add git curl wget \
+    java-basic sysadmin-basic package-utils devpkg-zlib
 
-RUN ln -s -f /usr/bin/pip3.7 /usr/bin/pip
-RUN ln -s -f /usr/bin/python3.7 /usr/bin/python
+# fix for stdlib not found issue
+RUN ln -sf /usr/lib64/libstdc++.so /usr/lib64/libstdc++.so.6
 
-# download and install bazel
-RUN mkdir /bazel && \
-    cd /bazel && \
-    curl -fSsL -O https://github.com/bazelbuild/bazel/releases/download/$BAZEL_VERSION/bazel-$BAZEL_VERSION-dist.zip && \
-    unzip bazel-$BAZEL_VERSION-dist.zip && \
-    env EXTRA_BAZEL_ARGS="--host_javabase=@local_jdk//:jdk" bash ./compile.sh && \
-    cp output/bazel /usr/bin/
-
-RUN pip install \
-    keras_applications==1.0.6 \
-    keras_preprocessing==1.0.9
-# clone build and install tensorflow 1.13.1
-WORKDIR /tensorflow_src
-RUN git clone https://github.com/tensorflow/tensorflow.git /tensorflow_src && \
-    git checkout -b quantized ${TF_COMMIT_SHA}
-RUN \
-  export PYTHON_BIN_PATH=/usr/bin/python3.7 &&\
-  export USE_DEFAULT_PYTHON_LIB_PATH=1 &&\
-  export CC_OPT_FLAGS="-march=native -mtune=native"  &&\
-  export TF_NEED_JEMALLOC=1  &&\
-  export TF_NEED_KAFKA=0 &&\
-  export TF_NEED_OPENCL_SYCL=0 &&\
-  export TF_NEED_GCP=0 &&\
-  export TF_NEED_HDFS=0 &&\
-  export TF_NEED_S3=0 &&\
-  export TF_ENABLE_XLA=1 &&\
-  export TF_NEED_GDR=0 &&\
-  export TF_NEED_VERBS=0 &&\
-  export TF_NEED_OPENCL=0 &&\
-  export TF_NEED_MPI=0 &&\
-  export TF_NEED_TENSORRT=0 &&\
-  export TF_SET_ANDROID_WORKSPACE=0 &&\
-  export TF_DOWNLOAD_CLANG=0 &&\
-  export TF_NEED_CUDA=0 &&\
-  export TF_BUILD_MAVX=MAVX512 &&\
-  export HTTP_PROXY=`echo $http_proxy | sed -e 's/\/$//'` &&\
-  export HTTPS_PROXY=`echo $https_proxy | sed -e 's/\/$//'`
-RUN ./configure
-RUN bazel --output_base=/tmp/bazel build --repository_cache=/tmp/cache \
-   --config=opt --config=mkl --copt=-O3 --copt=-mavx \
-   --copt=-mavx2 --copt=-march=skylake-avx512 --copt=-mfma  \
-   //tensorflow/tools/pip_package:build_pip_package
-RUN bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tf/
+COPY ./scripts/ /scripts
+# do not change the order of the devpkg-opencv bundle install
+# as it interferes with TensorFlow build
+RUN ./scripts/install_bazel.sh \
+    && ./scripts/install_tensorflow.sh
+RUN cd /usr/lib64/ && ln -sf libzstd.so.1.4.1 libzstd.so.1
+RUN swupd clean \
+    && swupd bundle-add devpkg-opencv devpkg-llvm \
+    && ./scripts/build_openvino_ie.sh
 
 #---------------------------------------------------------------------
 # Tensorflow with MKL-DNN on Clear Linux
 #---------------------------------------------------------------------
 ARG clear_ver
-FROM clearlinux/stacks-clearlinux:$clear_ver
+FROM stacks-clearlinux:$clear_ver
 LABEL maintainer=otc-swstacks@intel.com
 
 # FIXME: Until Moby finds a way for saving ARGs in multi-stage builds (see https://github.com/moby/moby/issues/34129)
 # we have to re-declare clear_ver
 ARG clear_ver
 ARG swupd_args=$clear_ver
-
-ARG HOROVOD_VERSION=0.16.1
+ARG HOROVOD_VERSION=0.16.4
+ARG NUMACTL_VERSION=2.0.12
 
 # update os and add required bundles
-RUN swupd update -m $swupd_args && \
-    swupd bundle-add which git \
-    openssh-server sysadmin-basic \
-    devpkg-openmpi python3-basic jupyter
+RUN swupd update -m $swupd_args \
+    && swupd bundle-add devpkg-openmpi devpkg-libX11 git openssh-server c-basic nodejs-basic curl python3-basic devpkg-gperftools \
+    && curl -fSsL -O https://github.com/numactl/numactl/releases/download/v${NUMACTL_VERSION}/numactl-${NUMACTL_VERSION}.tar.gz \
+    && tar xf numactl-${NUMACTL_VERSION}.tar.gz \
+    && cd numactl-${NUMACTL_VERSION} \
+    && ./configure \
+    && make \
+    && make install \
+    && rm -rf /numactl-${NUMACTL_VERSION}* \
+    && rm -rf /var/lib/swupd/* \
+    && ln -sf /usr/lib64/libstdc++.so /usr/lib64/libstdc++.so.6 \
+    && ln -sf /usr/lib64/libzstd.so.1.4.1 /usr/lib64/libzstd.so.1 \
+    && ln -s /usr/lib64/libtcmalloc.so /usr/lib/libtcmalloc.so
 
-RUN ln -s -f /usr/bin/pip3.7 /usr/bin/pip &&\
-    ln -s -f /usr/bin/python3.7 /usr/bin/python
-
-# install keras, nltk and jupyterhub
-RUN pip --no-cache-dir install \
-    keras_applications==1.0.6 \
-    keras_preprocessing==1.0.9 \
-    nltk==3.4 jupyterhub==0.9.4
-
-# install tensorflow
+# install tensorflow, ntlk, jupyterhub, opencv and horovod
 COPY --from=base /tmp/tf/*.whl /tmp/.
-RUN pip --no-cache-dir  install /tmp/tensorflow*.whl
+RUN pip --no-cache-dir install /tmp/tensorflow*.whl \
+    nltk jupyter jupyterlab jupyterhub opencv-python \
+    horovod==${HOROVOD_VERSION} \
+    && npm install -g configurable-http-proxy \
+    && pip --no-cache-dir install common \
+    && pip --no-cache-dir install notebook protobuf \
+    && pip --no-cache-dir install grpcio defusedxml==0.5.0 grpcio-tools test-generator==0.1.1 \
+    && npm cache clean --force \
+    && rm -rf /tmp/* \
+    && find /usr/lib/ -follow -type f -name '*.pyc' -delete \
+    && find /usr/lib/ -follow -type f -name '*.js.map' -delete 
 
-# install horovod
-RUN HOROVOD_WITH_TENSORFLOW=1 \
-    pip --no-cache-dir install --no-cache-dir horovod==${HOROVOD_VERSION}
+# install openvino inference engine
+COPY --from=base /dldt/inference-engine/bin/intel64/Release/lib/*.so /usr/local/lib/
+COPY --from=base /dldt/inference-engine/ie_bridges/python/bin/intel64/Release/python_api/python3.7/openvino/ /usr/local/lib/openvino/
 
-# clean up and init
-RUN rm -rf /tmp/*
+# init
+RUN echo "export LD_LIBRARY_PATH=/usr/local/lib" >> /.bashrc \
+    && echo "export PYTHONPATH=/usr/local/lib/openvino/inference_engine/:$PYTHONPATH" >> /.bashrc
+# init ie serving
+WORKDIR /ie_serving_py
+RUN git clone https://github.com/IntelAI/OpenVINO-model-server.git model_server \
+    && cp ./model_server/{setup.py,requirements.txt} /ie_serving_py \
+    && echo "OpenVINO Model Server version: 2019_R1.1" > /ie_serving_py/version \
+    && echo "Git commit: `cd ./model_server; git rev-parse HEAD; cd ..`" >> /ie_serving_py/version \
+    && echo "OpenVINO version: 2019_R1.1 src" >> /ie_serving_py/version \
+    && echo "# OpenVINO built with: https://github.com/opencv/dldt.git" >> /ie_serving_py/version \
++    && echo "# OpenVINO built with: https://github.com/IntelAI/OpenVINO-model-server.git" >>  /ie_serving_py/version \
+    && cp -r ./model_server/ie_serving /ie_serving_py/ie_serving \
+    && pip --no-cache-dir install . \
+    && rm -rf model_server
 WORKDIR /workspace
-COPY ./set_env.sh /workspace/
+COPY ./scripts/*.sh /workspace/scripts/
+COPY ./scripts/*.md /workspace/scripts/
 RUN chmod -R a+w /workspace
-ENTRYPOINT source /workspace/set_env.sh && /bin/bash
