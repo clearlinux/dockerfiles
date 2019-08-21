@@ -56,7 +56,10 @@ RUN set -ex \
 		echo 'daemonize = no'; \
 		echo; \
 		echo '[www]'; \
+        echo 'user = httpd'; \
+        echo 'group = httpd'; \
 		echo 'listen = 9000'; \
+        echo 'pm = dynamic'; \
 	} | tee php-fpm.d/zz-docker.conf
 
 WORKDIR /var/www/html
