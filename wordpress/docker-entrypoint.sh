@@ -25,11 +25,56 @@ file_env() {
 
 if [ "$1" == php-fpm ]; then
 	if [ "$(id -u)" = '0' ]; then
-		user='www-data'
-		group='www-data'
+		# php-fpm
+		user='httpd'
+		group='httpd'
 	else
 		user="$(id -u)"
 		group="$(id -g)"
+	fi
+
+	if [ ! -e index.php ] && [ ! -e wp-includes/version.php ]; then
+		# if the directory exists and WordPress doesn't appear to be installed AND the permissions of it are root:root, let's chown it (likely a Docker-created directory)
+		if [ "$(id -u)" = '0' ] && [ "$(stat -c '%u:%g' .)" = '0:0' ]; then
+			chown "$user:$group" .
+		fi
+
+		echo >&2 "WordPress not found in $PWD - copying now..."
+		if [ -n "$(ls -A)" ]; then
+			echo >&2 "WARNING: $PWD is not empty! (copying anyhow)"
+		fi
+		sourceTarArgs=(
+			--create
+			--file -
+			--directory /usr/src/wordpress
+			--owner "$user" --group "$group"
+		)
+		targetTarArgs=(
+			--extract
+			--file -
+		)
+		if [ "$user" != '0' ]; then
+			# avoid "tar: .: Cannot utime: Operation not permitted" and "tar: .: Cannot change mode to rwxr-xr-x: Operation not permitted"
+			targetTarArgs+=( --no-overwrite-dir )
+		fi
+		tar "${sourceTarArgs[@]}" . | tar "${targetTarArgs[@]}"
+		echo >&2 "Complete! WordPress has been successfully copied to $PWD"
+		if [ ! -e .htaccess ]; then
+			# NOTE: The "Indexes" option is disabled in the php:apache base image
+			cat > .htaccess <<-'EOF'
+				# BEGIN WordPress
+				<IfModule mod_rewrite.c>
+				RewriteEngine On
+				RewriteBase /
+				RewriteRule ^index\.php$ - [L]
+				RewriteCond %{REQUEST_FILENAME} !-f
+				RewriteCond %{REQUEST_FILENAME} !-d
+				RewriteRule . /index.php [L]
+				</IfModule>
+				# END WordPress
+			EOF
+			chown "$user:$group" .htaccess
+		fi
 	fi
 
 	# allow any of these "Authentication Unique Keys and Salts." to be specified via
@@ -108,6 +153,7 @@ if [ "$1" == php-fpm ]; then
 if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
 	$_SERVER['HTTPS'] = 'on';
 }
+
 EOPHP
 			chown "$user:$group" wp-config.php
 		elif [ -e wp-config.php ] && [ -n "$WORDPRESS_CONFIG_EXTRA" ] && [[ "$(< wp-config.php)" != *"$WORDPRESS_CONFIG_EXTRA"* ]]; then
@@ -177,7 +223,9 @@ EOPHP
 		if ! TERM=dumb php -- <<'EOPHP'
 <?php
 // database might not exist, so let's try creating it (just to be safe)
+
 $stderr = fopen('php://stderr', 'w');
+
 // https://codex.wordpress.org/Editing_wp-config.php#MySQL_Alternate_Port
 //   "hostname:port"
 // https://codex.wordpress.org/Editing_wp-config.php#MySQL_Sockets_or_Pipes
@@ -191,6 +239,7 @@ if (is_numeric($socket)) {
 $user = getenv('WORDPRESS_DB_USER');
 $pass = getenv('WORDPRESS_DB_PASSWORD');
 $dbName = getenv('WORDPRESS_DB_NAME');
+
 $maxTries = 10;
 do {
 	$mysql = new mysqli($host, $user, $pass, '', $port, $socket);
@@ -203,11 +252,13 @@ do {
 		sleep(3);
 	}
 } while ($mysql->connect_error);
+
 if (!$mysql->query('CREATE DATABASE IF NOT EXISTS `' . $mysql->real_escape_string($dbName) . '`')) {
 	fwrite($stderr, "\n" . 'MySQL "CREATE DATABASE" Error: ' . $mysql->error . "\n");
 	$mysql->close();
 	exit(1);
 }
+
 $mysql->close();
 EOPHP
 		then
