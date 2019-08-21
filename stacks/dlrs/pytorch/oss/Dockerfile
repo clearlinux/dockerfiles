@@ -1,6 +1,6 @@
 # OSS version of Pytorch on Clear OS
 ARG clear_ver
-FROM clearlinux/stacks-clearlinux:$clear_ver
+FROM stacks-clearlinux:$clear_ver
 LABEL maintainer=otc-swstacks@intel.com
 
 # FIXME: Until Moby finds a way for saving ARGs in multi-stage builds (see https://github.com/moby/moby/issues/34129)
@@ -14,8 +14,10 @@ RUN swupd update -m $swupd_args && \
     devpkg-libpng desktop-gnomelibs \
     openssh-server \
     sysadmin-basic \
+    devpkg-gperftools \
     machine-learning-pytorch \
-    git user-basic-dev
+    git user-basic-dev \ 
+    && ln -s /usr/lib64/libtcmalloc.so /usr/lib/libtcmalloc.so
 
 # install additional python packages for vision, horovod and notebook
 RUN pip --no-cache-dir install torchvision

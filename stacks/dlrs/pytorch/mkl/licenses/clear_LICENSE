@@ -13,6 +13,7 @@ AFL-2.0
 AFL-2.1
 AGPL-3.0
 AML
+ANTLR-PD
 APSL-2.0
 Apache-1.1
 Apache-2.0
@@ -81,6 +82,7 @@ LGPL-2.1+
 LGPL-2.1-only
 LGPL-3.0
 LGPL-3.0+
+LGPL-3.0-only
 LPL-1.0
 LPPL-1.0
 LPPL-1.2
@@ -108,7 +110,9 @@ OLDAP-2.8
 OML
 OSL-2.0
 OpenSSL
+PHP-3.0
 PHP-3.01
+Plexus
 PostgreSQL
 Public-Domain
 Python-2.0
@@ -122,9 +126,11 @@ SGI-B-1.0
 SGI-B-1.1
 SGI-B-2.0
 SISSL
+SPL-1.0
 Saxpath
 Sleepycat
 TCL
+TMate
 Unicode-TOU
 Unlicense
 Vim
@@ -152,5 +158,4 @@ The following licenses are not standard spdx identifiers:
 These are used for projects that have explicitly granted redistribution
 of the project source code, but don't have a typical OSI approved
 license identifier.
-
 

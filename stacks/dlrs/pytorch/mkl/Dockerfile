@@ -1,90 +1,60 @@
-# MKL version of Pytorch on Clear OS
+#--------------------------------------------------------------------
+# Base image to build MKL version of Pytorch on ClearLinux OS
+#--------------------------------------------------------------------
 ARG clear_ver
-FROM clearlinux/stacks-clearlinux:$clear_ver as base
+FROM stacks-clearlinux:$clear_ver as base
 LABEL maintainer=otc-swstacks@intel.com
-
 # FIXME: Until Moby finds a way for saving ARGs in multi-stage builds (see https://github.com/moby/moby/issues/34129)
 # we have to re-declare clear_ver
 ARG clear_ver
 ARG swupd_args=$clear_ver
-
-ARG PYTHON_VERSION=3.7.1
-ARG PYTORCH_COMMIT=4ac91b2
-ARG MINICONDA_VERSION=4.5.12
-ENV PATH /opt/conda/bin:$PATH
-
 # update os and add pkgs
-RUN swupd update -m $swupd_args && \
-    swupd bundle-add which git \
-    devpkg-opencv openssh-server \
-    sysadmin-basic devpkg-openmpi
+RUN swupd update -m $swupd_args && swupd bundle-add wget \
+    openssh-server devpkg-openmpi git which \
+    && rm -rf /var/lib/swupd/*
+# copy and execute installation scripts
+COPY ./scripts /scripts
+RUN cd /scripts \
+  && ./install_conda.sh \
+  && ./install_torch_deps.sh \ 
+  && ./install_pytorch.sh \
+  && ./install_torchvision.sh \
+  && ./install_utils.sh \
+  && cd / && rm -rf /scripts \
+  && rm -rf /opt/conda/pkgs/mkl*
 
-# install miniconda and necessary build packages
-ADD https://repo.continuum.io/miniconda/Miniconda3-$MINICONDA_VERSION-Linux-x86_64.sh  /tmp/miniconda.sh
-RUN chmod +x /tmp/miniconda.sh && \
-    /tmp/miniconda.sh -b -p /opt/conda && \
-    conda install -c conda-forge -y \
-    gcc=4.8.5 \
-    libgcc=7.2.0
+# cv2 deps
+RUN /opt/conda/bin/conda install -y -c conda-forge \
+    xorg-libsm xorg-libxrender \
+    xorg-libxext xorg-libxau \
+    && mv /opt/conda/compiler_compat/ld /opt/conda/compiler_compat/ld.orig \
+    && /opt/conda/bin/conda clean -afy \
+    && rm -f /opt/conda/bin/ffmpeg \
+    && rm -f /opt/conda/bin/jasper \
+    && find /opt/conda/ -follow -type f -name '*.a' -delete \
+    && find /opt/conda/ -follow -type f -name '*.pyc' -delete \
+    && find /opt/conda/ -follow -type f -name '*.js.map' -delete
+#--------------------------------------------------------------------
+# Pytorch CPU on ClearLinux
+#--------------------------------------------------------------------
+ARG clear_ver
+FROM stacks-clearlinux:$clear_ver
+LABEL maintainer=otc-swstacks@intel.com
+ARG clear_ver
+ARG swupd_args=$clear_ver
+# update os and add pkgs
+RUN swupd update -m $swupd_args && swupd bundle-add  \
+    openssh-server openmpi git sysadmin-basic devpkg-gperftools \
+    && rm -rf /var/lib/swupd/* \
+    && ln -s /usr/lib64/libtcmalloc.so /usr/lib/libtcmalloc.so
 
-#fix from:https://github.com/ContinuumIO/anaconda-issues/issues/5191
-RUN \
-    cd /opt/conda/lib && \
-    ln -sf libstdc++.so.6.0.25 libstdc++.so && \
-    ln -sf libstdc++.so.6.0.25 libstdc++.so.6
-
-RUN conda install -c anaconda -y python=$PYTHON_VERSION \
-    pip=18.1 \
-    setuptools=40.6.3 \
-    six=1.12.0 \
-    numpy=1.16.2 \
-    pyyaml=5.1 \
-    mkl=2019.1 \
-    mkl-include=2019.1 \
-    cython=0.29.6 \
-    typing=3.6.4 \
-    ninja=1.9.0
-
-RUN conda install -c conda-forge -y \
-    onnx=1.4.1 \
-    opencv
-
-# clone and build pytorch with
-RUN mv /opt/conda/compiler_compat/ld /opt/conda/compiler_compat/ld.orig
-RUN cd /tmp && git clone https://github.com/pytorch/pytorch.git
-WORKDIR /tmp/pytorch
-RUN git checkout ${PYTORCH_COMMIT} &&\
-    git submodule update --init
-RUN CMAKE_PREFIX_PATH="$(dirname $(which conda))/../" \
-    BUILD_ONNX_PYTHON=ON \
-    USE_OPENMP=ON \
-    pip install -v .
-
-# torchvision and jupyter
-RUN pip --no-cache-dir install \
-    torchvision==0.2.2 \
-    jupyterlab==0.35.4 \
-    jupyterhub==0.9.4 \
-    ipython==7.4.0 \
-    ipykernel==5.1.0 && \
-    python -m ipykernel install --user
-
-# install horovod
-RUN HOROVOD_WITH_TORCH=1 pip install --no-cache-dir horovod==0.16.0
-RUN mv /opt/conda/compiler_compat/ld.orig /opt/conda/compiler_compat/ld
-
-
-RUN pip --no-cache-dir install \
-    future==0.17.1 \
-    hypothesis==4.14.0 \
-    protobuf==3.7.0 \
-    networkx==2.2 \
-    opencv-python==4.1.0.25
-
-# clean up and init
-RUN conda clean -typsy &&\
-    rm -fr /tmp/*
+COPY --from=base /opt/conda/ /opt/conda
+#init
 WORKDIR /workspace
-RUN chmod -R a+w /workspace &&\
-    echo "export PATH=$PATH" >> ~/.bashrc
-CMD /bin/bash && source ~/.bashrc
+COPY ./scripts/generate_defaults.py /workspace
+RUN echo "export PATH=/opt/conda/bin:$PATH" >> /.bashrc \
+    && echo "export LD_LIBRARY_PATH=/usr/lib64:/opt/conda/lib" >> /.bashrc \
+    && /opt/conda/bin/python generate_defaults.py --generate \
+    && cat mkl_env.sh >> /.bashrc \
+    && chmod -R a+w /workspace 
+SHELL ["/bin/bash",  "-c",  "source /.bashrc"]
