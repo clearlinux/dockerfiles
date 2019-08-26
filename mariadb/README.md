@@ -78,14 +78,29 @@ Extra Build ARGs
 
 Default build args in Docker are on: https://docs.docker.com/engine/reference/builder/#arg
 
-## Run MariaDB on kubernetes cluster
+## Deploy with Kubernetes
 
-```
-1. kubectl create secret generic mariadb2 \
---from-literal= mysql-root-password= <your-mysql-root-pwd> \
---from-literal= mysql-user= <your-mysql-user> \
---from-literal= mysql-password = <your-mysql-pwd>
+This image can also be deployed on a Kubernetes cluster, such as [minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/).The following example YAML files are provided in the repository as reference for Kubernetes deployment:
 
-2. kubectl create -f mariadb-deployment.yaml
-```
+- [`mariadb-deployment.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/mariadb/mariadb-deployment.yaml): example using default configuration with secret to create a basic mariadb service.
 
+To deploy the image on a Kubernetes cluster:
+
+1. Review the contents of the template file and edit appropriately for your needs.
+
+2. Create secret for mariadb service.
+
+   ```
+   kubectl create secret generic mariadb \
+   --from-literal= mysql-root-password= <your-mysql-root-pwd> \
+   --from-literal= mysql-user= <your-mysql-user> \
+   --from-literal= mysql-password = <your-mysql-pwd>
+   ```
+
+3. Apply the YAML template configuraton.
+
+   ```
+   kubectl create -f mariadb-deployment.yaml
+   ```
+
+   
