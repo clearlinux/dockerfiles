@@ -29,15 +29,3 @@ Extra Build ARGs
 - ``swupd_args`` Specifies [SWUPD](https://github.com/clearlinux/swupd-client/blob/master/docs/swupd.1.rst#options) flags
 
 Default build args in Docker are on: https://docs.docker.com/engine/reference/builder/#arg
-
-## Run PostgreSQL on  kubernetes cluster
-
-```
-1. kubectl create secret generic postgres-config \
---from-literal= POSTGRES_DB= <your-postgres-db> \
---from-literal= POSTGRES_PASSWORD= <your-postgres-pwd> \
---from-literal= POSTGRES_USER = <your-postgres-user>
-
-2. kubectl create -f postgres-deployment.yaml
-```
-
