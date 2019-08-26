@@ -41,3 +41,21 @@ Default build args in Docker are on: https://docs.docker.com/engine/reference/bu
 kubectl create -f memcached-deployment.yaml
 ```
 
+## Deploy with Kubernetes
+
+This image can also be deployed on a Kubernetes cluster, such as [minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/).The following example YAML files are provided in the repository as reference for Kubernetes deployment:
+
+- [`memcached-deployment.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/memcached/memcached-deployment.yaml): example using default configuration to create a basic memcached service.
+
+To deploy the image on a Kubernetes cluster:
+
+1. Review the contents of the template file and edit appropriately for your needs.
+
+2. Apply the YAML template configuraton.
+
+   ```
+   kubectl create -f memcached-deployment.yaml
+   ```
+
+   
+
