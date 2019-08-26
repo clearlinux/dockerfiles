@@ -1,6 +1,0 @@
-apiVersion: 0.1.0
-kind: ksonnet.io/registry
-libraries:
-  dlrs-bench:
-    path: dlrs-bench
-    version: master
