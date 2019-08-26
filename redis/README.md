@@ -44,9 +44,20 @@ Default build args in Docker are on: https://docs.docker.com/engine/reference/bu
 
 
 
-## Run redis on  kubernetes cluster
+## Deploy with Kubernetes
 
-```
-kubectl create -f redis-deployment.yaml
-```
+This image can also be deployed on a Kubernetes cluster, such as [minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/).The following example YAML files are provided in the repository as reference for Kubernetes deployment:
 
+- [`redis-deployment.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/redis/redis-deployment.yaml): example using default configuration to create a basic redis service.
+
+To deploy the image on a Kubernetes cluster:
+
+1. Review the contents of the template file and edit appropriately for your needs.
+
+2. Apply the YAML template configuraton.
+
+   ```
+   kubectl create -f redis-deployment.yaml
+   ```
+
+   
