@@ -1,7 +1,7 @@
 # Clear Linux* OS `nginx` container image
 
 <!-- Required -->
-## What is this image?:
+## What is this image?
 
 `clearlinux/nginx` is a Docker image with `nginx` running on top of the
 [official clearlinux base image](https://hub.docker.com/_/clearlinux). 
