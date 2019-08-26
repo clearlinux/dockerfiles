@@ -1,0 +1,14 @@
+openvino:
+  model:
+    input: data
+    output: prob
+  port: 8001
+  claim_name: model-store-pvc
+  limits:
+    cpu: 4
+    memory: 4Gi
+  requests:
+    cpu: 500m
+    memory: 1Gi
+tfserving_proxy:
+  image: seldonio/tfserving-proxy:0.2
