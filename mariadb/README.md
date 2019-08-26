@@ -77,3 +77,15 @@ Extra Build ARGs
 - ``swupd_args`` Specifies [SWUPD](https://github.com/clearlinux/swupd-client/blob/master/docs/swupd.1.rst#options) flags
 
 Default build args in Docker are on: https://docs.docker.com/engine/reference/builder/#arg
+
+## Run MariaDB on kubernetes cluster
+
+```
+1. kubectl create secret generic mariadb2 \
+--from-literal= mysql-root-password= <your-mysql-root-pwd> \
+--from-literal= mysql-user= <your-mysql-user> \
+--from-literal= mysql-password = <your-mysql-pwd>
+
+2. kubectl create -f mariadb-deployment.yaml
+```
+
