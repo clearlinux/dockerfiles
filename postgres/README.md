@@ -30,14 +30,29 @@ Extra Build ARGs
 
 Default build args in Docker are on: https://docs.docker.com/engine/reference/builder/#arg
 
-## Run PostgreSQL on  kubernetes cluster
+## Deploy with Kubernetes
 
-```
-1. kubectl create secret generic postgres-config \
---from-literal= POSTGRES_DB= <your-postgres-db> \
---from-literal= POSTGRES_PASSWORD= <your-postgres-pwd> \
---from-literal= POSTGRES_USER = <your-postgres-user>
+This image can also be deployed on a Kubernetes cluster, such as [minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/).The following example YAML files are provided in the repository as reference for Kubernetes deployment:
 
-2. kubectl create -f postgres-deployment.yaml
-```
+- [`postgres-deployment.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/postgres/postgres-deployment.yaml): example using default configuration with secret to create a basic postgres service.
 
+To deploy the image on a Kubernetes cluster:
+
+1. Review the contents of the template file and edit appropriately for your needs.
+
+2. Create secret for postgres service.
+
+   ```
+   kubectl create secret generic postgres-config \
+   --from-literal= POSTGRES_DB= <your-postgres-db> \
+   --from-literal= POSTGRES_PASSWORD= <your-postgres-pwd> \
+   --from-literal= POSTGRES_USER = <your-postgres-user>
+   ```
+
+3. Apply the YAML template configuraton.
+
+   ```
+   kubectl create -f postgres-deployment.yaml
+   ```
+
+   
