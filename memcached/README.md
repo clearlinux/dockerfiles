@@ -57,5 +57,12 @@ To deploy the image on a Kubernetes cluster:
    kubectl create -f memcached-deployment.yaml
    ```
 
-   
 
+3. Install telnet bundle and connect to the service.
+
+   ```
+   swupd bundle-add netkit-telnet
+   telnet <nodeIP> 30100
+   ```
+
+   
