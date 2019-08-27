@@ -103,7 +103,7 @@ To deploy the image on a Kubernetes cluster:
    kubectl create -f mariadb-deployment.yaml
    ```
 
-4. Install Mariadb bundle and connect to the service
+4. Install Mariadb bundle and connect to the service, where 30001 is the port number defined in your service.
 
    ```
    swupd bundle-add mariadb

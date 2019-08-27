@@ -58,7 +58,7 @@ To deploy the image on a Kubernetes cluster:
    ```
 
 
-3. Install telnet bundle and connect to the service.
+3. Install telnet bundle and connect to the service, where 30100 is the port number defined in your service.
 
    ```
    swupd bundle-add netkit-telnet

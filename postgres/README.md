@@ -44,15 +44,24 @@ To deploy the image on a Kubernetes cluster:
 
    ```
    kubectl create secret generic postgres-config \
-   --from-literal= POSTGRES_DB= <your-postgres-db> \
-   --from-literal= POSTGRES_PASSWORD= <your-postgres-pwd> \
-   --from-literal= POSTGRES_USER = <your-postgres-user>
+   --from-literal=POSTGRES_DB=<your-postgres-db> \
+   --from-literal=POSTGRES_PASSWORD=<your-postgres-pwd> \
+   --from-literal=POSTGRES_USER=<your-postgres-user>
    ```
 
-3. Apply the YAML template configuraton.
+3. Apply the YAML template configuraton.  
 
    ```
    kubectl create -f postgres-deployment.yaml
    ```
 
+
+4. Install PostgreSQL bundle and connect to the service, where 30001 is the port number defined in your service.
+
+   ```
+   swupd bundle-add postgresql
+   psql -h<nodeIP> -U<your-postgres-user> --password -p30001 <your-postgres-db>
+   ```
+
    
+

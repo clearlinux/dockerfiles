@@ -61,7 +61,7 @@ To deploy the image on a Kubernetes cluster:
    ```
 
 
-3. Install redis bundle and connect to the service.
+3. Install redis bundle and connect to the service, where 30001 is the port number defined in your service.
 
    ```
    swupd bundle-add redis-native
