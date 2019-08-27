@@ -60,4 +60,12 @@ To deploy the image on a Kubernetes cluster:
    kubectl create -f redis-deployment.yaml
    ```
 
+
+3. Install redis bundle and connect to the service.
+
+   ```
+   swupd bundle-add redis-native
+   redis-cli -h <nodeIP> -p 30001
+   ```
+
    
