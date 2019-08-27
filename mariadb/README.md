@@ -82,25 +82,32 @@ Default build args in Docker are on: https://docs.docker.com/engine/reference/bu
 
 This image can also be deployed on a Kubernetes cluster, such as [minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/).The following example YAML files are provided in the repository as reference for Kubernetes deployment:
 
-- [`mariadb-deployment.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/mariadb/mariadb-deployment.yaml): example using default configuration with secret to create a basic mariadb service.
+- [`mariadb-deployment.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/mariadb/mariadb-deployment.yaml): example using default configuration with secret to create a basic Mariadb service.
 
 To deploy the image on a Kubernetes cluster:
 
 1. Review the contents of the template file and edit appropriately for your needs.
 
-2. Create secret for mariadb service.
+2. Create secret for Mariadb service.
 
    ```
    kubectl create secret generic mariadb \
-   --from-literal= mysql-root-password= <your-mysql-root-pwd> \
-   --from-literal= mysql-user= <your-mysql-user> \
-   --from-literal= mysql-password = <your-mysql-pwd>
+   --from-literal=mysql-root-password=<your-mysql-root-pwd> \
+   --from-literal=mysql-user=<your-mysql-user> \
+   --from-literal=mysql-password=<your-mysql-pwd>
    ```
 
 3. Apply the YAML template configuraton.
 
    ```
    kubectl create -f mariadb-deployment.yaml
+   ```
+
+4. Install Mariadb bundle and connect to the service
+
+   ```
+   swupd bundle-add mariadb
+   mysql -h<nodeIP> -u<your-mysql-user> -p<your-mysql-pwd> -P30001
    ```
 
    
