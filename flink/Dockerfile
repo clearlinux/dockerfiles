@@ -40,6 +40,15 @@ ENV FLINK_VERSION=1.7.2
 ENV FLINK_HOME=/usr/share/flink
 ENV PATH=$FLINK_HOME/bin:$PATH
 
+#create group and user flink
+RUN groupadd --system --gid=9999 flink && \
+    useradd --system --home-dir $FLINK_HOME --uid=9999 --gid=flink flink
+
+WORKDIR $FLINK_HOME
+
+#change owner for workdir
+RUN chown -R flink:flink .
+
 # Prepare to run
 RUN mkdir -p /var/log/flink
 
