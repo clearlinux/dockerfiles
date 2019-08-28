@@ -90,7 +90,7 @@ This image can also be deployed on a Kubernetes cluster, such as [minikube](http
 
 If you want to deploy `mariadb-deployment.yaml` on a Kubernetes cluster:
 
-2. Create secret for Mariadb service.
+1. Create secret for Mariadb service.
 
    ```
    kubectl create secret generic mariadb \
@@ -99,19 +99,18 @@ If you want to deploy `mariadb-deployment.yaml` on a Kubernetes cluster:
    --from-literal=mysql-password=<your-mysql-pwd>
    ```
 
-3. Apply the YAML template configuraton.
+2. Apply the YAML template configuraton.
 
    ```
    kubectl create -f mariadb-deployment.yaml
    ```
 
-4. Install Mariadb bundle and connect to the service, where 30001 is the port number defined in your service.
+3. Install Mariadb bundle and connect to the service, where 30001 is the port number defined in your service.
 
    ```
    swupd bundle-add mariadb
    mysql -h<nodeIP> -u<your-mysql-user> -p<your-mysql-pwd> -P30001
    ```
-
 
 
 
