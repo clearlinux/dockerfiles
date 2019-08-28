@@ -1,0 +1,59 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: mariadb-deploy-secret
+  labels:
+    app: mariadb
+    type: database
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mariadb
+        type: database
+    spec:
+      volumes:
+        - name: config-volume
+          configMap:
+            name: mysql-config
+      containers:
+        - name: mariadb
+          image: docker.io/clearlinux/mariadb
+          ports:
+            - containerPort: 3306
+              name: db-port
+          args: ["--bind-address=0.0.0.0"]
+          volumeMounts:
+            - name: config-volume
+              mountPath: /usr/share/defaults/mariadb
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb
+                  key: mysql-root-password
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb
+                  key: mysql-user
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb
+                  key: mysql-password
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mariadb-svc
+spec:
+  type: NodePort
+  ports:
+  - port: 3306
+    targetPort: 3306
+    nodePort: 30001
+  selector:
+    app: mariadb

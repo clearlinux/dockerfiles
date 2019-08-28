@@ -84,9 +84,11 @@ This image can also be deployed on a Kubernetes cluster, such as [minikube](http
 
 - [`mariadb-deployment.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/mariadb/mariadb-deployment.yaml): example using default configuration with secret to create a basic Mariadb service.
 
-To deploy the image on a Kubernetes cluster:
+- [`mariadb-deployment-conf.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/mariadb/mariadb-deployment-conf.yaml): example using your own custom configuration with secret to create a Mariadb service.
 
-1. Review the contents of the template file and edit appropriately for your needs.
+  
+
+If you want to deploy `mariadb-deployment.yaml` on a Kubernetes cluster:
 
 2. Create secret for Mariadb service.
 
@@ -101,6 +103,39 @@ To deploy the image on a Kubernetes cluster:
 
    ```
    kubectl create -f mariadb-deployment.yaml
+   ```
+
+4. Install Mariadb bundle and connect to the service, where 30001 is the port number defined in your service.
+
+   ```
+   swupd bundle-add mariadb
+   mysql -h<nodeIP> -u<your-mysql-user> -p<your-mysql-pwd> -P30001
+   ```
+
+
+
+
+If you want to deploy `mariadb-deployment-conf.yaml` on a Kubernetes cluster:
+
+1. Create secret for Mariadb service.
+
+   ```
+   kubectl create secret generic mariadb \
+   --from-literal=mysql-root-password=<your-mysql-root-pwd> \
+   --from-literal=mysql-user=<your-mysql-user> \
+   --from-literal=mysql-password=<your-mysql-pwd>
+   ```
+
+2. Create configmap for Mariadb service.
+
+   ```
+   kubectl create -f mariadb-config.yaml
+   ```
+
+3. Apply the YAML template configuration.
+
+   ```
+   kubectl create -f mariadb-deployment-conf.yaml
    ```
 
 4. Install Mariadb bundle and connect to the service, where 30001 is the port number defined in your service.
