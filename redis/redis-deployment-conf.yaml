@@ -1,0 +1,39 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: redis-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: redis-deployment
+      labels:
+        app: redis
+    spec:
+      volumes:
+        - name: config-volume
+          configMap:
+            name: redis-config
+      containers:
+      -  image: docker.io/clearlinux/redis
+         name: redis
+         command: ["redis-server"]
+         args: ["/etc/redis.conf","--protected-mode no"]
+         volumeMounts:
+           - name: config-volume
+             mountPath: /etc/redis.conf
+             subPath: redis.conf
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-svc
+spec:
+  type: NodePort
+  ports:
+  - port: 6379
+    targetPort: 6379
+    nodePort: 30001
+  selector:
+    app: redis
