@@ -55,7 +55,7 @@ This image can also be deployed on a Kubernetes cluster, such as [minikube](http
 
 If you want to deploy `redis-deployment.yaml` on a Kubernetes cluster:
 
-2. Apply the YAML template configuraton.
+1. Apply the YAML template configuraton.
 
    ```
    kubectl create -f redis-deployment.yaml
@@ -71,12 +71,6 @@ If you want to deploy `redis-deployment.yaml` on a Kubernetes cluster:
 
 
 If you want to deploy `redis-deployment-conf.yaml` on a Kubernetes cluster:
-
-1. Create configmap for redis service.
-
-   ```
-   kubectl create -f redis-config.yaml
-   ```
 
 2. Apply the YAML template configuration, here custom configuration is mounted in path: /etc/redis.conf
 
