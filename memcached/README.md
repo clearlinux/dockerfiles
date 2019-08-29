@@ -46,10 +46,11 @@ kubectl create -f memcached-deployment.yaml
 This image can also be deployed on a Kubernetes cluster, such as [minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/).The following example YAML files are provided in the repository as reference for Kubernetes deployment:
 
 - [`memcached-deployment.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/memcached/memcached-deployment.yaml): example using default configuration to create a basic memcached service.
+- [`memcached-deployment-conf.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/memcached/memcached-deployment-conf.yaml): example using your own custom configuration to create a  memcached service.
 
-To deploy the image on a Kubernetes cluster:
 
-1. Review the contents of the template file and edit appropriately for your needs.
+
+If you want to deploy `memcached-deployment.yaml` on a Kubernetes cluster:
 
 2. Apply the YAML template configuraton.
 
@@ -57,8 +58,24 @@ To deploy the image on a Kubernetes cluster:
    kubectl create -f memcached-deployment.yaml
    ```
 
+2. Install telnet bundle and connect to the service, where 30100 is the port number defined in your service.
 
-3. Install telnet bundle and connect to the service, where 30100 is the port number defined in your service.
+   ```
+   swupd bundle-add netkit-telnet
+   telnet <nodeIP> 30100
+   ```
+
+   
+
+If you want to deploy `memcached-deployment-conf.yaml` on a Kubernetes cluster:
+
+1. Apply the YAML template configuraton.
+
+   ```
+   kubectl create -f memcached-deployment-conf.yaml
+   ```
+
+2. Install telnet bundle and connect to the service, where 30100 is the port number defined in your service.
 
    ```
    swupd bundle-add netkit-telnet

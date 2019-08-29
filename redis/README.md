@@ -72,16 +72,17 @@ If you want to deploy `redis-deployment.yaml` on a Kubernetes cluster:
 
 If you want to deploy `redis-deployment-conf.yaml` on a Kubernetes cluster:
 
-2. Apply the YAML template configuration, here custom configuration is mounted in path: /etc/redis.conf
+1. Apply the YAML template configuration, here custom configuration is mounted in path: /etc/redis.conf
 
    ```
    kubectl create -f redis-deployment-conf.yaml
    ```
 
-3. Install redis bundle and connect to the service, where 30001 is the port number defined in your service.
+2. Install redis bundle and connect to the service, where 30001 is the port number defined in your service.
 
    ```
    swupd bundle-add redis-native
    redis-cli -h <nodeIP> -p 30001
    ```
 
+   
