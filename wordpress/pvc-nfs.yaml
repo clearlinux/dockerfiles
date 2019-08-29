@@ -1,0 +1,33 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: example-nfs
+provisioner: example.com/nfs
+mountOptions:
+  - vers=4.1
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc-db
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "example-nfs"
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 500Mi
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc-wp
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "example-nfs"
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 500Mi
