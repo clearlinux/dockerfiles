@@ -6,11 +6,12 @@ metadata:
     type: local
 spec:
   capacity:
-    storage: 2Gi
+    storage: 500Mi
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/data/pv-1"
+    path: "/tmp/data/pv-1"
+  persistentVolumeReclaimPolicy: Recycle
 ---
 kind: PersistentVolume
 apiVersion: v1
@@ -20,8 +21,9 @@ metadata:
     type: local
 spec:
   capacity:
-    storage: 2Gi
+    storage: 500Mi 
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/data/pv-2"
+    path: "/tmp/data/pv-2"
+  persistentVolumeReclaimPolicy: Recycle

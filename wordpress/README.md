@@ -56,7 +56,7 @@ with containers mysql(mariadb) and nginx.
      docker-compose up
      ```
      The configuration is defined in the
-     [`docker-compose.yml`](docker-compose.yml)
+     [`docker-compose.yml`](https://github.com/clearlinux/dockerfiles/blob/master/wordpress/docker-compose.yml)
 
    * List wordpress containers info:
      ```
@@ -82,40 +82,82 @@ This image can also be deployed on a Kubernetes cluster, such as
 following example YAML files are provided in the repository as
 reference for Kubernetes deployment:
 
-   * [`pv-local.yaml`](pv-local.yaml):
-     persistent volume for wordpress.
-   * [`mysql-deployment.yaml`](mysql-deployment.yaml):
+   * [`pv-local.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/wordpress/pv-local.yaml), [`pvc-local.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/wordpress/pvc-local.yaml):
+     local persistent volumes for databse and wordpress.
+   * [`nfs-deployment.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/wordpress/nfs-deployment.yaml), [`pvc-nfs.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/wordpress/pvc-nfs.yaml):
+     nfs provisioner and volumes for database and wordpress, modified from
+     [nfs](https://github.com/kubernetes-incubator/external-storage/tree/master/nfs)
+   * [`mysql-deployment.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/wordpress/mysql-deployment.yaml):
      database deployment for wordpress.
-   * [`wordpress-deployment.yaml`](wordpress-deployment.yaml):
+   * [`wordpress-deployment.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/wordpress/wordpress-deployment.yaml):
      example wordpress plus nginx as web server.
-   * [`kustomization.yaml`](kustomization.yaml):
-     pack above together as the one-shot resource yaml file to deploy wordpress. 
 
 The example utilies nginx, mariadb and wordpress containers. All are Clear Linux
 published ones on [official clearlinux base
 image](https://hub.docker.com/_/clearlinux).
-To deploy the image on a Kubernetes cluster you can simply run:
+To deploy the image on a Kubernetes cluster you have two volumes configuration
+choices:
+
+   * Use local volume, not appropriate for scaling on multi-node cluster.
+     ```
+     kubectl apply -f pv-local.yaml
+     kubectl apply -f pvc-local.yaml
+     ```
+   * Use nfs volume, capable for scaling on multi-node cluster.
+     ```
+     kubectl apply -f rbac.yaml
+     kubectl apply -f nfs-deployment.yaml
+     kubectl apply -f pvc-nfs.yaml
+     ```
+
+Once the persistent volumes got created, you can continue the wordpress
+deployment.
+
+1. Create secret password for database.
    ```
-   kubectl apply -k .
+   kubectl apply -f secret.yaml
    ```
 
-1. Check if the pods are running well.
+2. Deploy database and wordpress.
+   ```
+   kubectl apply -f mysql-deployment.yaml
+   kubectl apply -f wordpress-deployment.yaml
+   ```
+
+3. Then check if the pods are running well.
    ```
    kubectl get pods -o wide
    ```
 
-2. Get wordpress PORT and IP
+4. Get wordpress PORT and IP
    ```
    kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services wordpress
    kubectl get nodes -o jsonpath="{.items[0].status.addresses[0].address}"
    ```
 
-3. Edit web/blog in wordpress:
+5. Edit web/blog in wordpress:
    Open one brower to connect the wordpress blog with PORT and IP got on step 2.
    ```
    http://$IP:$PORT
    ```
 
+If using nfs volumes, you can scale the wordpress depolyment.
+   ```
+   kubectl scale deployments/wordpress --replicas=4
+   ```
+
+There are two scripts for deploy/clean the wordpress in one-shot command.
+   * Use local volume, [`deploy-local.sh`](https://github.com/clearlinux/dockerfiles/blob/master/wordpress/).
+   ```
+   ./deploy-local.sh          # deploy the wordpress
+   ./deploy-local.sh down     # destroy and clean the wordpress
+   ```
+
+   * Use nfs volume, [`deploy-nfs.sh`](https://github.com/clearlinux/dockerfiles/blob/master/wordpress/).
+   ```
+   ./deploy-nfs.sh          # deploy the wordpress
+   ./deploy-nfs.sh down     # destroy and clean the wordpress
+   ```
 
 <!-- Required -->
 ## Build and modify:

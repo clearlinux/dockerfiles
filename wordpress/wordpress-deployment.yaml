@@ -14,19 +14,6 @@ spec:
 #  type: LoadBalancer
   type: NodePort
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: wp-pv-claim
-  labels:
-    app: wordpress
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
----
 kind: ConfigMap
 apiVersion: v1
 metadata:
@@ -100,7 +87,7 @@ spec:
       volumes:
       - name: wordpress-persistent-storage
         persistentVolumeClaim:
-          claimName: wp-pv-claim
+          claimName: pvc-wp
       # Add the ConfigMap we declared above as a volume for the pod
       - name: nginx-config-volume
         configMap:
