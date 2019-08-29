@@ -125,12 +125,6 @@ If you want to deploy `mariadb-deployment-conf.yaml` on a Kubernetes cluster:
    --from-literal=mysql-password=<your-mysql-pwd>
    ```
 
-2. Create configmap for Mariadb service.
-
-   ```
-   kubectl create -f mariadb-config.yaml
-   ```
-
 3. Apply the YAML template configuration.
 
    ```
