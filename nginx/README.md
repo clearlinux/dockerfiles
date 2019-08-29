@@ -68,12 +68,12 @@ This image can also be deployed on a Kubernetes cluster, such as
 following example YAML template files are provided in the repository as
 reference for Kubernetes deployment:
 
-   * [`nginx-service-deployment-simple.yaml`](nginx-service-deployment-simple.yaml):
+   * [`nginx-service-deployment-simple.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/nginx/nginx-service-deployment-simple.yaml):
      example using default configuration to create a basic nginx service.
-   * [`nginx-service-deployment-customize-conf.yaml`](nginx-service-deployment-customize-conf.yaml):
+   * [`nginx-service-deployment-customize-conf.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/nginx/nginx-service-deployment-customize-conf.yaml):
      example using a customized nginx.conf configuration file to replace
      default one.
-   * [`nginx-service-deployment-persistent-volume.yaml`](nginx-service-deployment-persistent-volume.yaml):
+   * [`nginx-service-deployment-persistent-volume.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/nginx/nginx-service-deployment-persistent-volume.yaml):
      example using persistent storage for web server content.
 
 To deploy the image on a Kubernetes cluster:
