@@ -61,11 +61,11 @@ COPY --from=builder /install_root /
 
 COPY dars.ld.so.conf /etc/ld.so.conf
 
-COPY silent.cfg binaries/l_mkl_2019.4.243_online.tgz /
+COPY silent.cfg binaries/l_mkl_2019.2.187_online.tgz /
 
-RUN mkdir mkl && tar -xvf l_mkl_2019.4.243_online.tgz -C mkl --strip-components=1 && \
+RUN mkdir mkl && tar -xvf l_mkl_2019.2.187_online.tgz -C mkl --strip-components=1 && \
     mkl/install.sh -s silent.cfg && \
-    rm -rf silent.cfg l_mkl_2019.4.243_online.tgz mkl && \
+    rm -rf silent.cfg l_mkl_2019.2.187_online.tgz mkl && \
     ldconfig
 
 COPY binaries/mkl_wrapper.so binaries/mkl_wrapper.jar /opt/intel/mkl/wrapper/
