@@ -51,6 +51,23 @@ image](https://hub.docker.com/_/rabbitmq).
     ```
     docker run --rm -it --hostname my-rabbit --name some-rabbit clearlinux/rabbitmq
     ```
+### Deploy cluster nodes
+RabbitMQ nodes and CLI tools (e.g. rabbitmqctl) use a cookie to determine whether they are allowed to communicate with each other. For two nodes to be able to communicate they must have the same shared secret called the Erlang cookie.
+
+For setting a consistent cookie (especially useful for clustering but also for remote/cross-container administration via rabbitmqctl), use RABBITMQ_ERLANG_COOKIE:
+```
+docker run --rm -d --hostname some-rabbit --network some-network --name some-rabbit -e RABBITMQ_ERLANG_COOKIE='secret cookie here' clearlinux/rabbitmq
+```
+
+This can then be used from a separate instance to connect and list its users for example:
+```
+docker run --rm -it --network some-network -e RABBITMQ_ERLANG_COOKIE='secret cookie here' clearlinux/rabbitmq bash
+root@9b26d9235f73/ # rabbitmqctl -n rabbit@some-rabbit list_users
+Listing users ...
+user    tags
+guest   [administrator]
+```
+See the RabbitMQ [Clustering Guide](https://www.rabbitmq.com/clustering.html) for more information.
 
 <!-- Required -->
 ## Build and modify:
