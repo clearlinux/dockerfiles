@@ -15,6 +15,8 @@ spec:
           imagePullPolicy: "IfNotPresent"
           ports:
             - containerPort: 5432
+          # customize your conf here
+          args: ["-c", "max_connections=666", "-c", "shared_buffers=1GB"]
           env:
             - name: POSTGRES_DB
               valueFrom:
@@ -47,4 +49,3 @@ spec:
      nodePort: 30001
   selector:
    app: postgres
-

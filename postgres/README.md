@@ -36,9 +36,11 @@ This image can also be deployed on a Kubernetes cluster, such as [minikube](http
 
 - [`postgres-deployment.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/postgres/postgres-deployment.yaml): example using default configuration with secret to create a basic postgres service.
 
-To deploy the image on a Kubernetes cluster:
+- [`postgres-deployment-conf.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/postgres/postgres-deployment-conf.yaml): example using your own custom configuration with secret to create  postgres service.
 
-1. Review the contents of the template file and edit appropriately for your needs.
+  
+
+If you want to deploy `postgres-deployment.yaml` on a Kubernetes cluster:
 
 2. Create secret for postgres service.
 
@@ -55,8 +57,33 @@ To deploy the image on a Kubernetes cluster:
    kubectl create -f postgres-deployment.yaml
    ```
 
+3. Install PostgreSQL bundle and connect to the service, where 30001 is the port number defined in your service.
 
-4. Install PostgreSQL bundle and connect to the service, where 30001 is the port number defined in your service.
+   ```
+   swupd bundle-add postgresql
+   psql -h<nodeIP> -U<your-postgres-user> --password -p30001 <your-postgres-db>
+   ```
+
+   
+
+If you want to deploy `postgres-deployment-conf.yaml` on a Kubernetes cluster:
+
+1. Create secret for postgres service.
+
+   ```
+   kubectl create secret generic postgres-config \
+   --from-literal=POSTGRES_DB=<your-postgres-db> \
+   --from-literal=POSTGRES_PASSWORD=<your-postgres-pwd> \
+   --from-literal=POSTGRES_USER=<your-postgres-user>
+   ```
+
+2. Apply the YAML template configuraton.  
+
+   ```
+   kubectl create -f postgres-deployment-conf.yaml
+   ```
+
+3. Install PostgreSQL bundle and connect to the service, where 30001 is the port number defined in your service.
 
    ```
    swupd bundle-add postgresql
