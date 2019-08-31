@@ -19,11 +19,14 @@ set -u
 set -o pipefail
 
 export ARCH=skylake-avx512
+export TUNE=cascadelake
+export OPTM=3
 export TF_BRANCH=r1.14
+export TF_TAG=v1.14.0
 export PYTHON_BIN_PATH=/usr/bin/python
 export PROJECT=tensorflow
 export USE_DEFAULT_PYTHON_LIB_PATH=1
-export CC_OPT_FLAGS="-O3 -march=${ARCH} "
+export CC_OPT_FLAGS="-march=${ARCH} -mtune=native"
 export TF_NEED_JEMALLOC=1
 export TF_NEED_KAFKA=0
 export TF_NEED_OPENCL_SYCL=0
@@ -59,7 +62,7 @@ python_pkgs(){
 
 get_project() {
   git clone https://github.com/${PROJECT}/${PROJECT}.git 
-  cd tensorflow && git checkout ${TF_BRANCH}
+  cd tensorflow && git checkout -b ${TF_BRANCH} ${TF_TAG}
 }
 
 build () {
@@ -68,10 +71,13 @@ build () {
 
   # build TF
   bazel --output_base=/tmp/bazel build  \
-  --repository_cache=/tmp/cache --config=opt \
-  --config=mkl --cxxopt="-D_GLIBCXX_USE_CXX12_ABI=0" \
-  --copt=-O3 --copt=-march=${ARCH} \
+  --repository_cache=/tmp/cache \
+  --config=opt --config=mkl --copt=-mfma \
+  --copt=-O${OPTM} --copt=-Wa,-mfence-as-lock-add=yes \
+  --copt=-march=${ARCH}  --copt=-mtune=native \
    //tensorflow/tools/pip_package:build_pip_package
+
+  # generate pip package
   bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tf/
 }
 

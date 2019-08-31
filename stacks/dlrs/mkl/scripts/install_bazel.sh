@@ -18,7 +18,7 @@ set -e
 set -u
 set -o pipefail
 
-export BAZEL_VERSION=0.26.1
+export BAZEL_VERSION=0.25.2
 # download and install bazel
 mkdir /bazel && cd /bazel 
 curl -fSsL -O https://github.com/bazelbuild/bazel/releases/download/$BAZEL_VERSION/bazel-$BAZEL_VERSION-dist.zip
