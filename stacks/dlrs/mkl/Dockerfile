@@ -41,6 +41,7 @@ ARG clear_ver
 ARG swupd_args=$clear_ver
 ARG HOROVOD_VERSION=0.16.4
 ARG NUMACTL_VERSION=2.0.12
+ARG MODEL_SERVER_TAG=v2019.1.1
 
 # update os and add required bundles
 RUN swupd update -m $swupd_args \
@@ -54,7 +55,7 @@ RUN swupd update -m $swupd_args \
     && rm -rf /numactl-${NUMACTL_VERSION}* \
     && rm -rf /var/lib/swupd/* \
     && ln -sf /usr/lib64/libstdc++.so /usr/lib64/libstdc++.so.6 \
-    && ln -sf /usr/lib64/libzstd.so.1.4.1 /usr/lib64/libzstd.so.1 \
+    && ln -sf /usr/lib64/libzstd.so.1.4.* /usr/lib64/libzstd.so.1 \
     && ln -s /usr/lib64/libtcmalloc.so /usr/lib/libtcmalloc.so
 
 # install tensorflow, ntlk, jupyterhub, opencv and horovod
@@ -65,6 +66,7 @@ RUN pip --no-cache-dir install /tmp/tensorflow*.whl \
     && npm install -g configurable-http-proxy \
     && pip --no-cache-dir install common \
     && pip --no-cache-dir install notebook protobuf \
+    && pip --no-cache-dir install numpy tensorflow-serving-api google-cloud-storage boto3 jsonschema falcon cheroot \
     && pip --no-cache-dir install grpcio defusedxml==0.5.0 grpcio-tools test-generator==0.1.1 \
     && npm cache clean --force \
     && rm -rf /tmp/* \
@@ -77,16 +79,16 @@ COPY --from=base /dldt/inference-engine/ie_bridges/python/bin/intel64/Release/py
 
 # init
 RUN echo "export LD_LIBRARY_PATH=/usr/local/lib" >> /.bashrc \
-    && echo "export PYTHONPATH=/usr/local/lib/openvino/inference_engine/:$PYTHONPATH" >> /.bashrc
+    && echo "export PYTHONPATH=/usr/local/lib" >> /.bashrc
 # init ie serving
 WORKDIR /ie_serving_py
 RUN git clone https://github.com/IntelAI/OpenVINO-model-server.git model_server \
-    && cp ./model_server/{setup.py,requirements.txt} /ie_serving_py \
-    && echo "OpenVINO Model Server version: 2019_R1.1" > /ie_serving_py/version \
+    && cd model_server && git checkout ${MODEL_SERVER_TAG} && cd .. \
+    && cp ./model_server/setup.py /ie_serving_py \
+    && echo "OpenVINO Model Server version: ${MODEL_SERVER_TAG}" > /ie_serving_py/version \
     && echo "Git commit: `cd ./model_server; git rev-parse HEAD; cd ..`" >> /ie_serving_py/version \
-    && echo "OpenVINO version: 2019_R1.1 src" >> /ie_serving_py/version \
+    && echo "OpenVINO version: ${MODEL_SERVER_TAG} src" >> /ie_serving_py/version \
     && echo "# OpenVINO built with: https://github.com/opencv/dldt.git" >> /ie_serving_py/version \
-+    && echo "# OpenVINO built with: https://github.com/IntelAI/OpenVINO-model-server.git" >>  /ie_serving_py/version \
     && cp -r ./model_server/ie_serving /ie_serving_py/ie_serving \
     && pip --no-cache-dir install . \
     && rm -rf model_server
