@@ -12,11 +12,13 @@ COPY --from=clearlinux/os-core:latest /usr/lib/os-release /
 
 # Install additional content in a target directory
 # using the os version from the minimal base
+# Remove openjdk src package to optimize docker image size
 RUN source /os-release && \
     mkdir /install_root \
     && swupd os-install -V ${VERSION_ID} \
     --path /install_root --statedir /swupd-state \
-    --bundles=cassandra,os-core-plus,su-exec --no-boot-update
+    --bundles=cassandra,os-core-plus,su-exec --no-boot-update \
+    && rm /install_root/usr/lib/jvm/*/src.zip
 
 # For some Host OS configuration with redirect_dir on,
 # extra data are saved on the upper layer when the same
