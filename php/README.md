@@ -52,14 +52,14 @@ image](https://hub.docker.com/_/php).
 2. Start a container using the examples below:
   
    Create a Dockerfile in your own php project
-  ```
+    ```
     FROM clearlinux/php:latest
     COPY . /usr/src/myphpapp
     WORKDIR /usr/src/myphpapp
     CMD [ "php", "./my-script.php" ]
     ```
 
-  Then, run the commands to build and run the Docker image:
+3. Run the commands to build and run the Docker image:
     ```
     $ docker build -t my-own-php-instance .
     $ docker run -it --rm --name my-running-php my-own-php-instance
@@ -67,7 +67,6 @@ image](https://hub.docker.com/_/php).
 
 <!-- Optional -->
 ### Deploy with Kubernetes
-
 
 <!-- Required -->
 ## Build and modify:
