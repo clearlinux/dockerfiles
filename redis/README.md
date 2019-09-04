@@ -64,6 +64,47 @@ image](https://hub.docker.com/_/redis).
 <!-- Optional -->
 ### Deploy with Kubernetes
 
+This image can also be deployed on a Kubernetes cluster, such as [minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/).The following example YAML files are provided in the repository as reference for Kubernetes deployment:
+
+- [`redis-deployment.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/redis/redis-deployment.yaml): example using default configuration to create a basic redis service.
+- [`redis-deployment-conf.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/redis/redis-deployment-conf.yaml): example using your own custom configuration to create a redis service.
+
+
+
+If you want to deploy `redis-deployment.yaml` on a Kubernetes cluster:
+
+1. Apply the YAML template configuraton.
+
+   ```
+   kubectl create -f redis-deployment.yaml
+   ```
+
+2. Install redis bundle and connect to the service, where 30001 is the port number defined in your service.
+
+   ```
+   swupd bundle-add redis-native
+   redis-cli -h <nodeIP> -p 30001
+   ```
+
+
+
+If you want to deploy `redis-deployment-conf.yaml` on a Kubernetes cluster:
+
+1. Apply the YAML template configuration, here custom configuration is mounted in path: /etc/redis.conf
+
+   ```
+   kubectl create -f redis-deployment-conf.yaml
+   ```
+
+2. Install redis bundle and connect to the service, where 30001 is the port number defined in your service.
+
+   ```
+   swupd bundle-add redis-native
+   redis-cli -h <nodeIP> -p 30001
+   ```
+
+   
+
 <!-- Required -->
 ## Build and modify:
 
