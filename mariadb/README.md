@@ -59,10 +59,52 @@ Docker Hub.
     ```
     
     
+
 <!-- Optional -->
 ### Deploy with Kubernetes
 
+This image can also be deployed on a Kubernetes cluster, such as [minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/).The following example YAML files are provided in the repository as reference for Kubernetes deployment:
+
+- [`mariadb-deployment.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/mariadb/mariadb-deployment.yaml): example using default configuration with secret to create a basic Mariadb service.
+
+- [`mariadb-deployment-conf.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/mariadb/mariadb-deployment-conf.yaml): example using your own custom configuration with secret to create a Mariadb service.
+
+  
+
+Steps to deploy mariadb on a Kubernetes cluster:
+
+1. Create secret for Mariadb service.
+
+   ```
+   kubectl create secret generic mariadb \
+   --from-literal=mysql-root-password=<your-mysql-root-pwd> \
+   --from-literal=mysql-user=<your-mysql-user> \
+   --from-literal=mysql-password=<your-mysql-pwd>
+   ```
+
+2. If you want to deploy `mariadb-deployment.yaml`
+
+   ```
+   kubectl create -f mariadb-deployment.yaml
+   ```
+
+   Or if you want to deploy `mariadb-deployment-conf.yaml`  
+
+   ```
+   kubectl create -f mariadb-deployment-conf.yaml
+   ```
+
+3. Install Mariadb bundle and connect to the service, where 30001 is the port number defined in your service.
+
+   ```
+   swupd bundle-add mariadb
+   mysql -h<nodeIP> -u<your-mysql-user> -p<your-mysql-pwd> -P30001
+   ```
+
+
+
 <!-- Required -->
+
 ## Build and modify:
 
 The Dockerfiles for all Clear Linux* OS based container images are available at
