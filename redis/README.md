@@ -50,13 +50,11 @@ image](https://hub.docker.com/_/redis).
     ```
 
 2. Start a container using the examples below:
-
    ```
    docker run --name some-redis --network some-network -d clearlinux/redis redis-server --protected-mode no
    ```
    
-   connecting via redis-cli
-   ---------------------
+3. connecting via redis-cli
    ```
    docker run -it --network some-network --rm clearlinux/redis redis-cli -h some-redis
    ```
