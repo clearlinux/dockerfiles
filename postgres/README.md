@@ -56,6 +56,43 @@ Docker Hub.
 <!-- Optional -->
 ### Deploy with Kubernetes
 
+This image can also be deployed on a Kubernetes cluster, such as [minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/).The following example YAML files are provided in the repository as reference for Kubernetes deployment:
+
+- [`postgres-deployment.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/postgres/postgres-deployment.yaml): example using default configuration with secret to create a basic postgres service.
+- [`postgres-deployment-conf.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/postgres/postgres-deployment-conf.yaml): example using your own custom configuration with secret to create  postgres service.
+
+
+
+Steps to deploy Postgres on a Kubernetes cluster:
+
+1. Create secret for postgres service.
+
+   ```
+   kubectl create secret generic postgres-config \
+   --from-literal=POSTGRES_DB=<your-postgres-db> \
+   --from-literal=POSTGRES_PASSWORD=<your-postgres-pwd> \
+   --from-literal=POSTGRES_USER=<your-postgres-user>
+   ```
+
+2. If you want to deploy `postgres-deployment.yaml` 
+
+   ```
+   kubectl create -f postgres-deployment.yaml
+   ```
+
+   Or if you want to deploy `postgres-deployment-conf.yaml` 
+
+   ```
+   kubectl create -f postgres-deployment-conf.yaml
+   ```
+
+3. Install PostgreSQL bundle and connect to the service, where 30001 is the port number defined in your service.
+
+   ```
+   swupd bundle-add postgresql
+   psql -h<nodeIP> -U<your-postgres-user> --password -p30001 <your-postgres-db>
+   ```
+
 <!-- Required -->
 ## Build and modify:
 
