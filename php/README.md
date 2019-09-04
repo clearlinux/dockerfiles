@@ -50,24 +50,12 @@ image](https://hub.docker.com/_/php).
     ```
 
 2. Start a container using the examples below:
-  
-   Create a Dockerfile in your own php project
-  ```
-    FROM clearlinux/php:latest
-    COPY . /usr/src/myphpapp
-    WORKDIR /usr/src/myphpapp
-    CMD [ "php", "./my-script.php" ]
     ```
-
-  Then, run the commands to build and run the Docker image:
-    ```
-    $ docker build -t my-own-php-instance .
-    $ docker run -it --rm --name my-running-php my-own-php-instance
+    docker run -it --rm --name my-running-php clearlinux/php
     ```
 
 <!-- Optional -->
 ### Deploy with Kubernetes
-
 
 <!-- Required -->
 ## Build and modify:
@@ -87,8 +75,22 @@ modify the container images.
     ```
 
 3. Build the container image:
+   
+   * Build clearlinux basic php image
     ```
     docker build -t clearlinux/php .
+    ```
+
+   * Create a Dockerfile in your own php project and build:
+    ```
+    FROM clearlinux/php:latest
+    COPY . /usr/src/myphpapp
+    WORKDIR /usr/src/myphpapp
+    CMD [ "php", "./my-script.php" ]
+    ```
+    
+    ```
+    docker build -t my-own-php-instance .
     ```
 
    Refer to the Docker documentation for [default build
