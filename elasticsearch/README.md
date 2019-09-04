@@ -48,33 +48,28 @@ Docker Hub.
     ```
 
 2. Start a container using the examples below:
-
     ```
     docker volume create esdata
     docker run -d -p 9200:9200 -e "discovery.type=single-elasticsearch" -v esdata:/var/data/elasticsearch clearlinux/elasticsearch
     ```
     
 3. Check cluster health
-    ---------------------
     ```
     curl http://localhost:9200/_cluster/health?pretty
     ```
     
-    Create an index called customer
-    ---------------------
+4. Create an index called customer
     ```
     curl -X PUT "localhost:9200/customer?pretty"
     ```
     
-    Add new document to that index
-    ---------------------
+5. Add new document to that index
     ```
     curl -X PUT "localhost:9200/customer/doc/1?pretty" -H 'Content-Type: application/json' -d'{"name": "Tom John" }'
     curl -X PUT "localhost:9200/customer/doc/2?pretty" -H 'Content-Type: application/json' -d'{"name": "Kelly Wong" }'
     ```
     
-    View documents in the index
-    ---------------------
+6. View documents in the index
     ```
     curl localhost:9200/customer/_search?pretty
     ```
