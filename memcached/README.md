@@ -50,7 +50,45 @@ image](https://hub.docker.com/_/memcached).
     docker run --network somenetwork --name memcached-server -d clearlinux/memcached
     ```
 
+
+
+<!-- Optional -->
+
+### Deploy with Kubernetes
+
+This image can also be deployed on a Kubernetes cluster, such as [minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/).The following example YAML files are provided in the repository as reference for Kubernetes deployment:
+
+- [`memcached-deployment.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/memcached/memcached-deployment.yaml): example using default configuration to create a basic memcached service.
+
+- [`memcached-deployment-conf.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/memcached/memcached-deployment-conf.yaml): example using your own custom configuration to create a  memcached service.
+
+  
+
+Steps to deploy memcached on a Kubernetes cluster:
+
+1. If you want to deploy `memcached-deployment.yaml`
+
+   ```
+   kubectl create -f memcached-deployment.yaml
+   ```
+
+   Or if you want to deploy `memcached-deployment-conf.yaml`
+
+   ```
+   kubectl create -f memcached-deployment-conf.yaml
+   ```
+
+2. Install telnet bundle and connect to the service, where 30100 is the port number defined in your service.
+
+   ```
+   swupd bundle-add netkit-telnet
+   telnet <nodeIP> 30100
+   ```
+
+
+
 <!-- Required -->
+
 ## Build and modify:
 
 The Dockerfiles for all Clear Linux* OS based container images are available at
