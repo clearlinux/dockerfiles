@@ -54,7 +54,7 @@ Docker Hub.
     docker run --name some-httpd -dit -p 8080:80 clearlinux/httpd
     ```
     
-    connecting
+3. connecting
     
     ```
     curl http://localhost:8080/	# locally
