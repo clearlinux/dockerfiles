@@ -58,50 +58,6 @@ Docker Hub.
     mysql -h $IP -u root -p
     ```
     
-    Environment Variables
-    ---------------------
-    - ``MYSQL_ROOT_PASSWORD`` specifies MariaDB root password
-    
-    
-    Container Image Size
-    ---------------------
-    Clear Linux enables the AVX2 instructions compile in default for many applications, including mariadb.
-    With the two sets of binaries/libraries as below, this mariadb in Clear Linux can automatically and 
-    dynamically choose corresponding set to support different IA platforms.
-    
-    SSE:
-    ```
-    /usr/bin/mariadb
-    /usr/bin/mariadb-access
-    /usr/bin/mariadb-admin
-    /usr/bin/mariadb-backup
-    ...
-    /usr/bin/mysql
-    /usr/bin/mysql_client_test
-    /usr/bin/mysql_config
-    ...
-    /usr/lib64/libmariadb.so
-    /usr/lib64/libmariadbd.so
-    /usr/lib64/libmariadbd.so.19
-    ...
-    ```
-    
-    AVX/AVX2:
-    ```
-    /usr/bin/haswell/mariadb
-    /usr/bin/haswell/mariadb-admin
-    /usr/bin/haswell/mariadb-backup
-    /usr/bin/haswell/mariadb-binlog
-    ...
-    /usr/bin/haswell/mysql
-    /usr/bin/haswell/mysql_client_test
-    /usr/bin/haswell/mysql_ldb
-    ...
-    /usr/lib64/haswell/libmariadb.so
-    /usr/lib64/haswell/libmariadbd.so
-    /usr/lib64/haswell/libmariadbd.so.19
-    ...
-    ```
     
 <!-- Optional -->
 ### Deploy with Kubernetes
@@ -135,6 +91,47 @@ modify the container images.
      manager. See the [swupd man pages](https://github.com/clearlinux/swupd-client/blob/master/docs/swupd.1.rst#options)
      for more information.
 
+   - Environment Variables: ``MYSQL_ROOT_PASSWORD`` specifies MariaDB root password
+     
+## Container Image Size:
+
+Clear Linux enables the AVX2 instructions compile in default for many applications, including mariadb.
+With the two sets of binaries/libraries as below, this mariadb in Clear Linux can automatically and 
+dynamically choose corresponding set to support different IA platforms.
+    
+1. SSE:
+    ```
+    /usr/bin/mariadb
+    /usr/bin/mariadb-access
+    /usr/bin/mariadb-admin
+    /usr/bin/mariadb-backup
+    ...
+    /usr/bin/mysql
+    /usr/bin/mysql_client_test
+    /usr/bin/mysql_config
+    ...
+    /usr/lib64/libmariadb.so
+    /usr/lib64/libmariadbd.so
+    /usr/lib64/libmariadbd.so.19
+    ...
+    ```
+    
+2. AVX/AVX2:
+    ```
+    /usr/bin/haswell/mariadb
+    /usr/bin/haswell/mariadb-admin
+    /usr/bin/haswell/mariadb-backup
+    /usr/bin/haswell/mariadb-binlog
+    ...
+    /usr/bin/haswell/mysql
+    /usr/bin/haswell/mysql_client_test
+    /usr/bin/haswell/mysql_ldb
+    ...
+    /usr/lib64/haswell/libmariadb.so
+    /usr/lib64/haswell/libmariadbd.so
+    /usr/lib64/haswell/libmariadbd.so.19
+    ...
+    ```
 <!-- Required -->
 ## Licenses
 
