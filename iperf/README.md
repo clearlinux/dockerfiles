@@ -47,12 +47,12 @@ Docker Hub.
 
 2. Start a container using the examples below:
 
-    ## Run as Server:
+   * Run as Server:
     ```
     sudo docker run -it --rm --name=iperf-srv -p 5201:5201 clearlinux/iperf -s
     ```
     
-    ## Run as Client (first get server IP address):
+   * Run as Client (first get server IP address):
     ```
     sudo docker run -it --rm --network=host clearlinux/iperf -c <SERVER_IP>
     ```
