@@ -65,6 +65,45 @@ Docker Hub.
 <!-- Optional -->
 ### Deploy with Kubernetes
 
+This image can also be deployed on a Kubernetes cluster, such as [minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/).The following example YAML files are provided in the repository as reference for Kubernetes deployment:
+
+- [`cassandra-deployment.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/cassandra/cassandra-deployment.yaml): example using default configuration to create a basic cassandra service.
+
+- [`cassandra-deployment-conf.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/cassandra/cassandra-deployment-conf.yaml): example using your own custom configuration to create a cassandra service.
+
+  
+
+Steps to deploy cassandra on a Kubernetes cluster:
+
+1. If you want to deploy `cassandra-deployment.yaml`
+
+   ```
+   kubectl create -f cassandra-deployment.yaml
+   ```
+
+   Or if you want to deploy `cassandra-deployment-conf.yaml`  
+
+   ```
+   kubectl create -f cassandra-deployment-conf.yaml
+   ```
+
+2. Install cassandra bundle and add environmental variable.
+
+   ```
+   swupd bundle-add cassandra
+   swupd bundle-add which
+   BIN_CASSANDRA="/usr/share/cassandra/bin"
+   BIN_CASSANDRA_TOOL="/usr/share/cassandra/tools/bin"
+   export PATH=$PATH:$BIN_CASSANDRA:$BIN_CASSANDRA_TOOL
+   chmod -R 777 /usr/share/cassandra/tools/bin 
+   ```
+
+3. Connect to the service, where 30001 is the port number defined in your service.
+
+   ```
+   cqlsh <nodeIP> 30001
+   ```
+
 <!-- Required -->
 ## Build and modify:
 
