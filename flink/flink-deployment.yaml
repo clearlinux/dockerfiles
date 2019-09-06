@@ -1,0 +1,77 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: flink-jobmanager
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: flink
+        component: jobmanager
+    spec:
+      containers:
+      - name: jobmanager
+        image: docker.io/clearlinux/flink
+        args:
+        - jobmanager
+        ports:
+        - containerPort: 6123
+          name: rpc
+        - containerPort: 6124
+          name: blob
+        - containerPort: 6125
+          name: query
+        - containerPort: 8081
+          name: ui
+        env:
+        - name: JOB_MANAGER_RPC_ADDRESS
+          value: flink-jobmanager
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: flink-taskmanager
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: flink
+        component: taskmanager
+    spec:
+      containers:
+      - name: taskmanager
+        image: docker.io/clearlinux/flink
+        args:
+        - taskmanager
+        ports:
+        - containerPort: 6121
+          name: data
+        - containerPort: 6122
+          name: rpc
+        - containerPort: 6125
+          name: query
+        env:
+        - name: JOB_MANAGER_RPC_ADDRESS
+          value: flink-jobmanager
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flink-jobmanager
+spec:
+  ports:
+  - name: rpc
+    port: 6123
+  - name: blob
+    port: 6124
+  - name: query
+    port: 6125
+  - name: ui
+    port: 8081
+  selector:
+    app: flink
+    component: jobmanager
