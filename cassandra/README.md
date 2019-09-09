@@ -67,77 +67,127 @@ Docker Hub.
 This image can also be deployed on a Kubernetes cluster.The following example YAML files are provided 
 in the repository as reference for deploying Cassandra with Stateful Sets on a single node cluster:
 
-[`pv-local.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/cassandra/pv-local.yaml): local persistent volumes for cassandra database.
-[`storageclass.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/cassandra/storageclass.yaml): create a StorageClass with the volumeBindingMode set to “WaitForFirstConsumer”
-[`cassandra-statefulset.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/cassandra/cassandra-statefulset.yaml): create a Headless Service and a Statefulset for Cassandra with three replicas.
+- [`pv-local.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/cassandra/pv-local.yaml): local persistent volumes for cassandra database.
+- [`storageclass.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/cassandra/storageclass.yaml): create a StorageClass with the volumeBindingMode set to “WaitForFirstConsumer”
+- [`cassandra-deployment.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/cassandra/cassandra-deployment.yaml): example using default configuration to create a basic cassandra service.
+- [`cassandra-deployment-conf.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/cassandra/cassandra-deployment-conf.yaml): example using your own custom configuration to create a cassandra service.
+- [`cassandra-statefulset.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/cassandra/cassandra-statefulset.yaml): create a Headless Service and a Statefulset for Cassandra with three replicas.
 
-The example utilies official clearlinux cassandra container, to deploy this container on a Kubernetes cluster,
-please follow with below steps:
+
+
+**In this tutorial, we proposed 2 different kinds of method to deploy cassandra: stateless and stateful**
+
+If you want to deploy Cassandra in **stateful** manner, the example uses official clearlinux cassandra container, to deploy this container on a Kubernetes cluster, please follow with below steps:
 
 1. Create /mnt/disks directory on local test cluster
-    ```
-    $ mkdir /mnt/disks
-    $ for vol in vol1 vol2 vol3; do
-          mkdir /mnt/disks/$vol
-          chmod 777 /mnt/disks/$vol
-    done
-    ```
+
+   ```
+   $ mkdir /mnt/disks
+   $ for vol in vol1 vol2 vol3; do
+         mkdir /mnt/disks/$vol
+         chmod 777 /mnt/disks/$vol
+   done
+   ```
+
 2. Create a StorageClass
-    ```
-    kubectl apply -f storageclass.yaml
-    ```
-3. Create local persistent volumes, replace the nodeAffinity values with actual node name
-    ```
-    kubectl apply -f pv-local.yaml
-    ```
+
+   ```
+   kubectl apply -f storageclass.yaml
+   ```
+
+3. Create local persistent volumes
+
+   ```
+   kubectl apply -f pv-local.yaml
+   ```
+
 4. Create a Headless Service and a Statefulset for Cassandra with three replicas
-    ```
-    kubectl apply -f cassandra-statefulset.yaml 
-    ```
+
+   ```
+   kubectl apply -f cassandra-statefulset.yaml 
+   ```
+
 5. Validate the Cassandra StatefulSet
+
+   *Get the Cassandra StatefulSet:
+
+   ```
+   kubectl get statefulset cassandra
+   ```
+
+   ```
+   The response should be:
    
-    *Get the Cassandra StatefulSet:
-    ```
-    kubectl get statefulset cassandra
-    ```
-    ```
-    The response should be:
+   NAME        READY   AGE
+   cassandra   4/4     19h
+   ```
 
-    NAME        READY   AGE
-    cassandra   4/4     19h
-    ```
-    *Get the Pods to see the ordered creation status:
-    ```
-    kubectl get pods -l="app=cassandra"
-    ```
-    ```
-    The response should be:
+   *Get the Pods to see the ordered creation status:
 
-    NAME          READY   STATUS    RESTARTS   AGE
-    cassandra-0   1/1     Running   0          19h
-    cassandra-1   1/1     Running   0          19h
-    cassandra-2   1/1     Running   1          19h
-    cassandra-3   1/1     Running   1          19h
-    ```
-    *Run the Cassandra nodetool to display the status of the ring
-    ```
-    kubectl exec -it cassandra-0 -- nodetool status
-    ```
-    ```
-    The response should be:
+   ```
+   kubectl get pods -l="app=cassandra"
+   ```
 
-    Datacenter: datacenter1
-    =======================
-    Status=Up/Down
-    |/ State=Normal/Leaving/Joining/Moving
-    --  Address      Load       Tokens   Owns (effective)  Host ID  Rack
-    UN  10.244.0.64  227.89 KiB  256     24.4%      d0bf15be-ce18-40be-b3c2-f6f80e307e31  rack1
-    UN  10.244.0.61  189.28 KiB  256     23.2%      2aa68c9c-99b7-4a70-803a-5886019391ac  rack1
-    UN  10.244.0.62  195.16 KiB  256     28.1%      ecb0fe92-2b28-4be5-921d-a7d6b3367b5f  rack1
-    UN  10.244.0.63  228.66 KiB  256     24.3%      9720efad-a434-4b81-9434-9b7cafd72a9b  rack1
-    ```
+   ```
+   The response should be:
+   
+   NAME          READY   STATUS    RESTARTS   AGE
+   cassandra-0   1/1     Running   0          19h
+   cassandra-1   1/1     Running   0          19h
+   cassandra-2   1/1     Running   1          19h
+   cassandra-3   1/1     Running   1          19h
+   ```
+
+   *Run the Cassandra nodetool to display the status of the ring
+
+   ```
+   kubectl exec -it cassandra-0 -- nodetool status
+   ```
+
+   ```
+   The response should be:
+   
+   Datacenter: datacenter1
+   =======================
+   Status=Up/Down
+   |/ State=Normal/Leaving/Joining/Moving
+   --  Address      Load       Tokens   Owns (effective)  Host ID  Rack
+   UN  10.244.0.64  227.89 KiB  256     24.4%      d0bf15be-ce18-40be-b3c2-f6f80e307e31  rack1
+   UN  10.244.0.61  189.28 KiB  256     23.2%      2aa68c9c-99b7-4a70-803a-5886019391ac  rack1
+   UN  10.244.0.62  195.16 KiB  256     28.1%      ecb0fe92-2b28-4be5-921d-a7d6b3367b5f  rack1
+   UN  10.244.0.63  228.66 KiB  256     24.3%      9720efad-a434-4b81-9434-9b7cafd72a9b  rack1
+   ```
+
+
+
+If you want to deploy Cassandra in **stateless** manner, please follow with below steps:
+
+1. If you want to deploy `cassandra-deployment.yaml`
+
+   ```
+   kubectl create -f cassandra-deployment.yaml
+   ```
+
+   Or if you want to deploy `cassandra-deployment-conf.yaml`  
+
+   ```
+   kubectl create -f cassandra-deployment-conf.yaml
+   ```
+
+2. Install Cassandra bundle and add environmental variable.
+
+   ```
+   source cassandra-setup.sh
+   ```
+
+3. Connect to the service, where 30001 is the port number defined in your service.
+
+   ```
+   cqlsh <nodeIP> 30001
+   ```
 
 <!-- Required -->
+
 ## Build and modify:
 
 The Dockerfiles for all Clear Linux* OS based container images are available at
