@@ -56,8 +56,8 @@ Docker Hub.
     docker run --name some-cassandra --network some-network -d clearlinux/cassandra:tag
     ```
     
-    connect to cassandra from cqlsh
-    ---------------------
+3. connect to cassandra from cqlsh:
+
     ```
     docker run -it --network some-network --rm clearlinux/cassandra cqlsh -h some-cassandra
     ```
@@ -67,14 +67,20 @@ Docker Hub.
 This image can also be deployed on a Kubernetes cluster.The following example YAML files are provided 
 in the repository as reference for deploying Cassandra with Stateful Sets on a single node cluster:
 
-[`pv-local.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/cassandra/pv-local.yaml): local persistent volumes for cassandra database.
-[`storageclass.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/cassandra/storageclass.yaml): create a StorageClass with the volumeBindingMode set to “WaitForFirstConsumer”
-[`cassandra-statefulset.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/cassandra/cassandra-statefulset.yaml): create a Headless Service and a Statefulset for Cassandra with three replicas.
+- [`cassandra-deployment.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/cassandra/cassandra-deployment.yaml): example using default configuration to create a basic cassandra service.
+- [`cassandra-deployment-conf.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/cassandra/cassandra-deployment-conf.yaml): example using your own custom configuration to create a cassandra service.
+- [`pv-local.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/cassandra/pv-local.yaml): local persistent volumes for cassandra database.
+- [`storageclass.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/cassandra/storageclass.yaml): create a StorageClass with the volumeBindingMode set to “WaitForFirstConsumer”
+- [`cassandra-statefulset.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/cassandra/cassandra-statefulset.yaml): create a Headless Service and a Statefulset for Cassandra with three replicas.
 
-The example utilies official clearlinux cassandra container, to deploy this container on a Kubernetes cluster,
-please follow with below steps:
 
-1. Create /mnt/disks directory on local test cluster
+
+**In this tutorial, we proposed 2 different kinds of method to deploy cassandra: stateless and stateful**
+
+If you want to deploy Cassandra in **stateful** manner, the example uses official clearlinux cassandra container, to deploy this container on a Kubernetes cluster, please follow with below steps:
+
+1.  Create /mnt/disks directory on local test cluster
+    
     ```
     $ mkdir /mnt/disks
     $ for vol in vol1 vol2 vol3; do
@@ -137,7 +143,36 @@ please follow with below steps:
     UN  10.244.0.63  228.66 KiB  256     24.3%      9720efad-a434-4b81-9434-9b7cafd72a9b  rack1
     ```
 
+
+
+If you want to deploy Cassandra in **stateless** manner, please follow with below steps:
+
+1. If you want to deploy `cassandra-deployment.yaml`
+
+   ```
+   kubectl create -f cassandra-deployment.yaml
+   ```
+
+   Or if you want to deploy `cassandra-deployment-conf.yaml`  
+
+   ```
+   kubectl create -f cassandra-deployment-conf.yaml
+   ```
+
+2. Install Cassandra bundle and add environmental variable.
+
+   ```
+   source cassandra-setup.sh
+   ```
+
+3. Connect to the service, where 30001 is the port number defined in your service.
+
+   ```
+   cqlsh <nodeIP> 30001
+   ```
+
 <!-- Required -->
+
 ## Build and modify:
 
 The Dockerfiles for all Clear Linux* OS based container images are available at

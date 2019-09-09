@@ -1,0 +1,32 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: cassandra
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: cassandra
+    spec:
+      containers:
+        - image: docker.io/clearlinux/cassandra
+          name: cassandra
+          ports:
+            - containerPort: 9042
+              name: cql
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cassandra-svc
+spec:
+  type: NodePort
+  ports:
+  - port: 9042
+    targetPort: 9042
+    nodePort: 30001
+  selector:
+    name: cassandra
+
