@@ -28,9 +28,14 @@ COPY --from=clearlinux/os-core:latest / /os_core_install/
 RUN cd / && \
     find os_core_install | sed -e 's/os_core_install/install_root/' | xargs rm -d &> /dev/null || true
 
-
 FROM clearlinux/os-core:latest
 
 COPY --from=builder /install_root /
+
+COPY docker-entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/docker-entrypoint.sh
+RUN ln -s /usr/lib/node_modules/yarn/bin/yarn /usr/bin/yarn
+
+ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]
 
 CMD ["node"]
