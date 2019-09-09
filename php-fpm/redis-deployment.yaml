@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: php-fpm-redis
+  labels:
+    app: php-fpm
+spec:
+  ports:
+    - port: 6379
+      targetPort: 6379
+      #nodePort: 30001
+  selector:
+    app: php-fpm
+    tier: backend
+  clusterIP: None
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: php-fpm-redis
+  labels:
+    app: php-fpm
+spec:
+  selector:
+    matchLabels:
+      app: php-fpm
+      tier: backend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: php-fpm
+        tier: backend
+    spec:
+      containers:
+      - image: clearlinux/redis
+        name: redis
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 6379
+          name: redis
+        volumeMounts:
+        - name: redis-persistent-storage
+          mountPath: /data
+      volumes:
+      - name: redis-persistent-storage
+        persistentVolumeClaim:
+          claimName: pvc-redis
+
