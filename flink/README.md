@@ -55,8 +55,35 @@ image](https://hub.docker.com/_/flink).
     docker run  -d clearlinux/flink
     ```
     
+
 <!-- Optional -->
 ### Deploy with Kubernetes
+
+This image can also be deployed on a Kubernetes cluster, such as [minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/).The following example YAML files are provided in the repository as reference for Kubernetes deployment:
+
+- [`flink-deployment.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/flink/flink-deployment.yaml): example using default configuration to create a basic flink service.
+
+- [`flink-deployment-conf.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/flink/flink-deployment-conf.yaml): example using your own custom configuration to create a flink service.
+
+  
+
+Steps to deploy flink on a Kubernetes cluster:
+
+1. If you want to deploy `flink-deployment.yaml`
+
+   ```
+   kubectl create -f flink-deployment.yaml
+   ```
+
+   Or if you want to deploy `flink-deployment-conf.yaml`  
+
+   ```
+   kubectl create -f flink-deployment-conf.yaml
+   ```
+
+2. Run kubectl proxy in your terminal.
+
+3. Navigate to [http://\<nodeIP\>:8001/api/v1/namespaces/default/services/flink-jobmanager:ui/proxy](http://\<nodeIP\>:8001/api/v1/namespaces/default/services/flink-jobmanager:ui/proxy) in your browser. 
 
 <!-- Required -->
 ## Build and modify:
