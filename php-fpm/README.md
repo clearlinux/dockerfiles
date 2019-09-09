@@ -56,8 +56,42 @@ image](https://hub.docker.com/_/php).
 
 <!-- Optional -->
 ### Deploy with Kubernetes
+This image can also be deployed on a Kubernetes cluster, such as
+[minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/).The
+following example YAML files are provided in the repository as
+reference for Kubernetes deployment:
 
+   * [`pv-local.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/php-fpm/pv-local.yaml), [`pvc-local.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/php-fpm/pvc-local.yaml):
+     local persistent volumes for databse and wordpress.
+   * [`php-fpm-deployment.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/php-fpm/php-fpm-deployment.yaml):
+     deployment for php-fpm + nginx.
+   * [`redis-deployment.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/php-fpm/redis-deployment.yaml):
+     deployment for redis.
 
+The example utilies nginx, php-fpm and redis containers. All are Clear Linux
+published ones on [official clearlinux base
+image](https://hub.docker.com/_/clearlinux).
+To deploy the image on a Kubernetes cluster you have two volumes configuration
+choices:
+
+   * Use local volume, not appropriate for scaling on multi-node cluster.
+     ```
+     kubectl apply -f pv-local.yaml
+     kubectl apply -f pvc-local.yaml
+     ```
+Once the volumes got created, you can continue the php+redis
+deployment.
+
+1. Deploy redis and php-fpm.
+   ```
+   kubectl apply -f php-fpm-deployment.yaml
+   kubectl apply -f redis-deployment.yaml
+   ```
+
+2. Then check if the pods are running well.
+   ```
+   kubectl get pods -o wide
+   ```
 
 <!-- Required -->
 ## Build and modify:
