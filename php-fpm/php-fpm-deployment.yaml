@@ -1,0 +1,83 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: php-fpm
+  labels:
+    app: php-fpm
+spec:
+  ports:
+    - port: 80
+      nodePort: 32001
+  selector:
+    app: php-fpm
+    tier: frontend
+  type: NodePort
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: nginx-config
+data:
+  nginx.conf: |
+    server {
+        listen 80;
+        index index.php index.html;
+        server_name localhost;
+        error_log  /var/log/nginx/error.log;
+        access_log /var/log/nginx/access.log;
+        root /var/www/html;
+        location ~ \.php$ {
+            try_files $uri =404;
+            fastcgi_split_path_info ^(.+\.php)(/.+)$;
+            fastcgi_pass localhost:9000;
+            fastcgi_index index.php;
+            include fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_param PATH_INFO $fastcgi_path_info;
+      }
+    }
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: php-fpm
+  labels:
+    app: php-fpm
+spec:
+  selector:
+    matchLabels:
+      app: php-fpm
+      tier: frontend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: php-fpm
+        tier: frontend
+    spec:
+      containers:
+      - image: clearlinux/nginx
+        name: nginx
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: php-fpm-persistent-storage
+          mountPath: /var/www/html
+        - name: nginx-config-volume
+          mountPath: /etc/nginx/conf.d
+      - image: clearlinux/php-fpm
+        name: php-fpm
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - mountPath: /var/www/html
+          name: php-fpm-persistent-storage
+      volumes:
+      - name: php-fpm-persistent-storage
+        persistentVolumeClaim:
+          claimName: pvc-php
+      # Add the ConfigMap we declared above as a volume for the pod
+      - name: nginx-config-volume
+        configMap:
+         name: nginx-config
