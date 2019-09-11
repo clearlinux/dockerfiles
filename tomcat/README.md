@@ -86,7 +86,7 @@ Steps to deploy tomcat on a Kubernetes cluster:
    kubectl create -f tomcat-deployment-conf-custom.yaml
    ```
 
-2. Navigate to [http://\<nodeIP\>:30001](http://\<nodeIP\>:30001) in your browser. , where 30001 is the port number defined in your service.
+2. Navigate to [http://\<nodeIP\>:30001](http://\<nodeIP\>:30001) in your browser, where 30001 is the port number defined in your service.
 
 
 
