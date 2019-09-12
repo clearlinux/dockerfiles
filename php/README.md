@@ -54,8 +54,70 @@ image](https://hub.docker.com/_/php).
     docker run -it --rm --name my-running-php clearlinux/php
     ```
 
+3. Customize OPCache parameters via environment variable, for example:
+   ```
+   docker run -it -e "OPCACHE_ENABLE_CLI=1" clearlinux/php
+   ```
+   *Note: please get all environment variable setting from  below OPCache parameters section.*
+
 <!-- Optional -->
 ### Deploy with Kubernetes
+
+<!-- Optional -->
+### OPCache Configurations
+The OPCache parameters for PHP container could be configed via following environment variable.
+These values will be set into /usr/share/defaults/php/php.ini.
+
+* **OPCACHE_ENABLE_CLI**
+   - Default Value: 1
+   - Config in php.ini: opcache.enable_cli
+   - Descriptions:
+     Enables the opcode cache for the CLI version of PHP. When testing/debugging or
+     run **PHPBench**, set 1
+
+* **OPCACHE_VALIDATE_TIMESTAMPS**
+   - Default Value: 0
+   - Config in php.ini: opcache.validate_timestamps
+   - Descriptions:
+     If enabled, OPcache will check for updated scripts every opcache.revalidate_freq seconds.
+     If the source of workload is cloned by git via sidecar design pattern and will be updated
+     often, set 1
+
+* **OPCACHE_REVALIDATE_FREQ**
+   - Default Value: 0
+   - Config in php.ini: opcache.revalidate_freq
+   - Descriptions:
+     How often to check script timestamps for updates, in seconds. 0 will result in
+     OPcache checking for updates on every request.
+
+* **OPCACHE_INTERNED_STRINGS_BUFFER**
+   - Default Value: 16
+   - Config in php.ini: opcache.interned_strings_buffer
+   - Descriptions:
+     The amount of memory used to store interned strings, in megabytes.
+
+* **OPCACHE_OPTIMIZATION_LEVEL**
+   - Default Value: 0x7FFFFFFF
+   - Config in php.ini: opcache.optimization_level
+   - Descriptions:
+     A bitmask that controls which optimisation passes are executed.
+
+* **OPCACHE_MEMORY_CONSUMPTION**
+   - Default Value: 256
+   - Config in php.ini: opcache.memory_consumption
+   - Descriptions:
+     The size of the shared memory storage used by OPcache, in megabytes.
+     You can use the function opcachegetstatus() to tell how much memory opcache
+     is consuming and if you need to increase the amount
+
+* **OPCACHE_MAX_ACCELERATED_FILES**
+   - Default Value: 10000
+   - Confg in php.ini: opcache.max_accelerated_files
+   - Descriptions:
+     Controls how many PHP files, at most, can be held in memory at once. It's important
+     that your project has LESS FILES than whatever you set this at.
+     You can run `find . -type f -print | grep php | wc -l` to quickly calculate the number
+     of files in your codebase.
 
 <!-- Required -->
 ## Build and modify:
