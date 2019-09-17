@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ml-notebook
+  labels:
+    app: ml-notebook
+spec:
+  type: NodePort
+  ports:
+    - port: 8888     
+      targetPort: 8888
+      nodePort: 30001
+      name: jupyter
+  selector:
+    app: ml-notebook
+
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: ml-notebook
+  labels:
+    app: ml-notebook
+spec:
+  selector:
+    matchLabels:
+      app: ml-notebook
+  template:
+    metadata:
+      labels:
+        app: ml-notebook
+    spec:
+      containers:
+        - name: jupyter
+          image: "docker.io/clearlinux/machine-learning-ui"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8888
+              name: jupyter
