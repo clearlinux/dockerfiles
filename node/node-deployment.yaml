@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nodejs
+data:
+  app.js: |
+    const http = require('http');
+    const os = require('os');
+    var handler = function(request, response){
+            response.writeHead(200);
+            response.end("Hello nodejs!\n")
+    };
+    var www = http.createServer(handler);
+    www.listen(80);
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: my-node
+spec:
+  replicas: 10
+  template:
+    metadata:
+      labels:
+        app: my-node
+    spec:
+      containers:
+      - name: my-node
+        image: docker.io/clearlinux/node
+        ports:
+        - containerPort: 80
+        command: ["node", "/app.js"]
+        volumeMounts:
+        - name: nodejs-mount
+          mountPath: /app.js
+          subPath: app.js
+      volumes:
+      - name: nodejs-mount
+        configMap:
+          name: nodejs
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-node
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 30001
+  selector:
+    app: my-node
+
