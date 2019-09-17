@@ -13,6 +13,5 @@ RUN swupd update && \
 USER clr
 RUN git config --global user.email "travis@example.com" && \
     git config --global user.name "Travis CI" && \
-    go get -u gopkg.in/alecthomas/gometalinter.v2 && \
-    gometalinter.v2 --install
+    curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh| sh -s -- -b $(go env GOPATH)/bin v1.18.0
 
