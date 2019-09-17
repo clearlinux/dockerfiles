@@ -51,8 +51,31 @@ Docker Hub.
     docker run -it --rm clearlinux/node
     ```
     
+
 <!-- Optional -->
 ### Deploy with Kubernetes
+
+This image can also be deployed on a Kubernetes cluster, such as [minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/).The following example YAML files are provided in the repository as reference for Kubernetes deployment:
+
+- [`node-deployment.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/node/node-deployment.yaml): example to provide a basic HTTP service.
+
+
+
+Steps to deploy node on a Kubernetes cluster:
+
+1. Deploy node-deployment.yaml
+
+   ```
+   kubectl create -f node-deployment.yaml
+   ```
+
+2. Connect to the service, where 30001 is the port number defined in your service.
+
+   ```
+   curl <nodeIP>:30001
+   ```
+
+   
 
 <!-- Required -->
 ## Build and modify:
