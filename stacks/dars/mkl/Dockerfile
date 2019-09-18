@@ -4,7 +4,8 @@ ARG swupd_args
 # Move to latest Clear Linux release to ensure
 # that the swupd command line arguments are
 # correct
-RUN swupd update --no-boot-update $swupd_args
+RUN swupd update --no-boot-update $swupd_args && \
+    swupd bundle-add curl
 
 # Grab os-release info from the minimal base image so
 # that the new content matches the exact OS version
@@ -19,6 +20,17 @@ RUN source /os-release && \
     --bundles=big-data-basic,cpio,os-core-update,which --no-boot-update \
     && rm -rf /install_root/var/lib/swupd/*
 
+# fetch MKL library and wrapper
+RUN URL='http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/15095' && \
+    MKL_VERSION='l_mkl_2019.2.187_online' && \
+    mkdir /install_root/mkl /install_root/mkl_wrapper && \
+    curl ${URL}/${MKL_VERSION}.tgz -o /install_root/mkl/${MKL_VERSION}.tgz && \
+    tar -xvf /install_root/mkl/${MKL_VERSION}.tgz -C /install_root/mkl --strip-components=1 && \
+    curl -L https://github.com/Intel-bigdata/mkl_wrapper_for_non_CDH/raw/master/mkl_wrapper.jar -o /install_root/mkl_wrapper/mkl_wrapper.jar && \
+    curl -L https://github.com/Intel-bigdata/mkl_wrapper_for_non_CDH/raw/master/mkl_wrapper.so  -o /install_root/mkl_wrapper/mkl_wrapper.so
+
+COPY silent.cfg /install_root/mkl/
+
 # For some Host OS configuration with redirect_dir on,
 # extra data are saved on the upper layer when the same
 # file exists on different layers. To minimize docker
@@ -31,6 +43,9 @@ FROM clearlinux/os-core:latest
 LABEL maintainer=otc-swstacks@intel.com
 
 ENV HOME=/root
+
+COPY --from=builder /install_root /
+COPY --from=builder /install_root/mkl /mkl
 
 # Configure openjdk11
 ENV JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk
@@ -57,20 +72,14 @@ ENV SPARK_CONF_DIR=/etc/spark
 ENV YARN_RESOURCEMANAGER_USER=root
 ENV YARN_NODEMANAGER_USER=root
 
-COPY --from=builder /install_root /
-
 COPY dars.ld.so.conf /etc/ld.so.conf
+COPY silent.cfg /
 
-COPY silent.cfg binaries/l_mkl_2019.2.187_online.tgz /
-
-RUN mkdir mkl && tar -xvf l_mkl_2019.2.187_online.tgz -C mkl --strip-components=1 && \
-    mkl/install.sh -s silent.cfg && \
-    rm -rf silent.cfg l_mkl_2019.2.187_online.tgz mkl && \
+RUN /mkl/install.sh -s silent.cfg && \
+    rm -rf /mkl && \
     ldconfig
 
-COPY binaries/mkl_wrapper.so binaries/mkl_wrapper.jar /opt/intel/mkl/wrapper/
-
-RUN mkdir -p /etc/spark /etc/hadoop
+COPY --from=builder /install_root/mkl_wrapper/mkl_wrapper.* /opt/intel/mkl/wrapper/
 
 COPY spark_conf/* /etc/spark/
 COPY hadoop_conf/* /etc/hadoop/
