@@ -1,53 +1,106 @@
-Machine Learning
-================
-[![](https://images.microbadger.com/badges/image/clearlinux/machine-learning-ui.svg)](http://microbadger.com/images/clearlinux/machine-learning-ui "Get your own image badge on microbadger.com")
-[![](https://images.microbadger.com/badges/version/clearlinux/machine-learning-ui.svg)](http://microbadger.com/images/clearlinux/machine-learning-ui "Get your own version badge on microbadger.com")
+# Clear Linux* OS `machine-learning-ui` container image
 
-This provides a machine learning environment with the `machine-learning-web-ui`,
-bundle from [Clearlinux](https://clearlinux.org/documentation/bundles_overview.html)
+<!-- Required -->
+## What is this image?
 
-Build
------
-```
-docker build -t clearlinux/machine-learning-ui .
-```
+`clearlinux/machine-learning-ui` is a Docker image with `machine-learning-ui` running on top of the
+[official clearlinux base image](https://hub.docker.com/_/clearlinux). 
 
-Or just pull it from Dockerhub
-------------------------------
-```
-docker pull clearlinux/machine-learning-ui
-```
+<!-- application introduction -->
+> Machine Learning UI provides the machine learning framework with Jupiter notebook with the 
+> benefits of Clear Linux OS.
 
-Run the machine-learning-ui Container
-----------------------------------
-```
-docker run -p 8888:8888 -it clearlinux/machine-learning-ui
-```
+For other Clear Linux* OS
+based container images, see: https://hub.docker.com/u/clearlinux
 
-Environment Variables
----------------------
-none
+## Why use a clearlinux based image?
 
-Extra Build ARGs
-----------------
-- ``swupd_args`` Specifies [SWUPD](https://github.com/clearlinux/swupd-client/blob/master/docs/swupd.1.rst#options) flags
+<!-- CL introduction -->
+> [Clear Linux* OS](https://clearlinux.org/) is an open source, rolling release
+> Linux distribution optimized for performance and security, from the Cloud to
+> the Edge, designed for customization, and manageability.
 
-Default build args in Docker are on: https://docs.docker.com/engine/reference/builder/#arg
+Clear Linux* OS based container images use:
+* Optimized libraries that are compiled with latest compiler versions and
+  flags.
+* Software packages that follow upstream source closely and update frequently.
+* An aggressive security model and best practices for CVE patching.
+* A multi-staged build approach to keep a reduced container image size.
+* The same container syntax as the official images to make getting started
+  easy. 
 
+To learn more about Clear Linux* OS, visit: https://clearlinux.org.
+
+<!-- Required -->
+## Deployment:
+
+### Deploy with Docker
+The easiest way to get started with this image is by simply pulling it from
+Docker Hub. 
+
+1. Pull the image from Docker Hub: 
+    ```
+    docker pull clearlinux/machine-learning-ui
+    ```
+
+2. Start a container using the examples below:
+
+    ```
+    docker run -p 8888:8888 -it clearlinux/machine-learning-ui
+    ```
+    
+<!-- Optional -->
 ### Deploy with Kubernetes
+This image can also be deployed on a Kubernetes cluster, such as
+[minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/).The
+following example YAML template files are provided in the repository as
+reference for Kubernetes deployment:
 
-This image can also be deployed on a Kubernetes cluster, such as [minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/).The following example YAML files are provided in the repository as reference for Kubernetes deployment:
+   * [`machine-learning-ui-deployment.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/machine-learning-ui/machine-learning-ui-deployment.yaml):
+     example to provide jupyter notebook service.
 
-- [`machine-learning-ui-deployment.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/machine-learning-ui/machine-learning-ui-deployment.yaml): example to provide jupyter notebook service.
+To deploy the image on a Kubernetes cluster:
 
-  
+1. Review the contents of the template file and edit appropriately for your needs.
 
-Steps to deploy notebook on a Kubernetes cluster:
+2. Deploy machine-learning-ui-deployment.yaml.
+    ```
+    kubectl create -f machine-learning-ui-deployment.yaml
+    ```
 
-1. Deploy `machine-learning-ui-deployment.yaml`
+3. Navigate to http://<nodeip>:30001 in your browser, where 30001 is the port number defined in your service..
 
-   ```
-   kubectl create -f machine-learning-ui-deployment.yaml
-   ```
+<!-- Required -->
+## Build and modify:
 
-2. Navigate to [http://\<nodeIP\>:30001](http://\<nodeIP\>:30001) in your browser, where 30001 is the port number defined in your service.
+The Dockerfiles for all Clear Linux* OS based container images are available at
+https://github.com/clearlinux/dockerfiles. These can be used to build and
+modify the container images.
+
+1. Clone the clearlinux/dockerfiles repository.
+    ```
+    git clone https://github.com/clearlinux/dockerfiles.git
+    ```
+
+2. Change to the directory of the application:
+    ```
+    cd machine-learning-ui/
+    ```
+
+3. Build the container image:
+    ```
+    docker build -t clearlinux/machine-learning-ui .
+    ```
+
+   Refer to the Docker documentation for [default build arguments](https://docs.docker.com/engine/reference/builder/#arg).
+   Additionally:
+   
+   - `swupd_args` - specifies arguments to pass to the Clear Linux* OS software
+     manager. See the [swupd man pages](https://github.com/clearlinux/swupd-client/blob/master/docs/swupd.1.rst#options)
+     for more information.
+
+<!-- Required -->
+## Licenses
+
+All licenses for the Clear Linux* Project and distributed software can be found
+at https://clearlinux.org/terms-and-policies
