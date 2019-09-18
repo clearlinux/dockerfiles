@@ -31,6 +31,7 @@ env:
   - DOCKERFILE_DIR=redis
   - DOCKERFILE_DIR=ruby
   - DOCKERFILE_DIR=tensorflow
+  - DOCKERFILE_DIR=tensorflow-serving
   - DOCKERFILE_DIR=tomcat
   - DOCKERFILE_DIR=wordpress
 
