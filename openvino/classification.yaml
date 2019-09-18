@@ -1,0 +1,81 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: server
+data:
+  app.py: |
+    #!/usr/bin/python3
+
+    import subprocess
+    from flask import Flask, request
+    app = Flask(__name__)
+
+    @app.route('/')
+    def classification_sample():
+        return 'Classification sample'
+
+    @app.route('/image', methods=['POST'])
+    def do_classification():
+        if request.headers['Content-Type'] == 'application/octet-stream':
+            f = open('./image', 'wb')
+            f.write(request.data)
+            return subprocess.check_output("classification_sample_async -i cat.bmp -m $MODEL_PATH/$MODEL_NAME.xml", shell=True)
+        else:
+            return "415 Unsupported Media Type ;)"
+
+    if __name__ == '__main__':
+        app.run(debug=True, host='0.0.0.0')
+
+---
+
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: openvino-deploy
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: classification
+    spec:
+      containers:
+      - name: classification
+        image: clearlinux/openvino
+        imagePullPolicy: IfNotPresent
+        env:
+#        - name: http_proxy
+#          value: <your proxy>
+#        - name: https_proxy
+#          value: <your proxy>
+        - name: MODEL_NAME
+          value: alexnet
+        - name: MODEL_PRECISION
+          value: FP32
+        args:
+        - "python3"
+        - "app.py"
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - name: server-py
+          mountPath: /work/app.py
+          subPath: app.py
+      volumes:
+      - name: server-py
+        configMap:
+          name: server
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: openvino-server
+spec:
+  type: NodePort
+  ports:
+  - port: 5000
+    nodePort: 30008
+  selector:
+    app: classification

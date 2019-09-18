@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+  openvino:
+    image: clearlinux/openvino:latest
+    environment:
+      http_proxy: $http_proxy
+      https_proxy: $https_proxy
+      MODEL_NAME: alexnet
+      MODEL_PRECISION: FP32
+    ports:
+      - "5000:5000"
+    volumes:
+      - "./app.py:/work/app.py"
+    command: "python3 app.py"
+
