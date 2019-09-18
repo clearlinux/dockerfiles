@@ -20,6 +20,7 @@ env:
   - DOCKERFILE_DIR=nginx
   - DOCKERFILE_DIR=node
   - DOCKERFILE_DIR=openjdk
+  - DOCKERFILE_DIR=openvino
   - DOCKERFILE_DIR=os-core
   - DOCKERFILE_DIR=perl
   - DOCKERFILE_DIR=php

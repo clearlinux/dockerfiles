@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  openvino:
+    image: clearlinux/openvino:latest
+    environment:
+      http_proxy: $http_proxy
+      https_proxy: $https_proxy
+      MODEL_NAME: alexnet
+      MODEL_PRECISION: FP32
+    volumes:
+      - "./cat.bmp:/work/cat.bmp"
+      - "./demo.sh:/work/demo.sh"
+    command: "/work/demo.sh"
+
