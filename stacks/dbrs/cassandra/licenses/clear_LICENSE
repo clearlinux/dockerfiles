@@ -1,0 +1,147 @@
+
+List of licenses used in Clear Linux OS.
+
+This list is automatically generated. If you spot a mistake or
+omission, please mention this on dev@lists.clearlinux.org.
+
+To read the full license text for these licenses, please visit
+http://spdx.org/licenses/. A few licenses in this list are not
+declared on the http://spdx.org/licenses/ website, they are listed
+at the bottom of this list.
+
+AFL-2.0
+AFL-2.1
+AGPL-3.0
+AML
+APSL-2.0
+Apache-1.1
+Apache-2.0
+Artistic-1.0
+Artistic-1.0-Perl
+Artistic-2.0
+BSD-2-Clause
+BSD-2-Clause-FreeBSD
+BSD-2-Clause-NetBSD
+BSD-3-Clause
+BSD-3-Clause-Attribution
+BSD-3-Clause-Clear
+BSD-3-Clause-LBNL
+BSD-4-Clause
+BSD-4-Clause-UC
+BSL-1.0
+CC-BY-2.0
+CC-BY-3.0
+CC-BY-4.0
+CC-BY-ND-4.0
+CC-BY-SA-2.0
+CC-BY-SA-3.0
+CC-BY-SA-4.0
+CC0-1.0
+CDDL-1.0
+CDDL-1.1
+CECILL-1.1
+CPL-1.0
+ClArtistic
+Distributable
+EPL-1.0
+FSFULLR
+FTL
+GFDL-1.1
+GFDL-1.2
+GFDL-1.3
+GFDL-1.3+
+GL2PS
+GPL-1.0
+GPL-1.0+
+GPL-2.0
+GPL-2.0+
+GPL-2.0-only
+GPL-2.0-or-later
+GPL-3.0
+GPL-3.0+
+GPL-3.0-only
+HPND
+ICU
+IJG
+ISC
+ImageMagick
+Imlib2
+Intel
+JSON
+JasPer-2.0
+LAL-1.2
+LGPL-2.0
+LGPL-2.0+
+LGPL-2.1
+LGPL-2.1+
+LGPL-2.1-only
+LGPL-3.0
+LGPL-3.0+
+LPPL-1.0
+LPPL-1.3c
+Libpng
+MIT
+MIT-Opengroup
+MIT-enna
+MIT-feh
+MPL-1.1
+MPL-2.0
+MPL-2.0-no-copyleft-exception
+MS-PL
+MTLL
+MakeIndex
+NCSA
+NTP
+NetCDF
+Nunit
+OFL-1.0
+OFL-1.1
+OLDAP-2.0.1
+OLDAP-2.8
+OML
+OSL-2.0
+OpenSSL
+PHP-3.01
+PostgreSQL
+Public-Domain
+Python-2.0
+QPL-1.0
+Qhull
+Rdisc
+Ruby
+SAX-PD
+SGI-B-1.0
+SGI-B-1.1
+SGI-B-2.0
+SISSL
+Saxpath
+Sleepycat
+TCL
+Unicode-TOU
+Unlicense
+Vim
+W3C
+W3C-19980720
+WTFPL
+X11
+ZPL-2.0
+ZPL-2.1
+Zend-2.0
+Zlib
+bzip2-1.0.5
+bzip2-1.0.6
+gnuplot
+libtiff
+psutils
+zlib-acknowledgement
+
+The following licenses are not standard spdx identifiers:
+- Copyright
+- Distributable
+- Public-Domain
+
+These are used for projects that have explicitly granted redistribution
+of the project source code, but don't have a typical OSI approved
+license identifier.
+
+
