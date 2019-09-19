@@ -1,0 +1,12 @@
+#!/bin/bash
+
+srv=$(ps -C redis-server -o pid=)
+cli=$(ps -C redis-cli -o pid=)
+bench=$(ps -C redis-benchmark -o pid=)
+sentinel=$(ps -C redis-sentinel -o pid=)
+
+if [[ ! -z "$srv$cli$bench$sentinel" ]]; then
+    exit 0
+fi
+
+exit 1

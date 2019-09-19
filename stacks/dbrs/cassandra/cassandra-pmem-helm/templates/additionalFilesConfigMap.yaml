@@ -1,0 +1,11 @@
+{{- if and (.Files.Glob "files/additionalFiles/*") (.Values.enableAdditionalFilesConfigMap) }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-additional-files-configmap
+  labels:
+    app: {{printf "%s-%s" .Release.Name .Values.appLabelSuffix }}
+data: 
+  {{ (.Files.Glob "files/additionalFiles/*").AsConfig | nindent 2 }}
+{{- end }}
+
