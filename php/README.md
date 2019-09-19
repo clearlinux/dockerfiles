@@ -155,6 +155,8 @@ modify the container images.
     docker build -t my-own-php-instance .
     ```
 
+4. Please refer to [create custom application container image](https://github.com/clearlinux/clear-linux-documentation/pull/775) on how to customize your container image with specific debug capabilities, such as: make, git.
+
    Refer to the Docker documentation for [default build
    arguments](https://docs.docker.com/engine/reference/builder/#arg).
    Additionally:
