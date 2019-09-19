@@ -19,7 +19,6 @@ spec:
           ports:
             - containerPort: 3306
               name: db-port
-          args: ["--bind-address=0.0.0.0"]
           env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
@@ -50,4 +49,3 @@ spec:
     nodePort: 30001
   selector:
     app: mariadb
-
