@@ -69,6 +69,66 @@ guest   [administrator]
 ```
 See the RabbitMQ [Clustering Guide](https://www.rabbitmq.com/clustering.html) for more information.
 
+### Deploy with Kubernetes
+
+This image can also be deployed on a Kubernetes cluster, such as [minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/).The following example YAML files are provided in the repository as reference for Kubernetes deployment:
+
+- [`rabbitmq-deployment-conf.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/rabbitmq/rabbitmq-deployment-conf.yaml): example using your own custom configuration to create a rabbitmq service.
+
+  
+
+Steps to deploy rabbitmq on a Kubernetes cluster:
+
+1. Create namespace test-rabbitmq for rabbitmq service.
+
+   ```
+   kubectl create ns test-rabbitmq
+   ```
+
+2. Deploy `rabbitmq-deployment-conf.yaml`
+
+   ```
+   kubectl create -f rabbitmq-deployment-conf.yaml
+   ```
+
+3. Check the cluster status
+
+   - Wait few seconds....then run
+
+   ```
+   FIRST_POD=$(kubectl get pods --namespace test-rabbitmq -l 'app=rabbitmq' -o jsonpath='{.items[0].metadata.name }')
+   kubectl exec --namespace=test-rabbitmq $FIRST_POD rabbitmqctl cluster_status
+   ```
+
+   - The output should look something like this:
+
+   ```
+   Cluster status of node rabbit@rabbitmq-0.rabbitmq.test-rabbitmq.svc.cluster.local ...
+   [{nodes,[{disc,['rabbit@rabbitmq-0.rabbitmq.test-rabbitmq.svc.cluster.local',
+                   'rabbit@rabbitmq-1.rabbitmq.test-rabbitmq.svc.cluster.local',
+                   'rabbit@rabbitmq-2.rabbitmq.test-rabbitmq.svc.cluster.local']}]},
+    {running_nodes,['rabbit@rabbitmq-2.rabbitmq.test-rabbitmq.svc.cluster.local',
+                    'rabbit@rabbitmq-1.rabbitmq.test-rabbitmq.svc.cluster.local',
+                    'rabbit@rabbitmq-0.rabbitmq.test-rabbitmq.svc.cluster.local']},
+    {cluster_name,<<"rabbit@rabbitmq-0.rabbitmq.test-rabbitmq.svc.cluster.local">>},
+    {partitions,[]},
+    {alarms,[{'rabbit@rabbitmq-2.rabbitmq.test-rabbitmq.svc.cluster.local',[]},
+             {'rabbit@rabbitmq-1.rabbitmq.test-rabbitmq.svc.cluster.local',[]},
+             {'rabbit@rabbitmq-0.rabbitmq.test-rabbitmq.svc.cluster.local',[]}]}]
+   ```
+
+4. Install python and its package `pika`
+
+5. Use python to  connect to the rabbitmq service, where 30672 is the port number defined in your service.
+
+   ```
+   # in Python shell
+   >>> import pika
+   >>> connection = pika.BlockingConnection(pika.ConnectionParameters("<nodeIP>",30672))
+   ```
+
+   
+
 <!-- Required -->
 ## Build and modify:
 The Dockerfiles for all Clear Linux* OS based container images are available at
