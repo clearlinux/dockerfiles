@@ -1,0 +1,129 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  {{- $statefulSetName := printf "%s-%s" .Release.Name .Values.statefulSetSuffix }}
+  name: {{ $statefulSetName }}
+spec:
+  selector:
+    matchLabels:
+      {{- $appLabel := printf "%s-%s" .Release.Name .Values.appLabelSuffix }}
+      app: {{ $appLabel }} # has to match .spec.template.metadata.labels
+  {{- $serviceName := printf "%s-cassandra-pmem-svc" .Release.Name  }}
+  serviceName: {{ $serviceName  }}
+  replicas: {{ .Values.replicaCount  }} # by default is 1
+  template:
+    metadata:
+      labels:
+        app: {{ $appLabel }} # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: cassandra-pmem
+        image: {{ .Values.image.repository  }}/{{ .Values.image.name  }}:{{ .Values.image.tag  }}
+        ports:
+        - containerPort: 9042
+          name: cql
+        - containerPort: 7000
+          name: inter-node
+        {{- if .Values.exposeJmxPort }}
+        - containerPort: 7199
+          name: jmx-port
+        {{- end }}
+        {{- if .Values.resources.enabled }}
+        livenessProbe:
+          tcpSocket:
+            port: cql
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        resources:
+          requests:
+            memory: {{ .Values.resources.requests.memory }}
+            cpu: {{ .Values.resources.requests.cpu }}
+          limits:
+            memory: {{ .Values.resources.limits.memory }}
+            cpu: {{ .Values.resources.limits.cpu }}
+        {{- end }}
+        {{- if ( not .Values.provideCustomConfig ) }}
+        env:
+        - name: CASSANDRA_SEED_ADDRESSES
+          {{- $seedAddresses := "" }}
+          {{- $nodeNumber := .Values.replicaCount | int }}
+          {{- $releaseName := .Release.Name }}
+          {{- range $index, $value := until $nodeNumber }}
+          {{- $seedAddresses =  printf "%s%s-%d.%s:7000," $seedAddresses $statefulSetName $index $serviceName }}
+          {{- end}}
+          value: {{ $seedAddresses | quote }}
+        - name: CASSANDRA_CLUSTER_NAME
+          {{- $defaultClusterName := printf "%s-cassandra-pmem-k8s-cluster" .Release.Name }}
+          value: {{ .Values.clusterName  | default $defaultClusterName | quote }}
+        - name: CASSANDRA_FSDAX_POOL_SIZE_GB
+          value: {{ .Values.pmem.fsdaxPoolSizeInGB | default "3" | quote }}
+        {{- if .Values.exposeJmxPort }}
+        - name: LOCAL_JMX
+          value: "no"
+        {{- end }}
+        {{- if .Values.jvmOpts.enabled }}
+        - name: JVM_OPTS
+          value: {{ .Values.jvmOpts.value }}
+        {{- end }}
+        {{- end }}
+        volumeMounts:
+        {{- if and (.Files.Glob "files/conf/*") (.Values.provideCustomConfig) }} 
+        - name: config-volume
+          mountPath: /workspace/cassandra/conf
+        {{- end }}
+        {{- if and (.Files.Glob "files/additionalFiles/*") (.Values.enableAdditionalFilesConfigMap) }}
+        - name: additional-files-volume
+          mountPath: /etc/cassandra
+        {{- end }}
+        - name: cassandra-pmem-pvc
+          mountPath: /mnt/pmem
+        {{- if .Values.enablePersistence }}
+        - name: cassandra-data-pvc
+          mountPath: /workspace/cassandra/data
+        - name: cassandra-logs-pvc
+          mountPath: /workspace/cassandra/logs
+        {{- end }}
+      volumes:
+      {{- if and (.Files.Glob "files/conf/*") (.Values.provideCustomConfig) }}
+        - name: config-volume
+          configMap:
+            name: {{ .Release.Name }}-configmap
+      {{- end }}
+      {{- if and (.Files.Glob "files/additionalFiles/*") (.Values.enableAdditionalFilesConfigMap) }}
+        - name: additional-files-volume
+          configMap:
+            name: {{ .Release.Name }}-additional-files-configmap
+      {{- end }}
+  volumeClaimTemplates:
+  - metadata:
+      name: cassandra-pmem-pvc
+    spec:
+      accessModes: 
+      - ReadWriteOnce 
+      storageClassName: "pmem-csi-sc-ext4"
+      resources:
+        requests:
+          storage: {{ .Values.pmem.containerPmemAllocation  | default "4G" | quote }}
+  {{- if .Values.enablePersistence }}
+  - metadata:
+      name: cassandra-data-pvc
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      storageClassName: {{ .Values.persistentVolumes.dataStorageClass | quote }}
+      resources:
+        requests:
+          storage: {{ .Values.persistentVolumes.dataVolumeSize  | default "2G" | quote }}
+  - metadata:
+      name: cassandra-logs-pvc
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      storageClassName: {{ .Values.persistentVolumes.logsStorageClass | quote }}
+      resources:
+        requests:
+          storage: {{ .Values.persistentVolumes.logsVolumeSize  | default "2G" | quote }}
+  {{- end }}
+
+

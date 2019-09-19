@@ -1,0 +1,29 @@
+{{- if .Values.enableClientToolsPod }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-client-tools-pod
+  labels:
+    {{- $appLabel := printf "%s-%s" .Release.Name .Values.appLabelSuffix }}
+    app: {{ $appLabel }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ $appLabel }}
+  template:
+    metadata:
+      labels:
+        app: {{ $appLabel }}
+    spec:
+      containers:
+      - name: {{ .Release.Name }}-client-tools-pod
+        image: {{ .Values.clientToolsImage.repository  }}/{{ .Values.clientToolsImage.image  }}:{{ .Values.clientToolsImage.tag  }}
+        volumeMounts:
+          - name: test-profiles-volume
+            mountPath: /testProfiles
+      volumes:
+        - name: test-profiles-volume
+          configMap:
+            name: {{ .Release.Name }}-test-profiles-configmap
+{{- end }}
