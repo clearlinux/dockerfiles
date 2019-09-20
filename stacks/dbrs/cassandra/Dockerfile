@@ -49,8 +49,7 @@ RUN  cd /tmp && \
      rm /workspace/cassandra/conf/cassandra.yaml && \
      rm /workspace/cassandra/conf/jvm-server.options && \
      rm /workspace/cassandra/conf/jvm8-server.options && \
-     rm /workspace/cassandra/conf/jvm11-server.options && \
-     rm /workspace/cassandra/lib/snappy-java-1.1.2.6.jar
+     rm /workspace/cassandra/conf/jvm11-server.options
 
 
 COPY conf/cassandra-template.yaml /workspace/cassandra/conf/
