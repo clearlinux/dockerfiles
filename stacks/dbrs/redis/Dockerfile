@@ -1,7 +1,12 @@
 FROM clearlinux AS build-redis
 MAINTAINER otc-swstacks@intel.com
 
-RUN swupd bundle-add --quiet --no-progress git c-basic devpkg-ndctl os-testsuite-phoronix-server
+RUN swupd bundle-add --quiet --no-progress git c-basic devpkg-ndctl curl package-utils
+
+RUN clr_ver=$(grep VERSION_ID /usr/lib/os-release | awk -F= '{print $2}') && \
+	NUMA_DEV="https://cdn.download.clearlinux.org/releases/$clr_ver/clear/x86_64/os/Packages/numactl-dev-2.0.12-20.x86_64.rpm" && \
+	NUMA_LIB="https://cdn.download.clearlinux.org/releases/$clr_ver/clear/x86_64/os/Packages/numactl-lib-2.0.12-20.x86_64.rpm" && \
+	rpm -ihv --nodeps $NUMA_DEV $NUMA_LIB
 
 RUN  useradd redis-user
 
