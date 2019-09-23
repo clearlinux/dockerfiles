@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tf-serving-config
+data:
+  MODEL_NAME: half_plus_two
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: tf-serving
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: tf-serving
+    spec:
+      containers:
+      - name: tf-serving
+        image: docker.io/clearlinux/tensorflow-serving
+        ports:
+        - containerPort: 8501
+        env:
+          - name: MODEL_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: tf-serving-config
+                key: MODEL_NAME
+        volumeMounts:
+          - name: tf-serving-volume
+            mountPath: /models/half_plus_two
+
+      volumes:
+        - name: tf-serving-volume
+          hostPath:
+            # /var/tmp is the root directory where you saved your models
+            path: /var/tmp/serving/tensorflow_serving/servables/tensorflow/testdata/saved_model_half_plus_two_cpu
+            type: Directory
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tf-serving
+spec:
+  type: NodePort
+  ports:
+  - port: 8501
+    targetPort: 8501
+    nodePort: 30001
+  selector:
+    app: tf-serving
