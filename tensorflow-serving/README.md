@@ -51,6 +51,7 @@ Docker Hub.
     git clone https://github.com/tensorflow/serving
     TESTDATA="$(pwd)/serving/tensorflow_serving/servables/tensorflow/testdata"
     ```
+    
 3. Start a container using the examples below:
 
     ```
@@ -59,13 +60,46 @@ Docker Hub.
     -e MODEL_NAME=half_plus_two \
     clearlinux/tensorflow-serving &
     ```
+    
 4. Query the model using the predict API and the return => { "predictions": [2.5, 3.0, 4.5] }
 
     ```
     curl -d '{"instances": [1.0, 2.0, 5.0]}' \
     -X POST http://localhost:8501/v1/models/half_plus_two:predict
     ```
+
+### Deploy with Kubernetes
+
+This image can also be deployed on a Kubernetes cluster, such as [minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/).The following example YAML files are provided in the repository as reference for Kubernetes deployment:
+
+- [`tensorflow-serving-deployment.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/tensorflow-serving/tensorflow-serving-deployment.yaml): example to create a basic tensorflow-serving service.
+
+
+
+Steps to deploy tensorflow-serving on a Kubernetes cluster:
+
+1. Download a tensorflow-serving repo.
+
+   ```
+   cd /var/tmp
+   git clone https://github.com/tensorflow/serving
+   ```
+
+2. Deploy `tensorflow-serving-deployment.yaml` .
+
+   ```
+   kubectl create -f tensorflow-serving-deployment.yaml
+   ```
+
+3. Query the model using the predict API and the return => { "predictions": [2.5, 3.0, 4.5] }, where 30001 is the port number defined in your service.
+
+   ```
+   curl -d '{"instances": [1.0, 2.0, 5.0]}' \
+   -X POST http://<nodeIP>:30001/v1/models/half_plus_two:predict
+   ```
+
 <!-- Required -->
+
 ## Build and modify:
 
 The Dockerfiles for all Clear Linux* OS based container images are available at
