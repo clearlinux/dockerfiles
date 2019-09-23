@@ -14,7 +14,6 @@ env:
   - DOCKERFILE_DIR=httpd
   - DOCKERFILE_DIR=iperf
   - DOCKERFILE_DIR=machine-learning-ui
-  - DOCKERFILE_DIR=machine-learning
   - DOCKERFILE_DIR=mariadb
   - DOCKERFILE_DIR=memcached
   - DOCKERFILE_DIR=mixer-ci
