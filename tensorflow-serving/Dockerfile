@@ -51,4 +51,4 @@ RUN mkdir -p /usr/local/bin
 COPY tf_serving_entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/tf_serving_entrypoint.sh
 
-ENTRYPOINT ["tf_serving_entrypoint.sh"]
+CMD ["tf_serving_entrypoint.sh"]
