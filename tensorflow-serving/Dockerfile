@@ -52,3 +52,4 @@ COPY tf_serving_entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/tf_serving_entrypoint.sh
 
 ENTRYPOINT ["tf_serving_entrypoint.sh"]
+CMD ["tensorflow_model_server"]
