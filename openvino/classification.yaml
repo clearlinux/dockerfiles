@@ -4,8 +4,6 @@ metadata:
   name: server
 data:
   app.py: |
-    #!/usr/bin/python3
-
     import subprocess
     from flask import Flask, request
     app = Flask(__name__)
@@ -19,7 +17,7 @@ data:
         if request.headers['Content-Type'] == 'application/octet-stream':
             f = open('./image', 'wb')
             f.write(request.data)
-            return subprocess.check_output("classification_sample_async -i cat.bmp -m $MODEL_PATH/$MODEL_NAME.xml", shell=True)
+            return subprocess.check_output("classification_sample_async -i ./image -m $MODEL_PATH/$MODEL_NAME.xml", shell=True)
         else:
             return "415 Unsupported Media Type ;)"
 
