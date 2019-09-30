@@ -11,6 +11,6 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - "./app.py:/work/app.py"
+      - "./app.py:/app/app.py"
     command: "python3 app.py"
 

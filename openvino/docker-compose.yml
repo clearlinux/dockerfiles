@@ -9,7 +9,7 @@ services:
       MODEL_NAME: alexnet
       MODEL_PRECISION: FP32
     volumes:
-      - "./cat.bmp:/work/cat.bmp"
-      - "./demo.sh:/work/demo.sh"
-    command: "/work/demo.sh"
+      - "./cat.bmp:/app/cat.bmp"
+      - "./demo.sh:/app/demo.sh"
+    command: "/app/demo.sh"
 

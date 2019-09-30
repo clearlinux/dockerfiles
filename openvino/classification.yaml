@@ -57,7 +57,7 @@ spec:
         - containerPort: 5000
         volumeMounts:
         - name: server-py
-          mountPath: /work/app.py
+          mountPath: /app/app.py
           subPath: app.py
       volumes:
       - name: server-py

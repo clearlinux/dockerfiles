@@ -1,5 +1,4 @@
 face-detection-retail-0005
 facial-landmarks-35-adas
-mobilenet-ssd
 person-vehicle-bike-detection-crossroad-0078
 person-detection-retail-0013

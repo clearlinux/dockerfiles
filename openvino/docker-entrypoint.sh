@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-source /work/set_model_path.sh
+source /app/set_model_path.sh
 
 echo "MODEL NAME: $MODEL_NAME"
 echo "MODEL PRECISION: $MODEL_PRECISION"
