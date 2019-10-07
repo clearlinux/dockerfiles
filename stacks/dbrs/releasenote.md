@@ -53,7 +53,7 @@ The components of the Database Reference stack where selected because they suppo
 
 The images can be used in a Kubernetes cluster as a multi-node environment. To enable DCPMM support in Kubernetes, it is required to use the [pmem-csi driver](https://github.com/intel/pmem-csi) to create the storage classes which will map to the DCPMM regions in fsdax mode.
 
-Please refer to the [Database Reference Stack tutorial](https://clearlinux.org/documentation/clear-linux/tutorials/dbrs) for detailed instructions for running the benchmarks on the docker images.
+Please refer to the [Database Reference Stack tutorial](https://docs.01.org/clearlinux/latest/guides/stacks/dbrs.html) for detailed instructions for running the benchmarks on the docker images.
 
 
 # Contributing to the Database Reference Stack
