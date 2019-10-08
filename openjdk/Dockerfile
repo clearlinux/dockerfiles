@@ -17,7 +17,7 @@ RUN source /os-release && \
     mkdir /install_root \
     && swupd os-install -V ${VERSION_ID} \
     --path /install_root --statedir /swupd-state \
-    --bundles=os-core-update,java12-basic --no-boot-update
+    --bundles=os-core-update,java13-runtime --no-boot-update
 
 # For some Host OS configuration with redirect_dir on,
 # extra data are saved on the upper layer when the same
@@ -33,6 +33,6 @@ FROM clearlinux/os-core:latest
 
 COPY --from=builder /install_root /
 
-ENV PATH=/usr/lib/jvm/java-1.12.0-openjdk/bin:$PATH
+ENV PATH=/usr/lib/jvm/java-1.13.0-openjdk/bin:$PATH
 
 CMD ["java"]
