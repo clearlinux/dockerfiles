@@ -21,15 +21,13 @@ RUN source /os-release && \
     && rm -rf /install_root/var/lib/swupd/*
 
 # fetch MKL library and wrapper
-RUN URL='http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/15095' && \
-    MKL_VERSION='l_mkl_2019.2.187_online' && \
+RUN URL='http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/15816' && \
+    MKL_VERSION='l_mkl_2019.5.281_online' && \
     mkdir /install_root/mkl /install_root/mkl_wrapper && \
     curl ${URL}/${MKL_VERSION}.tgz -o /install_root/mkl/${MKL_VERSION}.tgz && \
     tar -xvf /install_root/mkl/${MKL_VERSION}.tgz -C /install_root/mkl --strip-components=1 && \
     curl -L https://github.com/Intel-bigdata/mkl_wrapper_for_non_CDH/raw/master/mkl_wrapper.jar -o /install_root/mkl_wrapper/mkl_wrapper.jar && \
     curl -L https://github.com/Intel-bigdata/mkl_wrapper_for_non_CDH/raw/master/mkl_wrapper.so  -o /install_root/mkl_wrapper/mkl_wrapper.so
-
-COPY silent.cfg /install_root/mkl/
 
 # For some Host OS configuration with redirect_dir on,
 # extra data are saved on the upper layer when the same
@@ -73,13 +71,18 @@ ENV YARN_RESOURCEMANAGER_USER=root
 ENV YARN_NODEMANAGER_USER=root
 
 COPY dars.ld.so.conf /etc/ld.so.conf
-COPY silent.cfg /
+COPY silent.cfg /mkl
 
-RUN /mkl/install.sh -s silent.cfg && \
-    rm -rf /mkl && \
+RUN /mkl/install.sh -s /mkl/silent.cfg && \   
     ldconfig
 
 COPY --from=builder /install_root/mkl_wrapper/mkl_wrapper.* /opt/intel/mkl/wrapper/
+
+RUN rm -rf /mkl_wrapper /mkl /tmp/*
+
+RUN mkdir -p /etc/spark /etc/hadoop && \
+    cp /usr/share/defaults/hadoop/log4j.properties /etc/hadoop && \
+    cp /usr/share/apache-spark/conf/log4j.properties.template /etc/spark/log4j.properties
 
 COPY spark_conf/* /etc/spark/
 COPY hadoop_conf/* /etc/hadoop/
