@@ -63,7 +63,9 @@ COPY dars.ld.so.conf /etc/ld.so.conf
 
 RUN ldconfig
 
-RUN mkdir -p /etc/spark /etc/hadoop
+RUN mkdir -p /etc/spark /etc/hadoop && \
+    cp /usr/share/defaults/hadoop/log4j.properties /etc/hadoop && \
+    cp /usr/share/apache-spark/conf/log4j.properties.template /etc/spark/log4j.properties
 
 COPY spark_conf/* /etc/spark/
 COPY hadoop_conf/* /etc/hadoop/
