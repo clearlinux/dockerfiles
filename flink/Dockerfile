@@ -33,9 +33,6 @@ FROM clearlinux/os-core:latest
 
 COPY --from=builder /install_root /
 
-# Configure Flink version
-ENV FLINK_VERSION=1.7.2
-
 # Prepare environment
 ENV FLINK_HOME=/usr/share/flink
 ENV PATH=$FLINK_HOME/bin:$PATH
