@@ -1,2 +1,3 @@
 flask
 redis
+networkx==2.3
