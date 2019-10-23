@@ -16,7 +16,7 @@ RUN source /os-release && \
     mkdir /install_root \
     && swupd os-install -V ${VERSION_ID} \
     --path /install_root --statedir /swupd-state \
-    --bundles=os-core-update,curl,python3-basic,computer-vision-basic,computer-vision-models --no-boot-update
+    --bundles=os-core-update,curl,computer-vision-openvino --no-boot-update
 
 # For some Host OS configuration with redirect_dir on,
 # extra data are saved on the upper layer when the same
