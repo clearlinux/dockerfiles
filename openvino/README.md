@@ -79,7 +79,7 @@ Docker Hub.
 
    * Use docker-compose to start the example:
      ```
-     docker-compose up -f docker-compose.yml
+     docker-compose -f docker-compose.yml up
      ```
      The configuration is defined in the
      [`docker-compose.yml`](https://github.com/clearlinux/dockerfiles/blob/master/openvino/docker-compose.yml)
@@ -91,7 +91,7 @@ Or
 
    * Use docker-compose to start the server first:
      ```
-     docker-compose up -f docker-compose-server.yml
+     docker-compose -f docker-compose-server.yml up
      ```
      The configuration is defined in the
      [`docker-compose-server.yml`](https://github.com/clearlinux/dockerfiles/blob/master/openvino/docker-compose-server.yml)
