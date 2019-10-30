@@ -7,7 +7,7 @@ ENV PATH="/home/clr/go/bin:${PATH}"
 
 # Update and add bundles
 RUN swupd update && \
-    swupd bundle-add mixer go-basic c-basic os-core-update-dev && \
+    swupd bundle-add mixer go-basic c-basic os-core-update-dev sudo && \
     useradd -G wheelnopw clr && \
     mkdir -p /run/lock
 USER clr
