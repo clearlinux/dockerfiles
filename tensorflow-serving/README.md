@@ -7,7 +7,7 @@
 [official clearlinux base image](https://hub.docker.com/_/clearlinux). 
 
 <!-- application introduction -->
-> [Tensorflow-serving](https://www.tensorflow.org/serving) is a flexible,
+> [Tensorflow-serving](https://github.com/tensorflow/serving) is a flexible,
 > high-performance serving system for machine learning models.
 
 For other Clear Linux* OS
@@ -38,7 +38,7 @@ To learn more about Clear Linux* OS, visit: https://clearlinux.org.
 The easiest way to get started with this image is by simply pulling it from
 Docker Hub. 
 
-*Note: This container uses the same syntax as the [official tensorflow-serving image](https://hub.docker.com/_/tensorflow-serving).
+*Note: This container uses the same syntax as the [official tensorflow-serving image](https://hub.docker.com/r/tensorflow/serving).
 
 
 1. Pull the image from Docker Hub: 
