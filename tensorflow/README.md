@@ -7,7 +7,7 @@
 [official clearlinux base image](https://hub.docker.com/_/clearlinux). 
 
 <!-- application introduction -->
-> [Tensorflow](http://www.tensorflow.org/) is an open-source machine learning library 
+> [Tensorflow](https://github.com/tensorflow/tensorflow) is an open-source machine learning library 
 > for research and production.
 
 For other Clear Linux* OS
@@ -38,7 +38,7 @@ To learn more about Clear Linux* OS, visit: https://clearlinux.org.
 The easiest way to get started with this image is by simply pulling it from
 Docker Hub. 
 
-*Note: This container uses the same syntax as the [official tensorflow image](https://hub.docker.com/_/tensorflow).
+*Note: This container uses the same syntax as the [official tensorflow image](https://hub.docker.com/r/tensorflow/tensorflow).
 
 
 1. Pull the image from Docker Hub: 
