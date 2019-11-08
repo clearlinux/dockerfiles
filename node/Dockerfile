@@ -33,6 +33,7 @@ FROM clearlinux/os-core:latest
 
 COPY --from=builder /install_root /
 
+ENV NAME="clearlinux-node"
 COPY docker-entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/docker-entrypoint.sh
 
