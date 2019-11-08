@@ -1,0 +1,19 @@
+#!/bin/bash
+echo "=> Tagging the image"
+
+set -e
+
+. ../docker-hooks.sh
+
+image="clearlinux/redis"
+tag=$(get_tag redis-native)
+
+if [ -z "$tag" ]; then
+    echo "no $pkg found on the release $clr_ver"
+else
+    docker tag $image:latest $image:$tag
+    docker push $image:$tag
+    major_tag=${tag%%.*}
+    docker tag $image:latest $image:$major_tag
+    docker push $image:$major_tag
+fi
