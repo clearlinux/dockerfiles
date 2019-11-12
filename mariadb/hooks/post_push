@@ -3,8 +3,8 @@ echo "=> Tagging the image"
 
 . ../docker-hooks.sh
 
-image="clearlinux/redis"
-tag=$(get_tag redis-native)
+image="clearlinux/mariadb"
+tag=$(get_tag mariadb)
 
 if [ $? -eq 0 ] && [ -n "$tag" ]; then
     major_tag=${tag%%.*}

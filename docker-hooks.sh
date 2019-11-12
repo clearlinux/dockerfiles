@@ -35,3 +35,14 @@ function get_tags_in_docker {
     tags=$(curl $tag_url 2>/dev/null | docker run -i stedolan/jq  '."results"[]["name"]')
     echo $tags
 }
+
+function tag_and_push {
+    local tag=$1
+    local major_tag=$2
+
+    set -e
+    docker tag $image:latest $image:$tag
+    docker push $image:$tag
+    docker tag $image:latest $image:$major_tag
+    docker push $image:$major_tag
+}
