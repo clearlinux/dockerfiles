@@ -13,9 +13,8 @@ function get_tag {
 
     # no matches, return NULL tag
     if [ -z "$matches" ]; then
-        echo ""
         echo "no $pkg found on the release $clr_ver"
-        exit 0
+        exit 1
     fi
 
     matches=($matches)
