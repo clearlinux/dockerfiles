@@ -3,10 +3,11 @@ echo "=> Tagging the image"
 
 . ../docker-hooks.sh
 
-image="clearlinux/redis"
-tag=$(get_tag redis-native)
+image="clearlinux/memcached"
+tag=$(get_tag memcached)
 
 if [ $? -eq 0 ] && [ -n "$tag" ]; then
-    major_tag=${tag%%.*}
+    # major tag format like 1.4 or 1.5
+    major_tag=${tag%.*}
     tag_and_push $tag $major_tag
 fi
