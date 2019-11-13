@@ -75,7 +75,14 @@ Steps to deploy node on a Kubernetes cluster:
    curl <nodeIP>:30001
    ```
 
-   
+### Environment variables
+
+When you start the node image, you can adjust the configuration of the instance by passing the environment variable on the docker run command line. If you want to add a new environment variable:
+
+* For manual execution add a -e option with the variable and value:
+   ```
+   docker run -it -e NAME="some-node" --rm clearlinux/node
+   ```
 
 <!-- Required -->
 ## Build and modify:
