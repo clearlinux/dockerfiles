@@ -75,7 +75,9 @@ Steps to deploy node on a Kubernetes cluster:
    curl <nodeIP>:30001
    ```
 
+### Expose Node docker container environment
    
+This image set node env NAME as "clearlinux-node".
 
 <!-- Required -->
 ## Build and modify:
