@@ -32,21 +32,17 @@ FROM clearlinux/os-core:latest
 
 COPY --from=builder /install_root /
 
-ENV PATH $PATH:/usr/libexec/postgresql11
-ENV PGDATA /var/lib/pgsql/data
-RUN sed -i "s|#listen_addresses.*|listen_addresses = '*'|" /usr/share/postgresql11/postgresql.conf.sample && \
-    mkdir -p /run/postgresql11 && chown -R postgres:postgres /run/postgresql11 && \
-    mkdir -p "$PGDATA" && chown -R postgres:postgres "$PGDATA" && \
-    mkdir /docker-entrypoint-initdb.d && \
-    mkdir -p /usr/local/bin
+RUN mkdir -p /etc/postgresql11
+COPY rootfs /
 
-VOLUME /var/lib/pgsql/data
-COPY docker-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh && \
-    ln -s /usr/local/bin/docker-entrypoint.sh / && \
-    ln -s /usr/share/postgresql11 /usr/share/postgresql
+RUN /postunpack.sh
 
-ENTRYPOINT ["docker-entrypoint.sh"]
+VOLUME [ "/clrconf/postgresql", "/docker-entrypoint-initdb.d", "/docker-entrypoint-preinitdb.d" ]
+
+RUN sed -i "s|#listen_addresses.*|listen_addresses = '*'|" /usr/share/postgresql11/postgresql.conf.sample
 
 EXPOSE 5432
-CMD ["postgres"]
+
+#USER 1001
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["/run.sh"]

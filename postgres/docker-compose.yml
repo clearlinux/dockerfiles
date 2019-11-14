@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  postgresql:
+    image: 'clearlinux/postgres'
+    ports:
+      - '5432:5432'
+    volumes:
+      - 'postgresql_data:/clrconf/postgresql'
+    environment:
+      - 'ALLOW_EMPTY_PASSWORD=yes'
+
+volumes:
+  postgresql_data:
+    driver: local
