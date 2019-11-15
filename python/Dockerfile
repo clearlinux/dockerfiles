@@ -31,6 +31,8 @@ RUN cd / && \
 
 FROM clearlinux/os-core:latest
 
+ENV NAME="clearlinux-python"
 COPY --from=builder /install_root /
 
+RUN set -e echo "IMAGE NAME: $NAME"
 CMD ["python3"]

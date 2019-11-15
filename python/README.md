@@ -55,6 +55,14 @@ Docker Hub.
 <!-- Optional -->
 ### Deploy with Kubernetes
 
+
+### Environment variables
+
+When you start the python image, you can adjust the configuration of the instance by passing the environment variable on the docker run command line. Manual execution add a -e option with the variable and value:
+   ```
+   docker run -it -e NAME="some-python" --rm clearlinux/python
+   ```
+
 <!-- Required -->
 ## Build and modify:
 
