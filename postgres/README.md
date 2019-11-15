@@ -33,6 +33,39 @@ Clear Linux* OS based container images use:
 To learn more about Clear Linux* OS, visit: https://clearlinux.org.
 
 <!-- Required -->
+## Environment Variables
+The PostgreSQL image uses several environment variables which are easy to miss. While none of the variables are required, they may significantly aid you in using the image.
+
+Warning: the Docker specific variables will only have an effect if you start the container with a data directory that is empty; any pre-existing database will be left untouched on container startup.
+
+### POSTGRES_PASSWORD
+This environment variable is recommended for you to use the PostgreSQL image. This environment variable sets the superuser password for PostgreSQL. The default superuser is defined by the POSTGRES_USER environment variable.
+
+Note 1: The PostgreSQL image sets up trust authentication locally so you may notice a password is not required when connecting from localhost (inside the same container). However, a password will be required if connecting from a different host/container.
+
+Note 2: This variable defines the superuser password in the PostgreSQL instance, as set by the initdb script during inital container startup. It has no effect on the PGPASSWORD environment variable that may be used by the psql client at runtime, as described at https://www.postgresql.org/docs/10/static/libpq-envars.html. PGPASSWORD, if used, will be specified as a separate environment variable
+
+### POSTGRES_USER
+This optional environment variable is used in conjunction with POSTGRES_PASSWORD to set a user and its password. This variable will create the specified user with superuser power and a database with the same name. If it is not specified, then the default user of postgres will be used.
+
+### POSTGRES_DB
+This optional environment variable can be used to define a different name for the default database that is created when the image is first started. If it is not specified, then the value of POSTGRES_USER will be used.
+
+### POSTGRES_INITDB_ARGS
+
+This optional environment variable can be used to send arguments to postgres initdb. The value is a space separated string of arguments as postgres initdb would expect them. This is useful for adding functionality like data page checksums: -e POSTGRES_INITDB_ARGS="--data-checksums".
+
+### POSTGRES_INITDB_WALDIR
+
+This optional environment variable can be used to define another location for the Postgres transaction log. By default the transaction log is stored in a subdirectory of the main Postgres data folder (PGDATA). Sometimes it can be desireable to store the transaction log in a different directory which may be backed by storage with different performance or reliability characteristics.
+
+### PGDATA
+
+This optional variable can be used to define another location - like a subdirectory - for the database files. The default is /var/lib/postgresql/data, but if the data volume you're using is a filesystem mountpoint (like with GCE persistent disks), Postgres initdb recommends a subdirectory (for example /var/lib/postgresql/data/pgdata ) be created to contain the data.
+
+This is an environment variable that is not Docker specific. Because the variable is used by the postgres server binary (see the [PostgreSQL docs](https://www.postgresql.org/docs/11/app-postgres.html#id-1.9.5.14.7)), the entrypoint script takes it into account.
+
+<!-- Required -->
 ## Deployment:
 
 ### Deploy with Docker
