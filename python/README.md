@@ -55,6 +55,12 @@ Docker Hub.
 <!-- Optional -->
 ### Deploy with Kubernetes
 
+
+### Environment variables
+
+The python image has environment variables 'NAME' to indicate clearlinux python, and 'VERSION' to show python package version this docker container is working with.
+
+
 <!-- Required -->
 ## Build and modify:
 

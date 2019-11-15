@@ -31,6 +31,9 @@ RUN cd / && \
 
 FROM clearlinux/os-core:latest
 
+ENV NAME="clearlinux-python"
+ENV VERSION="3.7"
+
 COPY --from=builder /install_root /
 
 CMD ["python3"]
