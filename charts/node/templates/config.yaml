@@ -1,0 +1,12 @@
+{{- if .Values.config.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "node.fullname" . }}
+  labels:
+{{ include "node.labels" . | indent 4 }}
+data:
+  app.js: |-
+{{ .Values.config.content | indent 4 }}
+{{- end }}
+
