@@ -65,24 +65,29 @@ The command removes all the Kubernetes components associated with the chart and 
 
 The following table lists the configurable parameters of the MariaDB chart and their default values.
 
-| Parameter                | Description                                    | Default                        |
-| ------------------------ | ---------------------------------------------- | ------------------------------ |
-| `image.replicaCount`     | Mariadb pod count                              | `2`                            |
-| `image.repository`       | MariaDB image repository                       | `docker.io/clearlinux/mariadb` |
-| `image.imagepullPolicy`  | MariaDB image pull policy                      | `IfNotPresent`                 |
-| `service.type`           | MariaDB service type                           | `NodePort`                     |
-| `service.port`           | MariaDB service port                           | `3306`                         |
-| `service.targetPort`     | MariaDB service targetPort                     | `3306`                         |
-| `service.nodePort`       | MariaDB service nodePort                       | `30001`                        |
-| `config.enabled`         | If apply custom config file to Mariadb service | `True`                         |
-| `config.content`         | custom file content                            | `your own custom conf`         |
-| `config.name`            | config volume name                             | `config-volume`                |
-| `mariadbRootPassword`    | Mariadb Root Password                          | `nil`                          |
-| `mariadbUser`            | Mariadb User Name                              | `nil`                          |
-| `mariadbPassword`        | Mariadb User Password                          | `nil`                          |
-| `persistence.enabled`    | if pv is enabled to Mariadb service            | `True`                         |
-| `persistence.accessMode` | pv accessMode for Mariadb service              | `ReadWriteMany`                |
-| `persistence.size`       | pv size for Mariadb service                    | `1Gi`                          |
+| Parameter                      | Description                                    | Default                        |
+| ------------------------------ | ---------------------------------------------- | ------------------------------ |
+| `image.replicaCount`           | Mariadb pod count                              | `2`                            |
+| `image.repository`             | MariaDB image repository                       | `docker.io/clearlinux/mariadb` |
+| `image.imagePullPolicy`        | MariaDB image pull policy                      | `IfNotPresent`                 |
+| `service.type`                 | MariaDB service type                           | `NodePort`                     |
+| `service.port`                 | MariaDB service port                           | `3306`                         |
+| `service.targetPort`           | MariaDB service targetPort                     | `3306`                         |
+| `service.nodePort`             | MariaDB service nodePort                       | `30001`                        |
+| `config.enabled`               | If apply custom config file to Mariadb service | `True`                         |
+| `config.content`               | custom file content                            | `your own custom conf`         |
+| `config.name`                  | config volume name                             | `config-volume`                |
+| `mariadbRootPassword`          | Mariadb Root Password                          | `nil`                          |
+| `mariadbUser`                  | Mariadb User Name                              | `nil`                          |
+| `mariadbPassword`              | Mariadb User Password                          | `nil`                          |
+| `persistence.enabled`          | if pv is enabled to Mariadb service            | `True`                         |
+| `persistence.accessMode`       | pv accessMode for Mariadb service              | `ReadWriteMany`                |
+| `persistence.size`             | pv size for Mariadb service                    | `1Gi`                          |
+| `ingress.enabled`              | Enable ingress controller resource             | `false`                        |
+| `ingress.hosts[0].host`        | Host to your Node installation                 | `chart-example.local`          |
+| `ingress.hosts[0].paths`       | Path within the url structure                  | `[]`                           |
+| `ingress.hosts[0].tls`         | Utilize TLS backend in ingress                 | `[]`                           |
+| `ingress.hosts[0].annotations` | Annotations for this host's ingress record     | `{}`                           |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
