@@ -1,0 +1,44 @@
+# Default values for mariadb.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  replicaCount: 2
+  repository: docker.io/clearlinux/mariadb
+  imagePullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 3306
+  targetPort: 3306
+  nodePort: 30001
+
+config:
+  enabled: True
+  name: config-volume
+  content: |-
+    [galera]
+    bind-address=0.0.0.0
+
+    [mysqld]
+    skip-log-bin
+    ssl=0
+    table_open_cache = 200000
+    table_open_cache_instances=64
+
+mariadbRootPassword:
+mariadbUser:
+mariadbPassword:
+
+persistence:
+  enabled: True   
+  accessMode: ReadWriteMany
+  size: 1Gi 
+
+ingress:
+  enabled: false
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths: []
+  tls: []

@@ -1,0 +1,11 @@
+{{- if .Values.config.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "mariadb.fullname" . }}
+  labels:
+{{ include "mariadb.labels" . | indent 4 }}
+data:
+  my.cnf: |-
+{{ .Values.config.content | indent 4 }}
+{{- end }}

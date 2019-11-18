@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "mariadb.fullname" . }}
+  labels:
+{{ include "mariadb.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.image.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "mariadb.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "mariadb.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      volumes:
+        {{- if .Values.config.enabled }}
+        - name: {{ .Values.config.name }}
+          configMap:
+            name: {{ include "mariadb.fullname" . }}
+        {{- end }}
+        {{- if .Values.persistence.enabled }}
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ include "mariadb.fullname" . }}
+        {{- end }}
+      containers:
+        - name: mariadb
+          image: {{ .Values.image.repository }}
+          ports:
+            - containerPort: 3306
+              name: db-port
+          imagePullPolicy: {{ .Values.image.imagePullPolicy }}
+          volumeMounts:
+          {{- if .Values.config.enabled }}
+            - name: {{ .Values.config.name }}
+              mountPath: /usr/share/defaults/mariadb/my.cnf.d
+          {{- end }}
+          {{- if .Values.persistence.enabled }}
+            - name: data
+              mountPath: /var/lib/mysql
+          {{- end }}
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "mariadb.fullname" . }}
+                  key: mariadb-root-password
+            - name: MYSQL_USER
+              value: {{ .Values.mariadbUser | quote }}  
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "mariadb.fullname" . }}
+                  key: mariadb-password
