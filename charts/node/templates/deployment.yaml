@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "node.fullname" . }}
+  labels:
+{{ include "node.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.image.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "node.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "node.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: node
+          image: {{ .Values.image.repository }}
+          imagePullPolicy: {{ .Values.image.imagePullPolicy }}
+          ports:
+          - containerPort: {{ .Values.service.port }}
+          command: ["node", "/app.js"]
+          volumeMounts:
+          - name: {{ .Values.config.name }}
+            mountPath: /app.js
+            subPath: app.js
+      volumes:
+      - name: {{ .Values.config.name }}
+        configMap:
+          name: {{ include "node.fullname" . }}
