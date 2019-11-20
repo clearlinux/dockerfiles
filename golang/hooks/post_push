@@ -1,13 +1,7 @@
 #!/bin/bash
-echo "=> Tagging the image"
-
 . ../docker-hooks.sh
 
 image="clearlinux/golang"
-tag=$(get_tag go)
+package=go
 
-if [ $? -eq 0 ] && [ -n "$tag" ]; then
-    # major tag format x.y, such as 1.12, 1.13
-    major_tag=${tag%.*}
-    tag_and_push $tag $major_tag
-fi
+do_tag $image $package

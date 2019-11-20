@@ -1,12 +1,7 @@
 #!/bin/bash
-echo "=> Tagging the image"
-
 . ../docker-hooks.sh
 
 image="clearlinux/openvino"
-tag=$(get_tag dldt)
+package=dldt
 
-if [ $? -eq 0 ] && [ -n "$tag" ]; then
-    major_tag=${tag%%.*}
-    tag_and_push $tag $major_tag
-fi
+do_tag $image $package

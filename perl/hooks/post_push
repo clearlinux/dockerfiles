@@ -1,12 +1,8 @@
 #!/bin/bash
-echo "=> Tagging the image"
-
 . ../docker-hooks.sh
 
 image="clearlinux/perl"
-tag=$(get_tag perl)
+package=perl
 
-if [ $? -eq 0 ] && [ -n "$tag" ]; then
-    major_tag=${tag%%.*}
-    tag_and_push $tag $major_tag
-fi
+do_tag $image $package
+
