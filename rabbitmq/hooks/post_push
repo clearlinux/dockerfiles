@@ -1,12 +1,7 @@
 #!/bin/bash
-echo "=> Tagging the image"
-
 . ../docker-hooks.sh
 
 image="clearlinux/rabbitmq"
-tag=$(get_tag rabbitmq-server)
+package=rabbitmq-server
 
-if [ $? -eq 0 ] && [ -n "$tag" ]; then
-    major_tag=${tag%%.*}
-    tag_and_push $tag $major_tag
-fi
+do_tag $image $package

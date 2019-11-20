@@ -1,13 +1,7 @@
 #!/bin/bash
-echo "=> Tagging the image"
-
 . ../docker-hooks.sh
 
 image="clearlinux/nginx"
-tag=$(get_tag nginx-mainline)
+package=nginx-mainline
 
-if [ $? -eq 0 ] && [ -n "$tag" ]; then
-    # major tag format 1.16 or 1.17
-    major_tag=${tag%.*}
-    tag_and_push $tag $major_tag
-fi
+do_tag $image $package

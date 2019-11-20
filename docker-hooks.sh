@@ -4,7 +4,7 @@ CLR_URL="https://cdn.download.clearlinux.org/releases"
 
 # Return tag value or NULL if not found
 function get_tag {
-    pkg=$1
+    local pkg=$1
 
     clr_ver=`docker run --rm clearlinux/os-core cat /usr/lib/os-release | grep VERSION_ID`
     clr_ver=${clr_ver##*=}
@@ -29,20 +29,42 @@ function get_tag {
 }
 
 function get_tags_in_docker {
-    img=$1
+    local img=$1
 
     tag_url="https://registry.hub.docker.com/v2/repositories/$img/tags/"
     tags=$(curl $tag_url 2>/dev/null | docker run -i stedolan/jq  '."results"[]["name"]')
     echo $tags
 }
 
+# For version format x.y.z, three tags as below
+#   x.y.z, x.y and x
 function tag_and_push {
+    # For version format x.y.z, three tags as below
+    #   tag: x.y.z
+    #   tag1: x.y
+    #   tag2: x
     local tag=$1
-    local major_tag=$2
+    local tag1=${tag%.*}
+    local tag2=${tag%%.*}
+    local image=$2
 
     set -e
     docker tag $image:latest $image:$tag
     docker push $image:$tag
-    docker tag $image:latest $image:$major_tag
-    docker push $image:$major_tag
+    docker tag $image:latest $image:$tag1
+    docker push $image:$tag1
+    docker tag $image:latest $image:$tag2
+    docker push $image:$tag2
+}
+
+function do_tag {
+    local image=$1
+    local pkg=$2
+    
+    echo "=> Tagging the $image"
+    local tag=$(get_tag $pkg)
+
+    if [ $? -eq 0 ] && [ -n "$tag" ]; then
+        tag_and_push $tag $image
+    fi
 }
