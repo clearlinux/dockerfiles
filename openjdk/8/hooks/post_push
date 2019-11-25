@@ -1,0 +1,7 @@
+#!/bin/bash
+. ../../docker-hooks.sh
+
+image="clearlinux/openjdk"
+package=openjdk
+
+do_tag $image $package 8

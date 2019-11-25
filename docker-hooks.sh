@@ -36,8 +36,10 @@ function get_tags_in_docker {
     echo $tags
 }
 
-# For version format x.y.z, three tags as below
-#   x.y.z, x.y and x
+# Do tagging and tagged image push
+# param 1, exact tag, x.y.z
+# param 2, container image name
+# param 3 (optional), base tag name, default is "latest"
 function tag_and_push {
     # For version format x.y.z, three tags as below
     #   tag: x.y.z
@@ -47,24 +49,30 @@ function tag_and_push {
     local tag1=${tag%.*}
     local tag2=${tag%%.*}
     local image=$2
+    local base=$3
+
+    if [ -z "$base" ]; then
+        base=latest
+    fi
 
     set -e
-    docker tag $image:latest $image:$tag
+    docker tag $image:$base $image:$tag
     docker push $image:$tag
-    docker tag $image:latest $image:$tag1
+    docker tag $image:$base $image:$tag1
     docker push $image:$tag1
-    docker tag $image:latest $image:$tag2
+    docker tag $image:$base $image:$tag2
     docker push $image:$tag2
 }
 
 function do_tag {
     local image=$1
     local pkg=$2
+    local base=$3
     
     echo "=> Tagging the $image"
     local tag=$(get_tag $pkg)
 
     if [ $? -eq 0 ] && [ -n "$tag" ]; then
-        tag_and_push $tag $image
+        tag_and_push $tag $image $base
     fi
 }
