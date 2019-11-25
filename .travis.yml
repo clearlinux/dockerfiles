@@ -19,7 +19,8 @@ env:
   - DOCKERFILE_DIR=mixer-ci
   - DOCKERFILE_DIR=nginx
   - DOCKERFILE_DIR=node
-  - DOCKERFILE_DIR=openjdk
+  - DOCKERFILE_DIR=openjdk/8
+  - DOCKERFILE_DIR=openjdk/13
   - DOCKERFILE_DIR=openvino
   - DOCKERFILE_DIR=os-core
   - DOCKERFILE_DIR=perl
