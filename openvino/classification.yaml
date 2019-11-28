@@ -26,12 +26,17 @@ data:
 
 ---
 
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: openvino-deploy
+  labels:
+    app: classification
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: classification
   template:
     metadata:
       labels:
