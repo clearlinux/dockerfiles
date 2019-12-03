@@ -1,0 +1,7 @@
+#!/bin/bash
+. ../docker-hooks.sh
+
+image="clearlinux/tesseract-ocr"
+package=tesseract
+
+do_tag $image $package
