@@ -1,0 +1,51 @@
+FROM clearlinux:latest AS builder
+MAINTAINER long1.wang@intel.com
+
+ARG swupd_args
+# Move to latest Clear Linux release to ensure
+# that the swupd command line arguments are
+# correct
+RUN swupd update --no-boot-update $swupd_args
+
+# Grab os-release info from the minimal base image so
+# that the new content matches the exact OS version
+COPY --from=clearlinux/os-core:latest /usr/lib/os-release /
+
+# Install additional content in a target directory
+# using the os version from the minimal base
+RUN source /os-release && \
+    mkdir /install_root \
+    && swupd os-install -V ${VERSION_ID} \
+    --path /install_root --statedir /swupd-state \
+    --bundles=os-core-update,python-extras --no-boot-update
+
+# For some Host OS configuration with redirect_dir on,
+# extra data are saved on the upper layer when the same
+# file exists on different layers. To minimize docker
+# image size, remove the overlapped files before copy.
+RUN mkdir /os_core_install
+COPY --from=clearlinux/os-core:latest / /os_core_install/
+RUN cd / && \
+    find os_core_install | sed -e 's/os_core_install/install_root/' | xargs rm -d &> /dev/null || true
+
+FROM clearlinux/os-core:latest
+
+COPY --from=builder /install_root /
+
+# Specifies the default number of threads to use in parallel regions.
+# If undefined one thread per CPU is used.
+# Here explictly unset it to let runtime decide it for refercence only. Operator or developer may
+# set it per workload.
+ENV OMP_NUM_THREADS=""
+# Specifies the number of threads to use for the whole program.
+# If undefined, the number of threads is not limited.
+ENV OMP_THREAD_LIMIT=""
+# Enable or disable the dynamic adjustment of the number of threads within a team.
+# If undefined, dynamic adjustment is disabled by default.
+ENV OMP_DYNAMIC=""
+# Allows to specify schedule type and chunk size.
+# If undefined, dynamic scheduling and a chunk size of 1 is used.
+ENV OMP_SCHEDULE=""
+# Enable or disable nested parallel regions, i.e., whether team members are allowed to create new teams.
+# If undefined, nested parallel regions are disabled by default.
+ENV OMP_NESTED=""
