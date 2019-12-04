@@ -53,9 +53,6 @@ Docker Hub.
     ```
     docker run --rm -it --name myapp -e "TESSDATA_PREFIX=/app" -v "$PWD":/app -w /app clearlinux/tesseract-ocr tesseract xxx.tiff stdout --oem 1
     ``` 
-<!-- Optional -->
-### Deploy with Kubernetes
-
 <!-- Required -->
 ## Build and modify:
 
@@ -67,6 +64,7 @@ modify the container images.
     ```
     git clone https://github.com/clearlinux/dockerfiles.git
     ```
+
 2. Change to the directory of the application:
     ```
     cd tesseract-ocr/
@@ -87,8 +85,8 @@ modify the container images.
      for more information.
 
 ## note:
-  > The container doesn't include any trained data for language, you need download specific language file from
-  > https://github.com/tesseract-ocr/tessdata and copy to /usr/share/tessdata, e.g to support English, you need copy eng.traineddata。
+  > The container doesn't include any trained data for language. You need download specific language file from
+  > https://github.com/tesseract-ocr/tessdata and copy to /usr/share/tessdata, e.g to support English, you need copy eng.traineddata.
 <!-- Required -->
 ## Licenses
 
