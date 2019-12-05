@@ -33,19 +33,25 @@ FROM clearlinux/os-core:latest
 COPY --from=builder /install_root /
 
 # Specifies the default number of threads to use in parallel regions.
-# If undefined one thread per CPU is used.
-# Here explictly unset it to let runtime decide it for refercence only. Operator or developer may
-# set it per workload.
-ENV OMP_NUM_THREADS=""
+# If undefined an optimized value will be set at runtime by docker-entrypoint.sh.
+#ENV OMP_NUM_THREADS="10"
 # Specifies the number of threads to use for the whole program.
 # If undefined, the number of threads is not limited.
-ENV OMP_THREAD_LIMIT=""
+ENV OMP_THREAD_LIMIT="4294967295"
 # Enable or disable the dynamic adjustment of the number of threads within a team.
 # If undefined, dynamic adjustment is disabled by default.
-ENV OMP_DYNAMIC=""
+ENV OMP_DYNAMIC="FALSE"
 # Allows to specify schedule type and chunk size.
 # If undefined, dynamic scheduling and a chunk size of 1 is used.
-ENV OMP_SCHEDULE=""
+ENV OMP_SCHEDULE="DYNAMIC"
 # Enable or disable nested parallel regions, i.e., whether team members are allowed to create new teams.
 # If undefined, nested parallel regions are disabled by default.
-ENV OMP_NESTED=""
+ENV OMP_NESTED="FALSE"
+
+COPY docker-entrypoint.sh /usr/local/bin/
+COPY set-num-threads.sh /usr/local/bin/
+
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["python3"]
+
+WORKDIR /bench

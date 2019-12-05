@@ -5,9 +5,12 @@
 
 `clearlinux/numpy-mp` is a Docker image with `parallelizable numpy` running on top of the
 [official clearlinux base image](https://hub.docker.com/_/clearlinux).
+It is an optimized and configurable Python-Numpy foundation container with AVX-512 enabled for microservice and FaaS workload for Kubernetes or HPC use cases.
 
 <!-- application introduction -->
 > [NumPy](https://numpy.org/) is the fundamental package for scientific computing with Python.
+> Clear Linux numpy-mp container can set OMP_NUM_THREADS dynamically at runtime to accelerate
+> performance according to assigned computing resources.
 
 For other Clear Linux* OS
 based container images, see: https://hub.docker.com/u/clearlinux
@@ -50,6 +53,29 @@ Docker Hub.
     ```
     docker run -d clearlinux/numpy-mp
     ```
+<!-- Optional -->
+### OMP Configurations
+The OMP parameters for numpy-mp container could be configured via following environment variable.
+
+* **OMP_NUM_THREADS**
+   - Descriptions:
+     Specifies the default number of threads to use in parallel regions. If undefined an optimized value will be set at runtime by [docker-entrypoint.sh](https://github.com/clearlinux/dockerfiles/blob/master/numpy-mp/docker-entrypoint.sh).
+
+* **OMP_THREAD_LIMIT**
+   - Descriptions:
+    Specifies the number of threads to use for the whole program. If undefined, the number of threads is not limited.
+
+* **OMP_DYNAMIC**
+   - Descriptions:
+     Enable or disable the dynamic adjustment of the number of threads within a team. If undefined, dynamic adjustment is disabled by default.
+
+* **OMP_SCHEDULE**
+   - Descriptions:
+     Allows to specify schedule type and chunk size. If undefined, dynamic scheduling and a chunk size of 1 is used.
+
+* **OMP_NESTED**
+   - Descriptions:
+     Enable or disable nested parallel regions, i.e., whether team members are allowed to create new teams. If undefined, nested parallel regions are disabled by default.
 
 <!-- Required -->
 ## Build and modify:
