@@ -93,6 +93,29 @@ Steps could refer to
 
     Then you can invoke your python function by OpenFaas UI or faas-cli.
     
+### go-clearlinux
+1.  mkdir test && cd test
+2.  `cp -r "<your-dockerfiles-path>"/FaaS/OpenFaaS/template/. template/`
+3.  `faas-cli new --lang go-clearlinux go-openfaas --prefix="<your-docker-username-here>"`
+
+    Files tree as below.
+> 
+    ├── go-openfaas
+    │   ├── handler.go
+    ├── go-openfaas.yml
+    └── template
+
+
+    *  Put the required Clear Linux bundles in the "bundles.txt".
+    For example,
+
+    `echo "openblas" >> go-openfaas/bundles.txt`
+    `echo "wget" >> go-openfaas/bundles.txt`
+4.  `faas-cli up -f go-openfaas.yml`
+
+    Then you can invoke your go function by OpenFaas UI or faas-cli.
+
+    
 ## Proxy and Clear Linux mirror
 
 When working behind a Proxy, you can pass proxy settings to faas-cli commands by "--build-arg".
