@@ -10,6 +10,29 @@ Steps could refer to
 
 [OpenFaaS workshop](https://github.com/openfaas/workshop)
 
+### dockerfile-clearlinux
+1.  `mkdir test && cd test`
+2.  `cp -r "<your-dockerfiles-path>"/FaaS/OpenFaaS/template/. template/`
+3.  `faas-cli new --lang dockerfile-clearlinux hello-dockerfile --prefix="<your-docker-username-here>"`
+
+    Files tree as below.
+>
+    ├── hello-dockerfile
+    │   ├── bundles.txt
+    │   └── Dockerfile
+    ├── hello-dockerfile.yml
+
+    *  Put the required Clear Linux bundles in the "bundles.txt".
+    For example,
+
+    `echo "openblas" >> hello-dockerfile/bundles.txt`
+    `echo "wget" >> hello-dockerfile/bundles.txt`
+4.  Replace the "cat" in the Dockerfile line below per your requirement.
+    ENV fprocess="cat"
+5.  `faas-cli up -f hello-dockerfile.yml`
+
+    Then you can invoke your python function by OpenFaas UI or faas-cli.
+
 ### python3-clearlinux
 1.  `mkdir test && cd test`
 2.  `cp -r "<your-dockerfiles-path>"/FaaS/OpenFaaS/template/. template/`
