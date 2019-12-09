@@ -1,4 +1,33 @@
-# OpenFaaS template based on Clear Linux
+# OpenFaaS template based on Clear Linux* OS
+
+## What are these templates
+
+> These templates are all based on the Clear Linux* OS.
+> They are from the published container images per the function as below.
+
+* [clearlinux:base](https://hub.docker.com/_/clearlinux)
+* [clearlinux/python](https://hub.docker.com/r/clearlinux/python)
+* [clearlinux/golang](https://hub.docker.com/r/clearlinux/golang)
+* [clearlinux/node](https://hub.docker.com/r/clearlinux/node)
+
+## Why use these templates
+
+<!-- CL introduction -->
+> [Clear Linux* OS](https://clearlinux.org/) is an open source, rolling release
+> Linux distribution optimized for performance and security, from the Cloud to
+> the Edge, designed for customization, and manageability.
+
+Clear Linux* OS based container images use:
+* Optimized libraries that are compiled with latest compiler versions and
+  flags.
+* Software packages that follow upstream source closely and update frequently.
+* An aggressive security model and best practices for CVE patching.
+* A multi-staged build approach to keep a reduced container image size.
+* The same container syntax as the official images to make getting started
+  easy. 
+
+Therefore, template based on Clear Linux* OS could get above benefits as well.
+
 
 ## How to use the template
 
