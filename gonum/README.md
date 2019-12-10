@@ -49,7 +49,7 @@ Docker Hub.
     ```
 	or specified app
     ```
-    docker run -it --rm -v "$PWD/app":/app -w /app clearlinux/gonum /bin/bash -c "go mod init app;go test -bench ."
+    docker run -it --rm -v "$PWD/test":/app -w /app clearlinux/gonum /bin/bash -c "go mod init app;go test -bench ."
     ```
 
 <!-- Required -->

@@ -36,8 +36,5 @@ ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 ENV CGO_LDFLAGS "-lopenblas"
 
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
-COPY test $GOPATH/src/test
-WORKDIR $GOPATH/src/test
-RUN go mod init blas_test && go mod tidy
-CMD ["go", "test", "-bench", "."]
-
+WORKDIR /app
+CMD ["go"]
