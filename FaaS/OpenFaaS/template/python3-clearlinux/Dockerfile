@@ -35,6 +35,10 @@ RUN for bundle in $(cat bundles.txt); do \
         swupd bundle-add $bundle $swupd_args; \
     done
 
+# give a chance to run help script
+COPY function/helper_script.sh .
+RUN chmod +x helper_script.sh && ./helper_script.sh
+
 WORKDIR /root/
 COPY function           function
 

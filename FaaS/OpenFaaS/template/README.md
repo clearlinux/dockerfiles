@@ -72,6 +72,7 @@ Steps could refer to
     ├── hello-openfaas
     │   ├── bundles.txt
     │   ├── handler.py
+    │   ├── helper_script.sh
     │   ├── __init__.py
     │   └── requirements.txt
     ├── hello-openfaas.yml
@@ -89,6 +90,10 @@ Steps could refer to
 
     `echo "openblas" >> hello-openfaas/bundles.txt`
     `echo "wget" >> hello-openfaas/bundles.txt`
+
+    *  Put any initial/helper operation in the "help_script.sh"
+
+
 4.  `faas-cli up -f hello-openfaas.yml`
 
     Then you can invoke your python function by OpenFaas UI or faas-cli.
