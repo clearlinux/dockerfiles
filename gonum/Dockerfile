@@ -36,7 +36,8 @@ ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 ENV CGO_LDFLAGS "-lopenblas"
 
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
-RUN go get -u gonum.org/v1/gonum/...
-RUN go get -d gonum.org/v1/netlib/... && go install gonum.org/v1/netlib/blas/netlib
+RUN go get -u gonum.org/v1/gonum/... && \
+    go get -d gonum.org/v1/netlib/... && \
+    go install gonum.org/v1/netlib/blas/netlib
 WORKDIR /app
 CMD ["go"]
