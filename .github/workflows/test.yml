@@ -7,7 +7,6 @@ on: [push]
 # We group all builds and tests into different jobs to
 # make them run concurrently.
 
-
 jobs:
   build1:
     name: build_group1
