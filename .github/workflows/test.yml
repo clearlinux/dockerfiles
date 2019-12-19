@@ -1,0 +1,217 @@
+name: CI
+
+on: [push]
+# Because there is job number limitation that system can 
+# concurrently run in Actions,
+# We group all builds and tests into different jobs to
+# make them run concurrently.
+jobs:
+  build1:
+    name: build_group1
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Run test
+      run: |
+        DOCKERFILE_DIR=("cassandra" "cgit" "elasticsearch")
+        for item in ${DOCKERFILE_DIR[*]}; \
+          do \
+            cd $item; \
+            docker build -t clearlinux/$item .; \
+            cd .. ;\
+          done
+
+  build2:
+    name: build_group2
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Run test
+      run: |
+        DOCKERFILE_DIR=("clr-installer-ci" "iperf")
+        for item in ${DOCKERFILE_DIR[*]}; \
+          do \
+            cd $item; \
+            docker build -t clearlinux/$item .; \
+            cd .. ;\
+          done
+  
+  build3:
+    name: build_group3
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Run test
+      run: |
+        DOCKERFILE_DIR=("golang" "haproxy" "mariadb" "node" "openjdk")
+        for item in ${DOCKERFILE_DIR[*]}; \
+          do \
+            cd $item; \
+            docker build -t clearlinux/$item .; \
+            cd .. ;\
+          done
+
+  build4:
+    name: build_group4
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Run test
+      run: |
+        DOCKERFILE_DIR=("machine-learning-ui")
+        for item in ${DOCKERFILE_DIR[*]}; \
+          do \
+            cd $item; \
+            docker build -t clearlinux/$item .; \
+            cd .. ;\
+          done
+
+  build5:
+    name: build_group5
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Run test
+      run: |
+        DOCKERFILE_DIR=("mixer-ci")
+        for item in ${DOCKERFILE_DIR[*]}; \
+          do \
+            cd $item; \
+            docker build -t clearlinux/$item .; \
+            cd .. ;\
+          done
+
+  build6:
+    name: build_group6
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Run test
+      run: |
+        DOCKERFILE_DIR=("openvino")
+        for item in ${DOCKERFILE_DIR[*]}; \
+          do \
+            cd $item; \
+            docker build -t clearlinux/$item .; \
+            cd .. ;\
+          done
+
+  build7:
+    name: build_group7
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Run test
+      run: |
+        DOCKERFILE_DIR=("os-core" "perl" "php" "php-fpm" "postgres" "rabbitmq")
+        for item in ${DOCKERFILE_DIR[*]}; \
+          do \
+            cd $item; \
+            docker build -t clearlinux/$item .; \
+            cd .. ;\
+          done
+
+  build8:
+    name: build_group8
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Run test
+      run: |
+        DOCKERFILE_DIR=("tensorflow" "tensorflow-serving" "tomcat" "php-fpm" "wordpress")
+        for item in ${DOCKERFILE_DIR[*]}; \
+          do \
+            cd $item; \
+            docker build -t clearlinux/$item .; \
+            cd .. ;\
+          done
+
+  test1:
+    name: build_test1
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: install
+      
+      run: | 
+        sudo apt-get update
+        sudo apt-get install bats
+    - name: Run test
+      run: |
+        DOCKERFILE_DIR=("flink")
+        for item in ${DOCKERFILE_DIR[*]}; \
+          do \
+            cd $item; \
+            docker build -t clearlinux/$item .; \
+            cd .. ;\
+            if [ -d "./tests/$item" ]; then cd tests; make $item; fi ;\
+            cd .. ;\
+          done
+
+  test2:
+    name: build_test2
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: install
+      
+      run: | 
+        sudo apt-get update
+        sudo apt-get install bats
+    - name: Run test
+      run: |
+        DOCKERFILE_DIR=("memcached")
+        for item in ${DOCKERFILE_DIR[*]}; \
+          do \
+            cd $item; \
+            docker build -t clearlinux/$item .; \
+            cd .. ;\
+            # Actions can not exec memcached BATs test and always hang 
+            # here, omit them
+            # if [ -d "./tests/$item" ]; then cd tests; make $item; fi ;\
+            # cd .. ;\
+          done
+
+  test3:
+    name: build_test3
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: install
+      
+      run: | 
+        sudo apt-get update
+        sudo apt-get install bats
+    - name: Run test
+      run: |
+        DOCKERFILE_DIR=("nginx")
+        for item in ${DOCKERFILE_DIR[*]}; \
+          do \
+            cd $item; \
+            docker build -t clearlinux/$item .; \
+            cd .. ;\
+            if [ -d "./tests/$item" ]; then cd tests; make $item; fi ;\
+            cd .. ;\
+          done
+
+  test4:
+    name: build_test4
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: install
+      
+      run: | 
+        sudo apt-get update
+        sudo apt-get install bats
+    - name: Run test
+      run: |
+        DOCKERFILE_DIR=("python" "ruby" "redis")
+        for item in ${DOCKERFILE_DIR[*]}; \
+          do \
+            cd $item; \
+            docker build -t clearlinux/$item .; \
+            cd .. ;\
+            if [ -d "./tests/$item" ]; then cd tests; make $item; fi ;\
+            cd .. ;\
+          done
