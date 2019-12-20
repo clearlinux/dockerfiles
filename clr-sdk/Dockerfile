@@ -1,5 +1,4 @@
 FROM clearlinux:latest
-MAINTAINER kevin.c.wells@intel.com
 
 ARG swupd_args
 

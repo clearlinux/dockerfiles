@@ -1,5 +1,4 @@
 FROM clearlinux:latest
-MAINTAINER kevin.c.wells@intel.com
 
 # Configure Go
 ENV GOPATH /home/clr/go

@@ -1,5 +1,4 @@
 FROM clearlinux AS build-redis
-MAINTAINER otc-swstacks@intel.com
 
 RUN swupd bundle-add --quiet --no-progress git c-basic devpkg-ndctl curl package-utils
 

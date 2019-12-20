@@ -30,7 +30,6 @@ RUN cd / && \
     find os_core_install | sed -e 's/os_core_install/install_root/' | xargs rm -d &> /dev/null || true
 
 FROM clearlinux/os-core:latest
-MAINTAINER wang.jue@intel.com
 
 COPY --from=builder /install_root /
 

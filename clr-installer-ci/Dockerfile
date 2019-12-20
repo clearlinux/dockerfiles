@@ -1,5 +1,4 @@
 FROM clearlinux:latest
-MAINTAINER mark.d.horn@intel.com
 
 # Configure Go
 ENV GOPATH="/go" PATH="/go/bin:${PATH}"

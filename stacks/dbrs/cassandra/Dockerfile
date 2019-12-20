@@ -1,5 +1,4 @@
 FROM clearlinux/stacks-clearlinux:latest
-MAINTAINER otc-swstacks@intel.com
 
 RUN swupd bundle-add curl java-runtime python2-basic which pmdk sudo
 
