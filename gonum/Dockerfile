@@ -1,5 +1,4 @@
 FROM clearlinux:latest AS builder
-MAINTAINER jing.j.wang@intel.com
 
 ARG swupd_args
 # Move to latest Clear Linux release to ensure

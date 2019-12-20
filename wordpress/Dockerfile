@@ -1,5 +1,4 @@
 FROM clearlinux/php-fpm
-MAINTAINER sophia.gong@intel.com
 
 VOLUME /var/www/html
 
