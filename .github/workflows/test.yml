@@ -1,0 +1,29 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build1:
+    name: build_group1
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ["cassandra", "cgit", "clr-installer-ci", "elasticsearch", "flink", "golang", "haproxy", "httpd", "iperf", "machine-learning-ui", "mariadb", "mixer-ci", "nginx", "node", "openjdk/8", "openjdk/13", "openvino", "os-core", "perl", "php", "php-fpm", "postgres", "python", "rabbitmq", "redis", "ruby", "tensorflow", "tensorflow-serving", "tomcat", "wordpress"]
+    steps:
+    - uses: actions/checkout@v1
+    - name: install
+      
+      run: | 
+        sudo apt-get purge moby-engine moby-cli 
+        sudo apt-get update
+        sudo apt-get install docker.io bats -f
+        sudo modprobe -r overlay
+        sudo modprobe overlay redirect_dir=off
+        sudo systemctl restart docker
+    - name: Run test
+      run: |
+        dir=$(pwd)
+        cd ${{ matrix.node }}
+        docker build -t clearlinux/${{ matrix.node }} .
+        cd $dir
+        if [ -d "./tests/${{ matrix.node }}" ]; then cd tests; make ${{ matrix.node }}; fi
