@@ -5,12 +5,18 @@ lcores=$(grep "^processor" -c /proc/cpuinfo)
 htn=$(lscpu | grep "^Thread(s) per core" | awk '{print $NF}')
 pcores=$(awk 'BEGIN{ x="'$lcores'" / "'$htn'"; printf("%.0f\n", (x == int(x))?x:int(x)+1) }')
 csets=$((0x$(cat /proc/self/status | grep "^Cpus_allowed:" | awk '{print $NF}')))
-cfull=$(((1<<cores) - 1))
+cfull=$(((1<<lcores) - 1))
+
+# cpu quota
+qus=$(cat /sys/fs/cgroup/cpu/cpu.cfs_quota_us)
+pus=$(cat /sys/fs/cgroup/cpu/cpu.cfs_period_us)
+# calculate qnums by CPU quota and round up
+if [[ $qus != "-1" ]]; then
+  qnums=$(awk 'BEGIN{ x="'$qus'" / "'$pus'"; printf("%.0f\n", (x == int(x))?x:int(x)+1) }')
+fi
 
 if (( csets == cfull )); then
-  # calculate physical core numbers
-  pnums=$pcores
-  lnums=$lcores
+  nums=$pcores
 else
   # if set cpu affinity
   # get hyperthread sibling topology
@@ -37,21 +43,23 @@ else
     n=$((n - m))
     ((lnums++))
   done
-fi
 
-# cpu quota
-qus=$(cat /sys/fs/cgroup/cpu/cpu.cfs_quota_us)
-pus=$(cat /sys/fs/cgroup/cpu/cpu.cfs_period_us)
+  # v2: cpuset-k guar-ex
+  if (( qnums == lnums )); then
+    if (( (lnums < pcores && lnums % 2 != 0) || pnums == 1 )); then
+      nums=$pnums
+    else
+      nums=$lnums
+    fi
+  else
+    # cpuset-d
+    nums=$pnums
+  fi
+fi
 
 # calculate nums by assigned logical core and total physical core numbers
-nums=$(((lnums < pcores)?lnums:pcores))
-# calculate qnums by CPU quota and round up
-if [[ $qus != "-1" ]]; then
-  qnums=$(awk 'BEGIN{ x="'$qus'" / "'$pus'"; printf("%.0f\n", (x == int(x))?x:int(x)+1) }')
-  nums=$(((nums < qnums)?nums:qnums))
+if [ ! -z $qnums ]; then
+  nums=$(((qnums < nums)?qnums:nums))
 fi
-
-# for special single physical core case
-nums=$(((nums == 2 && pnums == 1)?pnums:nums))
 
 export OMP_NUM_THREADS=$nums

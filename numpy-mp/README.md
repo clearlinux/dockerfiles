@@ -59,7 +59,7 @@ The OMP parameters for numpy-mp container could be configured via following envi
 
 * **OMP_NUM_THREADS**
    - Descriptions:
-     Specifies the default number of threads to use in parallel regions. If undefined an optimized value will be set at runtime by [docker-entrypoint.sh](https://github.com/clearlinux/dockerfiles/blob/master/numpy-mp/docker-entrypoint.sh).
+     Specifies the default number of threads to use in parallel regions. If undefined an optimized value will be set at runtime by [docker-entrypoint.sh](https://github.com/clearlinux/dockerfiles/blob/master/numpy-mp/docker-entrypoint.sh). In order to override the entrypoint, either pass "--entrypoint" in docker run argument or define a "command" in kubernetes yaml file.
 
 * **OMP_THREAD_LIMIT**
    - Descriptions:
