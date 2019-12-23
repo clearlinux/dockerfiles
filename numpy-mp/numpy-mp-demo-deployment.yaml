@@ -96,7 +96,7 @@ spec:
 #        - name: OMP_NUM_THREADS
 #          value: ""
         - name: OPENBLAS_LOOPS
-          value: "10000"
+          value: "2000"
         args:
         - "python3"
         - "sgemm.py"

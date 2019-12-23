@@ -54,6 +54,35 @@ Docker Hub.
     docker run -d clearlinux/numpy-mp
     ```
 <!-- Optional -->
+### Deploy with Kubernetes
+This image can also be deployed on a Kubernetes cluster, such as
+[minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/). The
+following example YAML file is provided in the repository as
+reference for Kubernetes deployment:
+
+   * [`numpy-mp-demo-deployment.yaml`](https://github.com/clearlinux/dockerfiles/blob/master/numpy-mp/numpy-mp-demo-deployment.yaml):
+     yaml file to deploy the numpy-mp workload example
+
+To deploy the image on a Kubernetes cluster:
+
+   * Start the numpy-mp workload example.
+     ```
+     kubectl apply -f numpy-mp-demo-deployment.yaml
+     ```
+
+   * Then check if the pods are running well.
+     ```
+     kubectl get pods -o wide
+     ```
+     This may take some time because it requires downloading the image.
+     Note, if your cluster is behind some proxy, you may need set the proxy
+     environment in the yaml file.
+
+   * Get the workload result
+     ```
+     kubectl logs --follow=true -f deployment/numpy-mp-deploy
+     ```
+
 ### OMP Configurations
 The OMP parameters for numpy-mp container could be configured via following environment variable.
 
