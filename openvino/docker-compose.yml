@@ -6,7 +6,7 @@ services:
     environment:
       http_proxy: $http_proxy
       https_proxy: $https_proxy
-      MODEL_NAME: alexnet
+      MODEL_NAME: mobilenetv2-int8-tf-0001
       MODEL_PRECISION: FP32
     volumes:
       - "./cat.bmp:/app/cat.bmp"
