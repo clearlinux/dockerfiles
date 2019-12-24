@@ -59,7 +59,7 @@ The model precision to be chosen, FP32, FP16 or INT8.
 #### MODEL_PATH
 The chosen model path, automatically set by the entrypoint script.
 
-For example, if using alexnet model to do classification, two environment variables
+For example, if using mobilenetv2-int8-tf-0001 model to do classification, two environment variables
 need to be passed to the container. Details can refer to the deployment below.
 
 
@@ -75,7 +75,7 @@ Docker Hub.
     docker pull clearlinux/openvino
     ```
 
-2. Start one-time classification_sample with alexnet model as below:
+2. Start one-time classification_sample with mobilenetv2-int8-tf-0001 model as below:
 
    * Use docker-compose to start the example:
      ```
@@ -87,7 +87,7 @@ Docker Hub.
 
 Or
 
-3. Start a simple openvino-server to accept image to do classification_sample with alexnet model:
+3. Start a simple openvino-server to accept image to do classification_sample with mobilenetv2-int8-tf-0001 model:
 
    * Use docker-compose to start the server first:
      ```
@@ -123,8 +123,7 @@ To deploy the image on a Kubernetes cluster:
      ```
      kubectl get pods -o wide
      ```
-     This may take some time because it requires downloading/converting the
-     alexnet model.
+     This may take some time because it requires downloading/converting the model.
      Note, if your cluster is behind some proxy, you may need set the proxy
      environment in the yaml file to make the model-init can download the model.
 

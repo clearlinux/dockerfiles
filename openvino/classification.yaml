@@ -52,7 +52,7 @@ spec:
 #        - name: https_proxy
 #          value: <your proxy>
         - name: MODEL_NAME
-          value: alexnet
+          value: mobilenetv2-int8-tf-0001
         - name: MODEL_PRECISION
           value: FP32
         args:
