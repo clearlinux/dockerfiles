@@ -59,9 +59,11 @@ The model precision to be chosen, FP32, FP16 or INT8.
 #### MODEL_PATH
 The chosen model path, automatically set by the entrypoint script.
 
-For example, if using mobilenetv2-int8-tf-0001 model to do classification, two environment variables
-need to be passed to the container. Details can refer to the deployment below.
+For example, if using [`mobilenetv2-int8-tf-0001`](https://github.com/opencv/open_model_zoo/blob/master/models/intel/mobilenetv2-int8-tf-0001/description/mobilenetv2-int8-tf-0001.md) model to do classification, two environment variables need to be passed to the container.
+Details can refer to the deployment below.
 
+Note, use trained and quantized INT8 fixed-point precision model such as `mobilenetv2-int8-tf-0001`
+on AVX512 VNNI platform could get [big performance advantage](https://www.intel.ai/vnni-enables-inference/).
 
 <!-- Required -->
 ## Deployment:
