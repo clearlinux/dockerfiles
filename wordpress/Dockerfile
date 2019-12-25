@@ -2,8 +2,8 @@ FROM clearlinux/php-fpm
 
 VOLUME /var/www/html
 
-ENV WORDPRESS_VERSION 5.2.2
-ENV WORDPRESS_SHA1 3605bcbe9ea48d714efa59b0eb2d251657e7d5b0
+ENV WORDPRESS_VERSION 5.3.2
+ENV WORDPRESS_SHA1 fded476f112dbab14e3b5acddd2bcfa550e7b01b
 
 RUN set -ex; \
     curl -o wordpress.tar.gz -fSL "https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz"; \
