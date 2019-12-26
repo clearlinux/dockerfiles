@@ -16,7 +16,7 @@ load ../utils
     [ "$status" -eq 0 ]
     ipaddr="$output"
 
-    echo stats | nc $ipaddr 11211
+    echo stats | nc -q 5 $ipaddr 11211
 
     # stop the container
     docker stop memcached-server
