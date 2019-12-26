@@ -32,16 +32,19 @@ Criteria for Pull Request Acceptance
 A pull request will be accepted for an image if it satisfies the guidelines
 mentioned above.
 
-When opening a pull request, be sure to also modify the .travis.yml to include
-the following entry:
+When opening a pull request, be sure to also modify the .github/workflows/
+tests.yml to add new item in matrix.node:
 
 ```
-   - DOCKERFILE_DIR=<name of folder containing image>
+   matrix:
+     node: ["name of folder containing image"]
 ```
 
-Make sure this entry is in sorted order in the existing list of DOCKERFILE_DIR.
-This step allows the build of the image to be tested in Travis CI.
+Make sure this entry is in sorted order in the existing list of items in the
+matrix.node.
 
-Because of the current usage of Travis CI, any pull request change will trigger
+This step allows the build of the image to be tested in Actions CI.
+
+Because of the current usage of Actions CI, any pull request change will trigger
 a rebuild of all images. Some of these may fail. The only failure that is
-blocking is if the image in question does not build in Travis CI.
+blocking is if the image in question does not build in Actions CI.
