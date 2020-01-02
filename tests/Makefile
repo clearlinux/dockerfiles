@@ -9,7 +9,7 @@ all:
 
 .PHONY: $(test_units)
 $(test_units): 
-	cd $@; bats -t $@.bats
+	cd $@; bats -t $@.bats; bats -t $@-security.bats
 
 .NOTPARALLEL: tests
 tests: $(test_units)
