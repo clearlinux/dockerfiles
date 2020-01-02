@@ -7,7 +7,6 @@ load ../security
 
 @test "SDL T1207 test" {
     # start container first
-    #docker run --name redis-server --rm -d clearlinux/redis redis-server --protected-mode no
     docker run --name redis-server --detach --restart=on-failure:5 clearlinux/redis
     run check_container_status redis-server
     [ "$status" -eq 0 ]
@@ -23,7 +22,6 @@ load ../security
 
 @test "SDL T1191 test" {
     # start container first
-    #docker run --name redis-server --rm -d clearlinux/redis redis-server --protected-mode no
     docker run --name redis-server --detach clearlinux/redis
     run check_container_status redis-server
     [ "$status" -eq 0 ]
@@ -39,7 +37,6 @@ load ../security
 
 @test "SDL T1199 test" {
     # start container first
-    #docker run --name redis-server --rm -d clearlinux/redis redis-server --protected-mode no
     docker run --name redis-server --detach clearlinux/redis
     run check_container_status redis-server
     [ "$status" -eq 0 ]

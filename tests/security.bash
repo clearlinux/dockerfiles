@@ -1,16 +1,5 @@
 # Defines helper functions used across a variety of tests.
 
-#get container ID
-# param 1, the image name
-#get_container_id() {
-#        if [ -n $1 ]; then
-#	    local container_id=$(docker ps -a --format "table {{.ID}} {{.Image}}" | grep $1 | awk '{print $1}')
-#            #echo $container_id
-#        else
-#            echo "Couldn't get container ID for image $1"
-#        fi
-#}
-
 #Start security test
 #SDL_T1207:Test that the 'on-failure' container restart policy is set to 5 (Docker)
 Test_SDL_T1207() {
@@ -40,7 +29,6 @@ Test_SDL_T1191() {
             echo "Couldn't get container ID for image $1"
         fi
 	local t1191=`docker ps --quiet --all | xargs docker inspect --format '{{ .Id }}: Privileged={{ .HostConfig.Privileged }}' | grep $container_id`
-	#echo $t1191
 	local t1191_result=`echo $t1191 | awk -F":" '{print $2}' | awk -F"=" '{print $2}'`
 	if [ "$t1191_result" == "false" ];then
         	echo "pass"
@@ -57,7 +45,6 @@ Test_SDL_T1199() {
             echo "Couldn't get container ID for image $1"
         fi
 	t1199=`docker ps --quiet --all | xargs docker inspect --format '{{ .Id }}: NetworkMode={{ .HostConfig.NetworkMode }}' | grep $container_id`
-	#echo $t1199
 	t1199_result=`echo $t1199 | awk -F":" '{print $2}' | awk -F"=" '{print $2}'`
 	if [ "$t1199_result" == "host" ];then
         	echo "fail"
