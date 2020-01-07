@@ -15,7 +15,6 @@ jobs:
       
       run: | 
         sudo apt-get purge moby-engine moby-cli 
-        sudo apt-get update
         sudo apt-get install docker.io bats -f
         sudo modprobe -r overlay
         sudo modprobe overlay redirect_dir=off
