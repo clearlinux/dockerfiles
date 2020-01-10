@@ -4,7 +4,9 @@
 ## What is this image?
 
 `clearlinux/gonum` is a Docker image with `gonum` running on top of the
-[official clearlinux base image](https://hub.docker.com/_/clearlinux). 
+[official clearlinux base image](https://hub.docker.com/_/clearlinux). User
+can deploy gonum apps on top of `clearlinux/gonum` container, and get better
+performance via newlib interface which call clearlinux avx512 optimized CBLAS. 
 
 <!-- application introduction -->
 > [Gonum](https://gonum.org/) Gonum is a set of numeric libraries for the Go programming language.
@@ -50,6 +52,20 @@ Docker Hub.
 	or specified app
     ```
     docker run -it --rm -v "$PWD/test":/app -w /app clearlinux/gonum /bin/bash -c "go mod init app;go test -bench ."
+    ```
+    For gonum app development, use newlib interface for blas can bring significant performance gain over default blas
+    ```
+	import (
+		"gonum.org/v1/gonum/blas/gonum"
+		"gonum.org/v1/netlib/blas/netlib"
+		"gonum.org/v1/gonum/blas/blas64"
+		...
+	)
+
+	func BenchmarkCBlas64(b *testing.B) {
+		blas64.Use(netlib.Implementation{})
+		...
+	}
     ```
 
 <!-- Required -->
