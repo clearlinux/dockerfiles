@@ -13,7 +13,7 @@ COPY . .
 
 # install bundles if required
 # PLEASE input bundle line by line
-COPY bundles.txt  .
+COPY function/bundles.txt  .
 RUN for bundle in $(cat bundles.txt); do \
         swupd bundle-add $bundle $swupd_args; \
     done
@@ -35,7 +35,7 @@ WORKDIR /home/app
 
 # install bundles if required
 # PLEASE input bundle line by line
-COPY bundles.txt  .
+COPY function/bundles.txt  .
 RUN for bundle in $(cat bundles.txt); do \
         swupd bundle-add $bundle $swupd_args; \
     done
