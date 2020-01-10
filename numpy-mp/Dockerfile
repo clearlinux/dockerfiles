@@ -49,6 +49,8 @@ ENV OMP_NESTED="FALSE"
 
 COPY docker-entrypoint.sh /usr/local/bin/
 COPY set-num-threads.sh /usr/local/bin/
+RUN mkdir /bench
+COPY ptmsgemm.py /bench
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["python3"]

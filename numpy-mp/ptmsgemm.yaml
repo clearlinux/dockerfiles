@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: numpy-mp-job
+spec:
+  template:
+    spec:
+      nodeName: c-lake-test 
+      containers:
+      - name: clr-nmp
+        image: numpy-ptmp
+        imagePullPolicy: Never
+        resources:
+          limits:
+            cpu: "8"
+            memory: "500Mi"
+          requests:
+            cpu: "8"
+            memory: "500Mi"
+        env:
+#        - name: OMP_NUM_THREADS
+#          value: "8"
+        - name: OPENBLAS_LOOPS
+          value: "200000"
+        - name: NUMPY_MP_PROCESS_MODEL
+          value: "DISABLE"
+#        command: ["python3"]
+        args:
+        - "python3"
+        - "/bench/ptmsgemm.py"
+        - "1280"
+        - "1280"
+      restartPolicy: Never
