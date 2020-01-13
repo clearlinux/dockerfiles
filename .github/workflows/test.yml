@@ -9,9 +9,9 @@ jobs:
     strategy:
       matrix:
         node: 
-          - ["cgit"]
-          - ["clr-installer-ci"]
-          - ["golang", "haproxy", "httpd", "iperf", "machine-learning-ui", "mariadb", "memcached", "mixer-ci", "nginx", "node", "openjdk/8", "openjdk/13", "openvino", "os-core", "perl", "php", "php-fpm", "postgres", "python", "rabbitmq", "redis", "ruby", "tensorflow", "tensorflow-serving", "wordpress"]
+          - dockerfile = ["cgit"]
+          - dockerfile = ["clr-installer-ci"]
+          - dockerfile = ["golang", "haproxy", "httpd", "iperf", "machine-learning-ui", "mariadb", "memcached", "mixer-ci", "nginx", "node", "openjdk/8", "openjdk/13", "openvino", "os-core", "perl", "php", "php-fpm", "postgres", "python", "rabbitmq", "redis", "ruby", "tensorflow", "tensorflow-serving", "wordpress"]
     steps:
     - uses: actions/checkout@v1
     - name: install
