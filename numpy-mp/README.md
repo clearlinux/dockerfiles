@@ -5,8 +5,7 @@
 
 `clearlinux/numpy-mp` is a Docker image with `parallelizable numpy` running on top of the
 [official clearlinux base image](https://hub.docker.com/_/clearlinux).
-It is an optimized and configurable Python-Numpy foundation container with AVX-512 enabled for microservice and FaaS workload for Kubernetes or HPC use cases.
-
+It is built with AVX-512 optimized Clear Linux content and adaptive OpenMP multithreading strategy for Kubernetes. It is with consideration of the factors impacting performance including Kubernetes CPU quota, number of CPU cores, SIMD AVX-512/AVX2 active cores, and active OpenMP threads. With this solution, CPU active cores are reduced with higher performance achieved at the same time on a Kubernetes cluster.
 <!-- application introduction -->
 > [NumPy](https://numpy.org/) is the fundamental package for scientific computing with Python.
 > Clear Linux numpy-mp container can set OMP_NUM_THREADS dynamically at runtime to accelerate
@@ -83,16 +82,17 @@ To deploy the image on a Kubernetes cluster:
      kubectl logs --follow=true -f deployment/numpy-mp-deploy
      ```
 
-### OMP Configurations
+### OpenMP Configurations
 The OMP parameters for numpy-mp container could be configured via following environment variable.
 
 * **OMP_NUM_THREADS**
    - Descriptions:
-     Specifies the default number of threads to use in parallel regions. If undefined an optimized value will be set at runtime by [docker-entrypoint.sh](https://github.com/clearlinux/dockerfiles/blob/master/numpy-mp/docker-entrypoint.sh). In order to override the entrypoint, either pass "--entrypoint" in docker run argument or define a "command" in kubernetes yaml file.
+     Specifies the default number of threads to use in parallel regions. If undefined, an optimized value will be set by the adaptive strategy script [set-num-threads.sh](https://github.com/clearlinux/dockerfiles/blob/master/numpy-mp/set-num-threads.sh). This script is called by [docker-entrypoint.sh](https://github.com/clearlinux/dockerfiles/blob/master/numpy-mp/docker-entrypoint.sh) at container start.
+     Alternatively, the user may explicitly set its value in either the Docker run command or in the Kubernetes yaml file, according to the application scenario. For example, if the developer splits the workload from application layer into multiple processes, the OpenMP threads can be set to 1.
 
 * **OMP_THREAD_LIMIT**
    - Descriptions:
-    Specifies the number of threads to use for the whole program. If undefined, the number of threads is not limited.
+     Specifies the number of threads to use for the whole program. If undefined, the number of threads is not limited.
 
 * **OMP_DYNAMIC**
    - Descriptions:
@@ -100,11 +100,11 @@ The OMP parameters for numpy-mp container could be configured via following envi
 
 * **OMP_SCHEDULE**
    - Descriptions:
-     Allows to specify schedule type and chunk size. If undefined, dynamic scheduling and a chunk size of 1 is used.
+     Specifies schedule type and chunk size. If undefined, dynamic scheduling and a chunk size of 1 is used.
 
 * **OMP_NESTED**
    - Descriptions:
-     Enable or disable nested parallel regions, i.e., whether team members are allowed to create new teams. If undefined, nested parallel regions are disabled by default.
+     Enable or disable nested parallel regions, such as whether team members are allowed to create new teams. If undefined, nested parallel regions are disabled by default.
 
 <!-- Required -->
 ## Build and modify:
