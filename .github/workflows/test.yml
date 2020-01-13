@@ -24,7 +24,7 @@ jobs:
     - name: run test
       run: |
         dir=$(pwd)
-        cd ${{matrix.node}}
+        cd ${{matrix.node.dockerfile}}
         docker build -t clearlinux/${{matrix.node}} .
         cd $dir
         if [ -d "./tests/${{matrix.node}}" ]; then cd tests; make ${{matrix.node}}; fi
