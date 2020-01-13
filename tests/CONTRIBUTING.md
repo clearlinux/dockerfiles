@@ -22,20 +22,15 @@ test case.
 How to add test cases
 ------------------------------------
 
-The test cases are for the micro services already added in the travis CI.
-So for any micro services defined in the "env" part of the ".travis" file,
-the same name directory could be added in the directory "tests". And the
-same name BAT script in the new added directory will be executed for each
-PR/commits. For example, redis.
-* First, the redis is added in the "env".
+The test cases are for the micro services already added in the Actions CI.
+So for any micro service name defined in the matrix.node of .github/workflows/
+tests.yml, the same name directory could be added in the directory "tests".
+And the same name BAT script in the new added directory will be executed for
+each PR/commits. For example, redis.
+* First, the redis name is added in the matrix.node.
 ```
-    services:
-      - docker
-
-    env:
-      ......
-       - DOCKERFILE_DIR=redis
-      ......
+   matrix:
+     node: ["redis"]
 ```
 
 * Second, create the "redis" directory and BAT script under tests
