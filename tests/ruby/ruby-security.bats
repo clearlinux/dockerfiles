@@ -7,7 +7,7 @@ load ../security
 
 @test "SDL T1191 test" {
     # start container first
-    docker run --name ruby-server --detach clearlinux/ruby
+    docker run --name ruby-server -it --detach clearlinux/ruby
     run check_container_status ruby-server
     [ "$status" -eq 0 ]
     run Test_SDL_T1191 clearlinux/ruby
@@ -22,7 +22,7 @@ load ../security
 
 @test "SDL T1195 test" {
     # start container first
-    docker run --name ruby-server --detach clearlinux/ruby
+    docker run --name ruby-server -it --detach clearlinux/ruby
     run check_container_status ruby-server
     [ "$status" -eq 0 ]
     run Test_SDL_T1195 clearlinux/ruby
@@ -37,7 +37,7 @@ load ../security
 
 @test "SDL T1215 test" {
     # start container first
-    docker run --name ruby-server --detach --security-opt=no-new-privileges clearlinux/ruby
+    docker run --name ruby-server -it --detach --security-opt=no-new-privileges clearlinux/ruby
     run check_container_status ruby-server
     [ "$status" -eq 0 ]
     run Test_SDL_T1215 clearlinux/ruby
