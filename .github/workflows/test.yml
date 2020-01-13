@@ -12,17 +12,16 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: install
-      
       run: | 
         sudo apt-get purge moby-engine moby-cli 
         sudo apt-get install docker.io bats -f
         sudo modprobe -r overlay
         sudo modprobe overlay redirect_dir=off
         sudo systemctl restart docker
-    - name: Run test
+    - name: run test
       run: |
         dir=$(pwd)
         cd ${{matrix.node}}
-        docker build -t clearlinux/${{ matrix.node }} .
+        docker build -t clearlinux/${{matrix.node}} .
         cd $dir
-        if [ -d "./tests/${{ matrix.node }}" ]; then cd tests; make ${{ matrix.node }}; fi
+        if [ -d "./tests/${{matrix.node}}" ]; then cd tests; make ${{matrix.node}}; fi
