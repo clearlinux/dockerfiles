@@ -10,7 +10,9 @@ jobs:
       matrix:
         node: 
           - name: cgit
+            dockerfile: cgit
           - name: clr-installer-ci
+            dockerfile: clr-installer-ci
         
     steps:
     - uses: actions/checkout@v1
