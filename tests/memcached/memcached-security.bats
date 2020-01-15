@@ -5,12 +5,12 @@
 load ../utils
 load ../security
 
-@test "SDL T1191 test" {
+@test "1191 test" {
     # start container first
     docker run --name memcached-server --detach clearlinux/memcached
     run check_container_status memcached-server
     [ "$status" -eq 0 ]
-    run Test_SDL_T1191 clearlinux/memcached
+    run Test_1191 clearlinux/memcached
     [ "$output" == "pass" ]
 
     # stop the container
@@ -20,12 +20,12 @@ load ../security
     [ "$status" -eq 1 ]
 }
 
-@test "SDL T1195 test" {
+@test "1195 test" {
     # start container first
     docker run --name memcached-server --detach clearlinux/memcached
     run check_container_status memcached-server
     [ "$status" -eq 0 ]
-    run Test_SDL_T1195 clearlinux/memcached
+    run Test_1195 clearlinux/memcached
     [ "$output" == "pass" ]
 
     # stop the container
@@ -35,12 +35,12 @@ load ../security
     [ "$status" -eq 1 ]
 }
 
-@test "SDL T1215 test" {
+@test "1215 test" {
     # start container first
     docker run --name memcached-server --detach --security-opt=no-new-privileges clearlinux/memcached
     run check_container_status memcached-server
     [ "$status" -eq 0 ]
-    run Test_SDL_T1215 clearlinux/memcached
+    run Test_1215 clearlinux/memcached
     [ "$output" == "pass" ]
 
     # stop the container
