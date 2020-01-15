@@ -1,8 +1,8 @@
 # Defines helper functions used across a variety of tests.
 
 #Start security test
-#SDL_T1191:Test if Linux Kernel Capabilities are restricted within containers (Docker)
-Test_SDL_T1191() {
+#1191:Test if Linux Kernel Capabilities are restricted within containers (Docker)
+Test_1191() {
 	if [ -n $1 ]; then
             local container_id=`docker ps --format "table {{.ID}} {{.Image}}" | grep $1 | awk '{print $1}'`
         else
@@ -17,8 +17,8 @@ Test_SDL_T1191() {
 	fi
 }
 
-#SDL_T1195: Test if SSH is running within containers (Docker)
-Test_SDL_T1195() {
+#1195: Test if SSH is running within containers (Docker)
+Test_1195() {
 	if [ -n $1 ]; then
             local container_id=`docker ps --format "table {{.ID}} {{.Image}}" | grep $1 | awk '{print $1}'`
         else
@@ -32,8 +32,8 @@ Test_SDL_T1195() {
 	fi
 }
 
-#SDL_T1215: Verify that containers are restricted from acquiring additional privileges (Docker)
-Test_SDL_T1215() {
+#1215: Verify that containers are restricted from acquiring additional privileges (Docker)
+Test_1215() {
 	if [ -n $1 ]; then
             local container_id=`docker ps --format "table {{.ID}} {{.Image}}" | grep $1 | awk '{print $1}'`
         else

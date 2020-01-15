@@ -5,12 +5,12 @@
 load ../utils
 load ../security
 
-@test "SDL T1191 test" {
+@test "1191 test" {
     # start container first
     docker run --name python-server --detach clearlinux/python sleep 60
     run check_container_status python-server
     [ "$status" -eq 0 ]
-    run Test_SDL_T1191 clearlinux/python
+    run Test_1191 clearlinux/python
     [ "$output" == "pass" ]
 
     # stop the container
@@ -20,12 +20,12 @@ load ../security
     [ "$status" -eq 1 ]
 }
 
-@test "SDL T1195 test" {
+@test "1195 test" {
     # start container first
     docker run --name python-server --detach clearlinux/python sleep 60
     run check_container_status python-server
     [ "$status" -eq 0 ]
-    run Test_SDL_T1195 clearlinux/python
+    run Test_1195 clearlinux/python
     [ "$output" == "pass" ]
 
     # stop the container
@@ -35,12 +35,12 @@ load ../security
     [ "$status" -eq 1 ]
 }
 
-@test "SDL T1215 test" {
+@test "1215 test" {
     # start container first
     docker run --name python-server --detach --security-opt=no-new-privileges clearlinux/python sleep 60
     run check_container_status python-server
     [ "$status" -eq 0 ]
-    run Test_SDL_T1215 clearlinux/python
+    run Test_1215 clearlinux/python
     [ "$output" == "pass" ]
 
     # stop the container
