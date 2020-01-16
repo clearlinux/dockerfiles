@@ -1,7 +1,7 @@
 Contributing Guidelines
 =======================
 
-Principle of the test cases
+Principle of the Unit test cases
 ----------------------------
 
 Focusing on basic tests on docker environment, may covering below:
@@ -19,11 +19,19 @@ either of the way:
 test case.
 * use BAT "setup" and "teardown" hooks.
 
-How to add test cases
+Principle of the Security test cases
+----------------------------
+Lower container security risk level by limit container access resources, limit expose scope, limit permission... 
+* Verify that Linux Kernel Capabilities are restricted within containers
+* Verify that the SSH server not be running within the containers
+* Verify that containers are restricted from acquiring additional privileges
+More security checks are recommended when deploying containers in product environment.   
+
+How to add Unit and Security test cases
 ------------------------------------
 
-The test cases are for the micro services already added in the Actions CI.
-So for any micro service name defined in the matrix.node of .github/workflows/
+The test cases are for the Containers already added in the Actions CI.
+So for any Containers name defined in the matrix.node of .github/workflows/
 tests.yml, the same name directory could be added in the directory "tests".
 And the same name BAT script in the new added directory will be executed for
 each PR/commits. For example, redis.
@@ -39,7 +47,8 @@ each PR/commits. For example, redis.
     └── tests
         └── redis
             └── redis.bats
+	    └── redis-security.bats
 ```
 
-* Last, develop the redis BAT test cases in "redis.bats" following the above
+* Last, develop the redis BAT test cases in "redis.bats" and "redis-security.bats" following the above
 principles.
