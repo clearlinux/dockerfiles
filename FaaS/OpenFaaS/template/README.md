@@ -2,11 +2,13 @@
 
 ## What are these templates
 
-> These templates are all based on the Clear Linux* OS.
+> Using OpenFaaS template, you can create new functions in a given programming language quickly. 
+> Here, these templates are all based on the Clear Linux* OS.
 > They are from the published container images per the function as below.
 
 * [clearlinux:base](https://hub.docker.com/_/clearlinux)
 * [clearlinux/python](https://hub.docker.com/r/clearlinux/python)
+* [clearlinux/numpy-mp](https://hub.docker.com/r/clearlinux/numpy-mp)
 * [clearlinux/golang](https://hub.docker.com/r/clearlinux/golang)
 * [clearlinux/node](https://hub.docker.com/r/clearlinux/node)
 

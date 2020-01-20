@@ -1,10 +1,11 @@
-Based on clearlinux/python:3 container image.
-Current version is 3.8.
-It can set OMP_NUM_THREADS dynamically at runtime to accelerate
-performance according to assigned computing resources.
+This is following part of [OpenFaaS tempalte Readme](https://github.com/clearlinux/dockerfiles/blob/master/FaaS/OpenFaaS/template/README.md). 
+This template is based on [clearlinux/numpy-mp](https://hub.docker.com/r/clearlinux/numpy-mp) container image. Python version is 3.8.
+It can leverage AVX512 advantage and set OMP_NUM_THREADS dynamically at runtime to accelerate performance according to assigned computing resources.
 
 ### numpy-clearlinux
-1.  `faas-cli new --lang numpy-mp numpy-openfaas --prefix="<your-docker-username-here>"`
+1.  Create a function named numpy-openfass
+
+`faas-cli new --lang numpy-mp numpy-openfaas --prefix="<your-docker-username-here>"`
 
     Files tree as below.
 >
@@ -35,6 +36,8 @@ performance according to assigned computing resources.
 
     *  Entry is "handler.py", do any change you want here.
 
-2.  `faas-cli up -f numpy-openfaas.yml`
+2.  Deploy function
+
+`faas-cli up -f numpy-openfaas.yml`
 
     Then you can invoke your python function by OpenFaas UI or faas-cli.

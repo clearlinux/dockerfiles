@@ -1,7 +1,10 @@
-Based on clearlinux:base image
+This is following part of [OpenFaaS tempalte Readme](https://github.com/clearlinux/dockerfiles/blob/master/FaaS/OpenFaaS/template/README.md). 
+This template is based on [clearlinux:base](https://hub.docker.com/_/clearlinux) image.
 
 ### dockerfile-clearlinux
-1.  `faas-cli new --lang dockerfile-clearlinux hello-openfaas --prefix="<your-docker-username-here>"`
+1.  Create a function named hello-openfass
+
+`faas-cli new --lang dockerfile-clearlinux hello-openfaas --prefix="<your-docker-username-here>"`
 
     Files tree as below.
 >
@@ -17,7 +20,9 @@ Based on clearlinux:base image
     `echo "openblas" >> hello-openfaas/bundles.txt`
     `echo "wget" >> hello-openfaas/bundles.txt`
 
-2.  `faas-cli up -f hello-openfaas.yml`
+2. Deploy function 
 
-    Then you can invoke your python function by OpenFaas UI or faas-cli.
+`faas-cli up -f hello-openfaas.yml`
+
+    Then you can invoke your function by OpenFaas UI or faas-cli.
 
