@@ -1,8 +1,10 @@
-Based on clearlinux/python:3 container image.
-Current version is 3.8.
+This is following part of [OpenFaaS tempalte Readme](https://github.com/clearlinux/dockerfiles/blob/master/FaaS/OpenFaaS/template/README.md). 
+This template is based on [clearlinux/python:3](https://hub.docker.com/r/clearlinux/python) container image. Python version is 3.8.
 
 ### python3-clearlinux
-1.  `faas-cli new --lang python3-clearlinux hello-openfaas --prefix="<your-docker-username-here>"`
+1.  Create a function named hello-openfass
+
+`faas-cli new --lang python3-clearlinux hello-openfaas --prefix="<your-docker-username-here>"`
 
     Files tree as below.
 >
@@ -29,6 +31,8 @@ Current version is 3.8.
 
     *  Put any initial/helper operation in the "help_script.sh"
 
-2.  `faas-cli up -f hello-openfaas.yml`
+2.  Deploy function
+
+`faas-cli up -f hello-openfaas.yml`
 
     Then you can invoke your python function by OpenFaas UI or faas-cli.
