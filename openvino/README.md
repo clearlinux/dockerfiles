@@ -34,6 +34,28 @@ Clear Linux* OS based container images use:
 
 To learn more about Clear Linux* OS, visit: https://clearlinux.org.
 
+## Supported Devices
+
+The dldt package in Clear Linux enables support for below devices.
+
+
+| PLUGIN               | DEVICE TYPES |
+| ---------------------| -------------|
+| CPU plugin           | Intel® Xeon® with Intel® AVX2 and AVX512, Intel® Core™ Processors with Intel® AVX2, Intel® Atom® Processors with Intel® SSE |
+| GPU plugin           | Intel® Processor Graphics, including Intel® HD Graphics and Intel® Iris® Graphics |
+| MYRIAD plugin        | Intel® Movidius™ Neural Compute Stick powered by the Intel® Movidius™ Myriad™ 2, Intel® Neural Compute Stick 2 powered by the Intel® Movidius™ Myriad™ X |
+
+Therefore, this clearlinux/opevino container image could be used directly for above.
+But please keep in mind, to run in docker for GPU/MYRIAD plugin, some devices have to
+be mapping to the running container.
+
+Taking GPU plugin for example, attach the GPU to the container using `--device /dev/dri`
+option and run the container:
+```
+docker run -it --device /dev/dri clearlinux/openvino
+```
+
+For details please refer to the [link](https://docs.openvinotoolkit.org/latest/_docs_install_guides_installing_openvino_docker_linux.html)
 
 ## Environment variables
 
