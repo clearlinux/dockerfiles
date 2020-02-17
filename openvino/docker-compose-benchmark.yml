@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  openvino:
+    image: clearlinux/openvino:latest
+    environment:
+      http_proxy: $http_proxy
+      https_proxy: $https_proxy
+      MODEL_NAME: squeezenet1.1
+      MODEL_PRECISION: FP32
+    volumes:
+      - "./car.png:/app/car.png"
+      - "./demo_benchmark.sh:/app/demo_benchmark.sh"
+    command: "/app/demo_benchmark.sh"
+
