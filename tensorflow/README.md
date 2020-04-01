@@ -2,9 +2,8 @@
 
 <!-- Required -->
 ## What is this image?
-
 `clearlinux/tensorflow` is a Docker image with `tensorflow` running on top of the
-[official clearlinux base image](https://hub.docker.com/_/clearlinux). 
+[official clearlinux base image](https://hub.docker.com/_/clearlinux). It is built with AVX-512 optimized Clear Linux content and dynamic multithreading strategy for Kubernetes. It is with consideration of the factors impacting performance including Kubernetes CPU quota, number of CPU cores, SIMD AVX-512/AVX2 active cores, and active threads. With this solution, CPU active cores are reduced with higher performance achieved at the same time on a Kubernetes cluster.
 
 <!-- application introduction -->
 > [Tensorflow](https://github.com/tensorflow/tensorflow) is an open-source machine learning library 
@@ -51,9 +50,12 @@ Docker Hub.
     ```
     docker run -it --rm clearlinux/tensorflow bash
     ```
+### Run workload in the container
+The TF_NUM_THREADS environment variable is set by docker-entrypoint.sh of the container. It can be used as optimized value for intra_op_parallelism_threads when running tensorflow workload. For example:
+```
+python tf_cnn_benchmarks.py --device=cpu --num_intra_threads=${TF_NUM_THREADS} --data_format=NHWC --batch_size=32 --model=resnet50 --variable_update=parameter_server
+```
 
-<!-- Optional -->
-### Deploy with Kubernetes
 
 <!-- Required -->
 ## Build and modify:
