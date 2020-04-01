@@ -31,3 +31,8 @@ RUN cd / && \
 FROM clearlinux/os-core:latest
 
 COPY --from=builder /install_root /
+
+COPY docker-entrypoint.sh /usr/local/bin/
+COPY set-num-threads.sh /usr/local/bin/
+
+ENTRYPOINT ["docker-entrypoint.sh"]
