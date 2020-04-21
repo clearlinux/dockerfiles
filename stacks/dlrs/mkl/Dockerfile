@@ -2,7 +2,7 @@
 # Base instance to build MKL based Tensorflow on Clear Linux
 #---------------------------------------------------------------------
 ARG clear_ver
-FROM stacks-clearlinux:$clear_ver as base
+FROM clearlinux/stacks-clearlinux:$clear_ver as base
 LABEL maintainer=otc-swstacks@intel.com
 
 # FIXME: Until Moby finds a way for saving ARGs in multi-stage builds (see https://github.com/moby/moby/issues/34129)
@@ -32,7 +32,7 @@ RUN swupd clean \
 # Tensorflow with MKL-DNN on Clear Linux
 #---------------------------------------------------------------------
 ARG clear_ver
-FROM stacks-clearlinux:$clear_ver
+FROM clearlinux/stacks-clearlinux:$clear_ver
 LABEL maintainer=otc-swstacks@intel.com
 
 # FIXME: Until Moby finds a way for saving ARGs in multi-stage builds (see https://github.com/moby/moby/issues/34129)
