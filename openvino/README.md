@@ -125,6 +125,15 @@ Or
      curl -H "Content-type: application/octet-stream" -X POST http://localhost:5000/image --data-binary @cat.bmp
      ```
 
+4. Start benchmark with default squeezenet-1.1 model and FP32 precision as below:
+
+   * Use docker-compose to start the example:
+     ```
+     docker-compose -f docker-compose-benchmark.yml up
+     ```
+     The configuration is defined in the
+     [`docker-compose-benchmark.yml`](https://github.com/clearlinux/dockerfiles/blob/master/openvino/docker-compose.yml)
+     you can change benchmark model e.g. googlenet-v1 and precision e.g. FP16 by updating configuration file.
 
 <!-- Optional -->
 ### Deploy with Kubernetes
