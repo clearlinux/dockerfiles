@@ -47,7 +47,7 @@ Docker Hub.
 2. Start a container using the examples below:
 
     ```
-    docker run -it --rm -v "$PWD":/root octave-cli your-script.m
+    docker run -it --rm -v "$PWD":/root clearlinux/octave-cli your-script.m
     ```
     
 <!-- Optional -->
