@@ -1,0 +1,8 @@
+#!/bin/bash
+. ../docker-hooks.sh
+
+image="clearlinux/octave"
+package=octave
+
+do_tag $image $package
+
