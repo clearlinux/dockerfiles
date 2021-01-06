@@ -14,7 +14,7 @@ WORKDIR /home/numpy-func
 COPY function /home/numpy-func/function
 WORKDIR /home/numpy-func/function
 # pip install python packages if required
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # install bundles if required
 # PLEASE input bundle line by line
