@@ -1,7 +1,7 @@
 FROM clearlinux/stacks-dlrs-mkl:v0.4.0
 
-RUN pip install jaeger-client==3.13.0 seldon-core tornado>=5.0\
-    && pip install --upgrade setuptools \
+RUN pip install --no-cache-dir jaeger-client==3.13.0 seldon-core tornado>=5.0\
+    && pip install --no-cache-dir --upgrade setuptools \
     && sed -i "s/max_workers=10/max_workers=1/g" /usr/lib/python3.7/site-packages/seldon_core/wrapper.py
 
 RUN git clone https://github.com/SeldonIO/seldon-core.git /opt/seldon-core \

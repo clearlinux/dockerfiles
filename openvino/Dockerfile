@@ -52,7 +52,7 @@ RUN for m in $(cat /app/models.txt); do \
 
 # Pre-install some python libs for serivce to use
 COPY ./requirements.txt /app
-RUN pip3 install -r /app/requirements.txt
+RUN pip3 install --no-cache-dir -r /app/requirements.txt
 
 COPY ./set_model_path.sh /app
 COPY docker-entrypoint.sh /usr/local/bin/
