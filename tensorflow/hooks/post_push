@@ -1,7 +1,0 @@
-#!/bin/bash
-. ../docker-hooks.sh
-
-image="clearlinux/tensorflow"
-package=tensorflow
-
-do_tag $image $package
