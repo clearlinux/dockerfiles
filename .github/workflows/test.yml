@@ -23,7 +23,6 @@ jobs:
          - node
          - openjdk/8
          - openjdk/13
-         - openvino
          - os-core
          - perl
          - php
@@ -33,9 +32,6 @@ jobs:
          - rabbitmq
          - redis
          - ruby
-         - tensorflow
-         - tensorflow-serving
-         - wordpress
     steps:
     - uses: actions/checkout@v1
     - name: install
