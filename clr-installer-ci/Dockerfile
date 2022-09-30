@@ -8,5 +8,4 @@ RUN swupd update && \
     swupd bundle-add sysadmin-basic storage-utils network-basic go-basic-dev devpkg-gtk3 clr-installer-gui && \
     swupd clean && \
     # Install the Go Linters
-    go get -u gopkg.in/alecthomas/gometalinter.v2 && \
-    gometalinter.v2 --install
+    go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
