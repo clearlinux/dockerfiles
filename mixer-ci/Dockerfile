@@ -11,6 +11,5 @@ RUN swupd update && \
     mkdir -p /run/lock
 USER clr
 RUN git config --global user.email "travis@example.com" && \
-    git config --global user.name "Travis CI" && \
-    curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh| sh -s -- -b $(go env GOPATH)/bin v1.18.0
+    git config --global user.name "Travis CI"
 
