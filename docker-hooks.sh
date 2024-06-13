@@ -68,7 +68,7 @@ function do_tag {
     local image=$1
     local pkg=$2
     local base=$3
-    
+
     echo "=> Tagging the $image"
     local tag=$(get_tag $pkg)
 

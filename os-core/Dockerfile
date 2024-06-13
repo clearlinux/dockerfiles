@@ -1,9 +1,10 @@
 FROM clearlinux:latest AS builder
 
+ARG clear_ver
 ARG swupd_args
 
 # Move to latest Clear Linux release
-RUN swupd update --no-boot-update $swupd_args
+RUN swupd update --no-boot-update -V $clear_ver $swupd_args
 
 # Install clean os-core bundle in target directory
 # using the new os version

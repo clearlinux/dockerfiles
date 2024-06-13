@@ -1,0 +1,26 @@
+name: Dockerfiles Release
+on: [create]
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}
+  cancel-in-progress: true
+env:
+  GITHUB_TOKEN: ${{ github.token }}
+
+jobs:
+  release:
+    if: (github.event_name == 'create' && github.event.ref_type == 'tag')
+    name: Release
+    strategy:
+      fail-fast: false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v4
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and Push
+        run: ./build-and-push-images.sh ${{ github.event.ref }}
