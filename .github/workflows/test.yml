@@ -35,9 +35,8 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: install
-      run: | 
-        sudo apt-get purge moby-engine moby-cli 
-        sudo apt-get install docker.io bats -f
+      run: |
+        sudo apt-get install bats -f
         sudo modprobe -r overlay
         sudo modprobe overlay redirect_dir=off
         sudo systemctl restart docker
