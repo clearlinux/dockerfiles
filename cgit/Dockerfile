@@ -11,7 +11,7 @@ RUN swupd update --no-boot-update -V $clear_ver $swupd_args
 
 # Grab os-release info from the minimal base image so
 # that the new content matches the exact OS version
-COPY --from=clearlinux/httpd:latest /usr/lib/os-release /
+COPY --from=httpd /usr/lib/os-release /
 
 # Install additional content in a target directory
 # using the os version from the minimal base
