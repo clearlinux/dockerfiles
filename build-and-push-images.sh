@@ -26,8 +26,7 @@ build_and_push_image() {
 main() {
     local ver="$1"
     build_and_push_image os-core "${ver}"
-    build_and_push_image clr-installer-ci "${ver}"
-	# httpd is used by cgit so it must be pushed first
+    # httpd is used by cgit so it must be pushed first
     build_and_push_image httpd "${ver}"
     build_and_push_image cgit "${ver}"
     build_and_push_image golang "${ver}"
@@ -35,7 +34,6 @@ main() {
     build_and_push_image iperf "${ver}"
     build_and_push_image mariadb "${ver}"
     build_and_push_image memcached "${ver}"
-    build_and_push_image mixer-ci "${ver}"
     build_and_push_image nginx "${ver}"
     build_and_push_image node "${ver}"
     build_and_push_image numpy-mp "${ver}"
@@ -51,4 +49,10 @@ main() {
     build_and_push_image tesseract-ocr "${ver}"
 }
 
-main $1
+if [ "$2" == "clr-installer-ci" ]; then
+    build_and_push_image clr-installer-ci "$1"
+elif [ "$2" == "mixer-ci" ]; then
+    build_and_push_image mixer-ci "$1"
+else
+	main $1
+fi
