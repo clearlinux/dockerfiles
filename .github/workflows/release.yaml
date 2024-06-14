@@ -7,44 +7,6 @@ env:
   GITHUB_TOKEN: ${{ github.token }}
 
 jobs:
-  clr-installer-ci:
-    if: (github.event_name == 'create' && github.event.ref_type == 'tag')
-    name: Release
-    strategy:
-      fail-fast: false
-    runs-on: ubuntu-latest
-    steps:
-      - name: Delete unused tools folder
-        run: rm -rf /opt/hostedtoolcache
-      - name: Code Checkout
-        uses: actions/checkout@v4
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and Push
-        run: ./build-and-push-images.sh ${{ github.event.ref }} clr-installer-ci
-  mixer-ci:
-    if: (github.event_name == 'create' && github.event.ref_type == 'tag')
-    name: Release
-    strategy:
-      fail-fast: false
-    runs-on: ubuntu-latest
-    steps:
-      - name: Delete unused tools folder
-        run: rm -rf /opt/hostedtoolcache
-      - name: Code Checkout
-        uses: actions/checkout@v4
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and Push
-        run: ./build-and-push-images.sh ${{ github.event.ref }} mixer-ci
   release:
     if: (github.event_name == 'create' && github.event.ref_type == 'tag')
     name: Release

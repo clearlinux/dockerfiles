@@ -49,10 +49,4 @@ main() {
     build_and_push_image tesseract-ocr "${ver}"
 }
 
-if [ "$2" == "clr-installer-ci" ]; then
-    build_and_push_image clr-installer-ci "$1"
-elif [ "$2" == "mixer-ci" ]; then
-    build_and_push_image mixer-ci "$1"
-else
-	main $1
-fi
+main $1
