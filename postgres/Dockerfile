@@ -34,10 +34,10 @@ FROM core
 
 COPY --from=builder /install_root /
 
-ENV PATH $PATH:/usr/libexec/postgresql11
+ENV PATH $PATH:/usr/libexec/postgresql
 ENV PGDATA /var/lib/pgsql/data
-RUN sed -i "s|#listen_addresses.*|listen_addresses = '*'|" /usr/share/postgresql11/postgresql.conf.sample && \
-    mkdir -p /run/postgresql11 && chown -R postgres:postgres /run/postgresql11 && \
+RUN sed -i "s|#listen_addresses.*|listen_addresses = '*'|" /usr/share/postgresql/postgresql.conf.sample && \
+    mkdir -p /run/postgresql && chown -R postgres:postgres /run/postgresql && \
     mkdir -p "$PGDATA" && chown -R postgres:postgres "$PGDATA" && \
     mkdir /docker-entrypoint-initdb.d && \
     mkdir -p /usr/local/bin
