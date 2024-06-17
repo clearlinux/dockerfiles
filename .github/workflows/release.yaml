@@ -25,11 +25,12 @@ jobs:
       - name: Build and Push httpd
         run: ./build-and-push-images.sh httpd ${{ github.event.ref }}
   release-matrix:
+    needs: release-pre-reqs
     if: (github.event_name == 'create' && github.event.ref_type == 'tag')
     name: Release Matrix
     strategy:
       matrix:
-        iamge: ['cgit', 'golang', 'haproxy', 'iperf', 'mariadb', 'memcached', 'nginx', 'node', 'numpy-mp', 'perl', 'php', 'php-fpm', 'postgres', 'python', 'rabbitmq', 'r-base', 'redis', 'ruby', 'tesseract-ocr']
+        image: ['cgit', 'golang', 'haproxy', 'iperf', 'mariadb', 'memcached', 'nginx', 'node', 'numpy-mp', 'perl', 'php', 'php-fpm', 'postgres', 'python', 'rabbitmq', 'r-base', 'redis', 'ruby', 'tesseract-ocr']
     runs-on: ubuntu-latest
     steps:
       - name: Code Checkout
