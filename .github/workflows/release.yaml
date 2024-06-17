@@ -1,5 +1,5 @@
 name: Dockerfiles Release
-on: [create]
+on: create
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}
   cancel-in-progress: true
@@ -7,15 +7,11 @@ env:
   GITHUB_TOKEN: ${{ github.token }}
 
 jobs:
-  release:
-    if: (github.event_name == 'create' && github.event.ref_type == 'tag')
-    name: Release
-    strategy:
-      fail-fast: false
+  if: (github.event_name == 'create' && github.event.ref_type == 'tag')
+  release-pre-reqs:
+    name: Release image required by other images
     runs-on: ubuntu-latest
     steps:
-      - name: Delete unused tools folder
-        run: rm -rf /opt/hostedtoolcache
       - name: Code Checkout
         uses: actions/checkout@v4
       - name: Login to GitHub Container Registry
@@ -25,4 +21,22 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and Push
-        run: ./build-and-push-images.sh ${{ github.event.ref }}
+        run: ./build-and-push-images.sh os-core ${{ github.event.ref }}
+        run: ./build-and-push-images.sh httpd ${{ github.event.ref }}
+  release-matrix:
+    name: Release Matrix
+    strategy:
+      matrix:
+        iamge: ['cgit', 'golang', 'haproxy', 'iperf', 'mariadb', 'memcached', 'nginx', 'node', 'numpy-mp', 'perl', 'php', 'php-fpm', 'postgres', 'python', 'rabbitmq', 'r-base', 'redis', 'ruby', 'tesseract-ocr']
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v4
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and Push
+        run: ./build-and-push-images.sh ${{ matrix.image }} ${{ github.event.ref }}
