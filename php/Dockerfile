@@ -2,6 +2,7 @@ ARG clear_ver
 FROM ghcr.io/clearlinux/os-core:$clear_ver AS core
 FROM clearlinux:latest AS builder
 
+ARG clear_ver
 ARG swupd_args
 # Move to latest Clear Linux release to ensure
 # that the swupd command line arguments are
