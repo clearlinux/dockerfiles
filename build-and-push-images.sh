@@ -6,15 +6,17 @@ create_image() {
     local name="$1"
     local ver="$2"
     pushd "${name}"
-	echo "Creating ${name} for version ${ver}"
-    docker build -t ghcr.io/clearlinux/"${name}":"${ver}" . --build-arg="clear_ver=${ver}"
+    echo "Creating ${name} for version ${ver}"
+    docker build -t ghcr.io/clearlinux/"${name}":latest . --build-arg="clear_ver=${ver}"
     popd
 }
 
 push_image() {
     local name="$1"
     local ver="$2"
-	echo "Pushing ${name} for version ${ver}"
+    echo "Pushing ${name} for version ${ver}"
+    docker tag ghcr.io/clearlinux/"${name}":latest ghcr.io/clearlinux/"${name}":"${ver}"
+    docker push ghcr.io/clearlinux/"${name}":latest
     docker push ghcr.io/clearlinux/"${name}":"${ver}"
 }
 
