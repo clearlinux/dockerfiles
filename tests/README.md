@@ -7,6 +7,6 @@ The dockerfiles are from [page](https://github.com/clearlinux/dockerfiles). The 
 
 To run the tests, you can simple type "make tests", it will run all the test cases.
 If you want to run specific Container test, just type "make SERVICE-NAME".
-For example, "make redis" to run tests for redis.
+For example, "make valkey" to run tests for valkey.
 
 

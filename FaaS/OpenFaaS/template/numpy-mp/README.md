@@ -23,7 +23,7 @@ It can leverage AVX512 advantage and set OMP_NUM_THREADS dynamically at runtime 
     *  Put the required python packages in the "requirements.txt".
     For example,
 
-    `echo "redis" >> numpy-openfaas/requirements.txt`
+    `echo "valkey" >> numpy-openfaas/requirements.txt`
     `echo "flask" >> numpy-openfaas/requirements.txt`
 
     *  Put the required Clear Linux bundles in the "bundles.txt".

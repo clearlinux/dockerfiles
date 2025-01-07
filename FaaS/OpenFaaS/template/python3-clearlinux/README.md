@@ -20,7 +20,7 @@ This template is based on [clearlinux/python:3](https://hub.docker.com/r/clearli
     *  Put the required python packages in the "requirements.txt".
     For example,
 
-    `echo "redis" >> hello-openfaas/requirements.txt`
+    `echo "valkey" >> hello-openfaas/requirements.txt`
     `echo "flask" >> hello-openfaas/requirements.txt`
 
     *  Put the required Clear Linux bundles in the "bundles.txt".

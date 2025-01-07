@@ -11,23 +11,23 @@ data:
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: redis-deployment
+  name: valkey-deployment
 spec:
   replicas: 1
   template:
     metadata:
-      name: redis-deployment
+      name: valkey-deployment
       labels:
-        app: redis
+        app: valkey
     spec:
       volumes:
         - name: config-volume
           configMap:
-            name: redis-config
+            name: valkey-config
       containers:
-      -  image: docker.io/clearlinux/redis
-         name: redis
-         command: ["redis-server"]
+      -  image: ghcr.io/clearlinux/valkey
+         name: valkey
+         command: ["valkey-server"]
          args: ["/etc/redis.conf","--protected-mode no"]
          volumeMounts:
            - name: config-volume
@@ -38,7 +38,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: redis-svc
+  name: valkey-svc
 spec:
   type: NodePort
   ports:
@@ -46,4 +46,4 @@ spec:
     targetPort: 6379
     nodePort: 30001
   selector:
-    app: redis
+    app: valkey

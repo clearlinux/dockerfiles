@@ -30,8 +30,8 @@ jobs:
          - postgres
          - python
          - rabbitmq
-         - redis
          - ruby
+         - valkey
     steps:
     - uses: actions/checkout@v1
     - name: install

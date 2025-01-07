@@ -1,13 +1,13 @@
-# Clear Linux* OS `redis` container image
+# Clear Linux* OS `valkey` container image
 
 <!-- Required -->
 ## What is this image?
 
-`clearlinux/redis` is a Docker image with `redis` running on top of the
+`clearlinux/valkey` is a Docker image with `valkey` running on top of the
 [official clearlinux base image](https://hub.docker.com/_/clearlinux). 
 
 <!-- application introduction -->
-> [Redis](https://redis.io/) is an open source (BSD licensed), in-memory data structure 
+> [Valkey](https://valkey.io/) is an open source (BSD licensed), in-memory data structure 
 > store, used as a database, cache and message broker. It supports data structures such 
 > as strings, hashes, lists, sets, sorted sets with range queries, bitmaps, hyperloglogs, 
 > geospatial indexes with radius queries and streams. 
@@ -40,23 +40,20 @@ To learn more about Clear Linux* OS, visit: https://clearlinux.org.
 The easiest way to get started with this image is by simply pulling it from
 Docker Hub. 
 
-*Note: This container uses the same syntax as the [official redis
-image](https://hub.docker.com/_/redis).
 
-
-1. Pull the image from Docker Hub: 
+1. Pull the image from Github Container Registry: 
     ```
-    docker pull clearlinux/redis
+    docker pull ghcr.io/clearlinux/valkey
     ```
 
 2. Start a container using the examples below:
    ```
-   docker run --name some-redis --network some-network -d clearlinux/redis redis-server --protected-mode no
+   docker run --name some-valkey --network some-network -d ghcr.io/clearlinux/valkey valkey-server --protected-mode no
    ```
-   
+
 3. connecting via redis-cli
    ```
-   docker run -it --network some-network --rm clearlinux/redis redis-cli -h some-redis
+   docker run -it --network some-network --rm ghcr.io/clearlinux/valkey redis-cli -h some-valkey
    ```
 
 <!-- Optional -->
@@ -71,22 +68,22 @@ This image can also be deployed on a Kubernetes cluster, such as [minikube](http
 
 Steps to deploy redis on a Kubernetes cluster:
 
-1. If you want to deploy `redis-deployment.yaml` 
+1. If you want to deploy `valkey-deployment.yaml` 
 
    ```
-   kubectl create -f redis-deployment.yaml
+   kubectl create -f valkey-deployment.yaml
    ```
 
-   Or if you want to deploy `redis-deployment-conf.yaml`
+   Or if you want to deploy `valkey-deployment-conf.yaml`
 
    ```
-   kubectl create -f redis-deployment-conf.yaml
+   kubectl create -f valkey-deployment-conf.yaml
    ```
 
-2. Install redis bundle and connect to the service, where 30001 is the port number defined in your service.
+2. Install valkey bundle and connect to the service, where 30001 is the port number defined in your service.
 
    ```
-   swupd bundle-add redis-native
+   swupd bundle-add valkey
    redis-cli -h <nodeIP> -p 30001
    ```
 
@@ -104,17 +101,17 @@ modify the container images.
 
 2. Change to the directory of the application:
     ```
-    cd redis/
+    cd valkey/
     ```
 
 3. Build the container image:
     ```
-    docker build -t clearlinux/redis .
+    docker build -t ghcr.io/clearlinux/valkey .
     ```
 
    Refer to the Docker documentation for [default build arguments](https://docs.docker.com/engine/reference/builder/#arg).
    Additionally:
-   
+
    - `swupd_args` - specifies arguments to pass to the Clear Linux* OS software
      manager. See the [swupd man pages](https://github.com/clearlinux/swupd-client/blob/master/docs/swupd.1.rst#options)
      for more information.

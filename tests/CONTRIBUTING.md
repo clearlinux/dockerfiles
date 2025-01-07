@@ -34,21 +34,21 @@ The test cases are for the Containers already added in the Actions CI.
 So for any Containers name defined in the matrix.node of .github/workflows/
 tests.yml, the same name directory could be added in the directory "tests".
 And the same name BAT script in the new added directory will be executed for
-each PR/commits. For example, redis.
-* First, the redis name is added in the matrix.node.
+each PR/commits. For example, valkey.
+* First, the valkey name is added in the matrix.node.
 ```
    matrix:
-     node: ["redis"]
+     node: ["valkey"]
 ```
 
-* Second, create the "redis" directory and BAT script under tests
+* Second, create the "valkey" directory and BAT script under tests
 ```
    dockerfiles
     └── tests
-        └── redis
-            └── redis.bats
-	    └── redis-security.bats
+        └── valkey
+            └── valkey.bats
+	    └── valkey-security.bats
 ```
 
-* Last, develop the redis BAT test cases in "redis.bats" and "redis-security.bats" following the above
+* Last, develop the valkey BAT test cases in "valkey.bats" and "valkey-security.bats" following the above
 principles.
