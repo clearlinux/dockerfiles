@@ -2,6 +2,6 @@
 . ../docker-hooks.sh
 
 image="clearlinux/nginx"
-package=nginx-mainline
+package=nginx
 
 do_tag $image $package
